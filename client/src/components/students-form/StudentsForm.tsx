@@ -1,64 +1,80 @@
 import Paper from '@mui/material/Paper';
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardContent';
 import { SubmitStudentsFormButton } from './SubmitStudentsFormButton';
+import { useEffect, useState } from 'react';
+import { fetchDayOptions } from '../../api/api-utils';
+import React from 'react';
+import { Day, DayOptions, Option } from '../../types/types';
 
-interface Days {
-    options: Option[];
-    name: string
+export interface OptionDay {
+    option: Option,
+    day: Day
 }
-
-
-interface Option {
-    id: number;
-    from: any;
-    to: any;
+const compareOptionDay = (x: OptionDay, day: Day, option: Option) => {
+    return x.day === day && x.option === option;
 }
-
-const days: Days[] = [
-    { options: [{ id: 1, from: "15:00", to: "16:30" }, { id: 2, from: "12:30", to: "14:00" }, { id: 3, from: "13:00", to: "14:30" }], name: "Monday" },
-    { options: [{ id: 1, from: "15:00", to: "16:30" }, { id: 2, from: "12:30", to: "14:00" }, { id: 3, from: "13:00", to: "14:30" }], name: "Tuesday" },
-    { options: [{ id: 1, from: "15:00", to: "16:30" }, { id: 2, from: "12:30", to: "14:00" }, { id: 3, from: "13:00", to: "14:30" }], name: "Wednesday" },
-    { options: [{ id: 1, from: "15:00", to: "16:30" }, { id: 2, from: "12:30", to: "14:00" }, { id: 3, from: "13:00", to: "14:30" }], name: "Thursday" },
-    { options: [{ id: 1, from: "15:00", to: "16:30" }, { id: 2, from: "12:30", to: "14:00" }, { id: 3, from: "13:00", to: "14:30" }], name: "Friday" },
-];
-
 
 export const StudentsForm = () => {
+    const [days, setDays] = useState<DayOptions[]>([]);
+    const [checkedOptions, setCheckedOptions] = useState<OptionDay[]>([]);
+
+    useEffect(() => {
+        const loadData = async () => {
+            const data = await fetchDayOptions();
+            setDays(data);
+        }
+        loadData();
+    }, [])
+
+    const handleToggle = (option: Option, day: Day) => {
+        const currentIndex = checkedOptions.findIndex((x) => compareOptionDay(x, day, option));
+        const newChecked = [...checkedOptions];
+
+        if (currentIndex === -1) {
+            newChecked.push({ option, day });
+        }
+        else {
+            newChecked.splice(currentIndex, 1);
+        }
+
+        setCheckedOptions(newChecked);
+    }
+
     return (
         <>
             <Card component={Paper} sx={{ maxWidth: 500 }}>
                 <CardContent>
-
                     <List
                         sx={{ maxWidth: 500, maxHeight: 500, overflow: 'auto' }}
                     >
-                        {days.map(day => {
-                            return <>
-                                <ListSubheader>{day.name}</ListSubheader>
-                                {day.options.map(option =>
-                                    <ListItem
+                        {days.map(dayOptions => {
+                            return <React.Fragment key={dayOptions.day}>
+                                <ListSubheader>{dayOptions.day}</ListSubheader>
+                                {dayOptions.options.map(option =>
+                                    <ListItemButton
                                         key={option.id}
+                                        onClick={() => handleToggle(option, dayOptions.day)}
                                     >
-                                        <Checkbox edge="start" />
+                                        <Checkbox edge="start" checked={checkedOptions.findIndex((x) => compareOptionDay(x, dayOptions.day, option)) !== -1} />
                                         <ListItemText>
                                             {option.from + " - " + option.to}
                                         </ListItemText>
-                                    </ListItem>
+                                    </ListItemButton>
                                 )}
-                            </>
+                            </React.Fragment>
                         }
                         )}
                     </List >
                 </CardContent>
                 <CardActions>
-                    <SubmitStudentsFormButton />
+                    <SubmitStudentsFormButton checkedOptions={checkedOptions} />
                 </CardActions>
             </Card>
         </>
