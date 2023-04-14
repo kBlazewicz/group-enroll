@@ -6,13 +6,15 @@ export enum Day {
     Friday = "Friday"
 };
 
-export interface DayOptions {
-    options: Option[];
-    day: Day
+export interface Vote {
+    id: number;
+    possibility: boolean;
 }
 
-export interface Option {
+export interface Term {
     id: number;
-    from: any;
-    to: any;
+    startTime: any;
+    endTime: any;
+    dayOfWeek: Day
+    voteList: Vote[]
 }

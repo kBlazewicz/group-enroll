@@ -7,45 +7,67 @@ import Checkbox from '@mui/material/Checkbox';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardContent';
-import { SubmitStudentsFormButton } from './SubmitStudentsFormButton';
+// import { SubmitStudentsFormButton } from './SubmitStudentsFormButton';
 import { useEffect, useState } from 'react';
-import { fetchDayOptions } from '../../api/api-utils';
+import { fetchTerms } from '../../api/api-utils';
 import React from 'react';
-import { Day, DayOptions, Option } from '../../types/types';
+import { Day, Term } from '../../types/types';
+import { SubmitStudentsFormButton } from './SubmitStudentsFormButton';
 
-export interface OptionDay {
-    option: Option,
-    day: Day
+const compareTerms = (x: Term, term: Term) => {
+    return x.dayOfWeek === term.dayOfWeek && x.startTime === term.startTime && x.endTime === term.endTime;
 }
-const compareOptionDay = (x: OptionDay, day: Day, option: Option) => {
-    return x.day === day && x.option === option;
+
+interface TermsByDayGroup {
+    dayOfWeek: Day,
+    terms: Term[]
+}
+const groupTermsByDay = (terms: Term[]) => {
+    let termsByDayGroups: TermsByDayGroup[] = [
+        { dayOfWeek: Day.Monday, terms: [] },
+        { dayOfWeek: Day.Tuesday, terms: [] },
+        { dayOfWeek: Day.Wednesday, terms: [] },
+        { dayOfWeek: Day.Thursday, terms: [] },
+        { dayOfWeek: Day.Friday, terms: [] }
+    ]
+
+    termsByDayGroups.forEach(group => {
+        terms.forEach(term => {
+            if (group.dayOfWeek === term.dayOfWeek) {
+                group.terms.push(term)
+            }
+        });
+    });
+
+    return termsByDayGroups;
 }
 
 export const StudentsForm = () => {
-    const [days, setDays] = useState<DayOptions[]>([]);
-    const [checkedOptions, setCheckedOptions] = useState<OptionDay[]>([]);
+    const [terms, setTerms] = useState<Term[]>([]);
+    const [checkedTerms, setCheckedTerms] = useState<Term[]>([]);
 
     useEffect(() => {
         const loadData = async () => {
-            const data = await fetchDayOptions();
-            setDays(data);
+            const data = await fetchTerms();
+            setTerms(data);
         }
         loadData();
     }, [])
 
-    const handleToggle = (option: Option, day: Day) => {
-        const currentIndex = checkedOptions.findIndex((x) => compareOptionDay(x, day, option));
-        const newChecked = [...checkedOptions];
+    const handleToggle = (term: Term) => {
+        const currentIndex = checkedTerms.findIndex((x) => compareTerms(x, term));
+        const newChecked = [...checkedTerms];
 
         if (currentIndex === -1) {
-            newChecked.push({ option, day });
+            newChecked.push(term);
         }
         else {
             newChecked.splice(currentIndex, 1);
         }
 
-        setCheckedOptions(newChecked);
+        setCheckedTerms(newChecked);
     }
+
 
     return (
         <>
@@ -54,17 +76,17 @@ export const StudentsForm = () => {
                     <List
                         sx={{ maxWidth: 500, maxHeight: 500, overflow: 'auto' }}
                     >
-                        {days.map(dayOptions => {
-                            return <React.Fragment key={dayOptions.day}>
-                                <ListSubheader>{dayOptions.day}</ListSubheader>
-                                {dayOptions.options.map(option =>
+                        {groupTermsByDay(terms).map(group => {
+                            return <React.Fragment key={group.dayOfWeek}>
+                                <ListSubheader>{group.dayOfWeek}</ListSubheader>
+                                {group.terms.map(term =>
                                     <ListItemButton
-                                        key={option.id}
-                                        onClick={() => handleToggle(option, dayOptions.day)}
+                                        key={term.id}
+                                        onClick={() => handleToggle(term)}
                                     >
-                                        <Checkbox edge="start" checked={checkedOptions.findIndex((x) => compareOptionDay(x, dayOptions.day, option)) !== -1} />
+                                        <Checkbox edge="start" checked={checkedTerms.findIndex((x) => compareTerms(x, term)) !== -1} />
                                         <ListItemText>
-                                            {option.from + " - " + option.to}
+                                            {term.startTime + " - " + term.endTime}
                                         </ListItemText>
                                     </ListItemButton>
                                 )}
@@ -74,7 +96,7 @@ export const StudentsForm = () => {
                     </List >
                 </CardContent>
                 <CardActions>
-                    <SubmitStudentsFormButton checkedOptions={checkedOptions} />
+                    <SubmitStudentsFormButton checkedTerms={checkedTerms} />
                 </CardActions>
             </Card>
         </>
