@@ -8,6 +8,7 @@ export enum Day {
 
 export interface Vote {
     id: number;
+    studentId: number;
     possibility: boolean;
 }
 
@@ -17,4 +18,13 @@ export interface Term {
     endTime: any;
     dayOfWeek: Day
     voteList: Vote[]
+}
+
+export interface Student {
+    id: number;
+    name: string;
+    surname: string;
+    album: number;
+    mail: string;
+    generalComment: string;
 }

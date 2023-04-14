@@ -15,13 +15,16 @@ import { Day, Term } from '../../types/types';
 import { SubmitStudentsFormButton } from './SubmitStudentsFormButton';
 
 const compareTerms = (x: Term, term: Term) => {
-    return x.dayOfWeek === term.dayOfWeek && x.startTime === term.startTime && x.endTime === term.endTime;
+    return x.dayOfWeek === term.dayOfWeek &&
+        x.startTime === term.startTime &&
+        x.endTime === term.endTime;
 }
 
 interface TermsByDayGroup {
     dayOfWeek: Day,
     terms: Term[]
 }
+
 const groupTermsByDay = (terms: Term[]) => {
     let termsByDayGroups: TermsByDayGroup[] = [
         { dayOfWeek: Day.Monday, terms: [] },
@@ -70,35 +73,34 @@ export const StudentsForm = () => {
 
 
     return (
-        <>
-            <Card component={Paper} sx={{ maxWidth: 500 }}>
-                <CardContent>
-                    <List
-                        sx={{ maxWidth: 500, maxHeight: 500, overflow: 'auto' }}
-                    >
-                        {groupTermsByDay(terms).map(group => {
-                            return <React.Fragment key={group.dayOfWeek}>
-                                <ListSubheader>{group.dayOfWeek}</ListSubheader>
-                                {group.terms.map(term =>
-                                    <ListItemButton
-                                        key={term.id}
-                                        onClick={() => handleToggle(term)}
-                                    >
-                                        <Checkbox edge="start" checked={checkedTerms.findIndex((x) => compareTerms(x, term)) !== -1} />
-                                        <ListItemText>
-                                            {term.startTime + " - " + term.endTime}
-                                        </ListItemText>
-                                    </ListItemButton>
-                                )}
-                            </React.Fragment>
-                        }
-                        )}
-                    </List >
-                </CardContent>
-                <CardActions>
-                    <SubmitStudentsFormButton checkedTerms={checkedTerms} />
-                </CardActions>
-            </Card>
-        </>
+        <Card component={Paper} sx={{ maxWidth: 500 }}>
+            <CardContent>
+                <List
+                    sx={{ maxWidth: 500, maxHeight: 500, overflow: 'auto' }}
+                >
+                    {groupTermsByDay(terms).map(group => {
+                        return <React.Fragment key={group.dayOfWeek}>
+                            <ListSubheader>{group.dayOfWeek}</ListSubheader>
+                            {group.terms.map(term =>
+                                <ListItemButton
+                                    key={term.id}
+                                    onClick={() => handleToggle(term)}
+                                >
+                                    <Checkbox edge="start" checked={checkedTerms.findIndex((x) =>
+                                        compareTerms(x, term)) !== -1} />
+                                    <ListItemText>
+                                        {term.startTime + " - " + term.endTime}
+                                    </ListItemText>
+                                </ListItemButton>
+                            )}
+                        </React.Fragment>
+                    }
+                    )}
+                </List >
+            </CardContent>
+            <CardActions>
+                <SubmitStudentsFormButton />
+            </CardActions>
+        </Card>
     )
 }

@@ -1,9 +1,8 @@
 import Button from '@mui/material/Button';
-import { Term } from '../../types/types';
 
-export const SubmitStudentsFormButton = ({checkedTerms: checkedTerms}: {checkedTerms: Term[]}) => {
+export const SubmitStudentsFormButton = () => {
     const handleOnClick = () => {
-        console.log(checkedTerms)
+        alert("Submit sent!")
     }
     return (
         <Button variant='contained' onClick={handleOnClick}>
