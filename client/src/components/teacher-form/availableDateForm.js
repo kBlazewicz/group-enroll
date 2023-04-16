@@ -32,14 +32,10 @@ function dateInTable(table, startTime, endTime, weekDay){
       flag = true;
     }
   })
-  console.log(flag)
   return flag;
 }
 
-
 let nextId = 0;
-
-
 
 export const AvailableDateForm = () => {
   const [startTime, setStartTime] = useState("12:00");
@@ -47,7 +43,7 @@ export const AvailableDateForm = () => {
   const [weekDay, setWeekDay] = useState("mon");
   const [availableDates, setAvailableDates] = useState([])
   
-  const handleSubmit= (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const [start_hrs, start_mins] = startTime.split(':')
     const [end_hrs, end_mins] = endTime.split(':')
@@ -70,9 +66,21 @@ export const AvailableDateForm = () => {
       }
     }
   }
+
+  const sendTerms = (e) => {
+    e.preventDefault();
+    if(availableDates.length <= 1){
+      alert('Nie można przesłać - zbyt mało dodanych terminów')
+    }else{
+      console.log(
+        {
+          availableDates
+        }
+    )}
+  }
     
   return (
-    <div>
+    <div style={{textAlign: "center"}}>
       <h1>Dodawanie terminów</h1>
       <form onSubmit={e => { handleSubmit(e) }}>       
         <label>
@@ -81,10 +89,10 @@ export const AvailableDateForm = () => {
             name="startTime"
             type="time"
             value={startTime}
-            onChange={e => setStartTime(e.target.value)} />
+            onChange={e => setStartTime(e.target.value)}
+            style={{margin: "10px"}} />
         </label>
    
-        <br/>
         <br/>
           
         <label>
@@ -93,10 +101,10 @@ export const AvailableDateForm = () => {
             name="endTime"
             type="time"
             value={endTime}
-            onChange={e => setEndTime(e.target.value)} />
+            onChange={e => setEndTime(e.target.value)} 
+            style={{margin: "10px"}}/>
         </label>
          
-        <br/>
         <br/>
           
         <label>
@@ -104,9 +112,12 @@ export const AvailableDateForm = () => {
           <select 
             name="weekDay"
             value={weekDay} 
-            onChange={e => setWeekDay(e.target.value)}>
+            onChange={e => setWeekDay(e.target.value)}
+            style={{margin: "10px",
+                    padding:"2px"}}>
             {daysShortcuts.map(day => (
-              <option value={day.shortcut}>
+              <option value={day.shortcut}
+                      key={day.shortcut}>
                 {day.pol_name}
               </option>
             ))}           
@@ -120,7 +131,8 @@ export const AvailableDateForm = () => {
           <input
             name="submit"
             type="submit"
-            value="Dodaj"/>
+            value="Dodaj"
+            style={{padding: "6px 12px"}}/>
         </label>
           
       </form>
@@ -129,12 +141,21 @@ export const AvailableDateForm = () => {
       <h1>Dodane terminy</h1>
       <div>
         {availableDates.map(date => (
-          <div>
+          <div key={date.id}>
             {date.startTime + ' - ' + 
             date.endTime + ',  ' +
             getDayFromShortcut(date.weekDay)} <br/>
           </div>
         ))}
+      </div>
+
+      <br/>
+
+      <div>
+        <button onClick={e => {sendTerms(e)}}
+        style={{padding: "6px 12px"}}>
+          Prześlij terminy
+        </button>
       </div>
     </div>
     );
