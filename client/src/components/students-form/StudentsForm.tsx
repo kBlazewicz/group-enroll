@@ -7,11 +7,10 @@ import Checkbox from '@mui/material/Checkbox';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardContent';
-// import { SubmitStudentsFormButton } from './SubmitStudentsFormButton';
 import { useEffect, useState } from 'react';
 import { fetchTerms } from '../../api/api-utils';
 import React from 'react';
-import { Day, Term } from '../../types/types';
+import { Day, Term, getDays } from '../../types/types';
 import { SubmitStudentsFormButton } from './SubmitStudentsFormButton';
 
 const compareTerms = (x: Term, term: Term) => {
@@ -25,14 +24,11 @@ interface TermsByDayGroup {
     terms: Term[]
 }
 
-const groupTermsByDay = (terms: Term[]) => {
-    let termsByDayGroups: TermsByDayGroup[] = [
-        { dayOfWeek: Day.Monday, terms: [] },
-        { dayOfWeek: Day.Tuesday, terms: [] },
-        { dayOfWeek: Day.Wednesday, terms: [] },
-        { dayOfWeek: Day.Thursday, terms: [] },
-        { dayOfWeek: Day.Friday, terms: [] }
-    ]
+const groupTermsByDay = (terms: Term[]): TermsByDayGroup[] => {
+    const termsByDayGroups: TermsByDayGroup[] = getDays().map(day => ({
+        dayOfWeek: day,
+        terms: []
+    }));
 
     termsByDayGroups.forEach(group => {
         terms.forEach(term => {
