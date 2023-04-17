@@ -20,10 +20,9 @@ jobs:
       with:
         java-version: '17'
         distribution: 'corretto'
-        settings-path: ${{ github.workspace }} # location for the settings.xml file
 
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package --file server/pom.xml
       
     - name: Run tests with Maven
       run: mvn test
@@ -32,5 +31,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: jar
-        path: target/*.jar
+        path: ./server/target/*.jar
 
