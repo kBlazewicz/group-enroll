@@ -4,7 +4,7 @@ interface Props {
     children: ReactNode[];
 }
 
-const Home: React.FC<Props> = ({ children }) => {
+const Result: React.FC<Props> = ({ children }) => {
     return (
         <div
             style={{
@@ -25,4 +25,4 @@ const Home: React.FC<Props> = ({ children }) => {
     );
 };
 
-export default Home;
+export default Result;
