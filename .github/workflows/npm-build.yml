@@ -22,13 +22,13 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install dependencies
-      run: npm install
+      run: cd client && npm install
 
     - name: Build
-      run: npm run build
+      run: cd client && npm run build
 
     - name: Archive production build
       uses: actions/upload-artifact@v2
       with:
         name: build
-        path: build
+        path: client/build
