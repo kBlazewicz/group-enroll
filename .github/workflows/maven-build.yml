@@ -25,7 +25,7 @@ jobs:
       run: mvn -B package --file server/pom.xml
       
     - name: Run tests with Maven
-      run: mvn test
+      run: mvn test --file server/pom.xml
 
     - name: Archive production build
       uses: actions/upload-artifact@v2
