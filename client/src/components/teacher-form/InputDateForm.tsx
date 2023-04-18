@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 
+
 const daysShortcuts = [
   {shortcut: "mon", pol_name: "Poniedziałek"},
   {shortcut: "tue", pol_name: "Wtorek"},
@@ -12,7 +13,15 @@ const daysShortcuts = [
 ]
 
 
-function getDayFromShortcut(shortcut){
+export interface InputTerm {
+  id: number;
+  startTime: string;
+  endTime: string;
+  weekDay: string
+}
+
+
+function getDayFromShortcut(shortcut: string){
   let full_name;
 
   daysShortcuts.forEach( elem => {
@@ -25,7 +34,7 @@ function getDayFromShortcut(shortcut){
 }
 
 
-function dateInTable(table, startTime, endTime, weekDay){
+function dateInTable(table:InputTerm[], startTime:string, endTime:string, weekDay:string){
   let flag = false;
   table.forEach(elem => {
     if(elem.startTime === startTime && elem.endTime === endTime && elem.weekDay === weekDay){
@@ -37,13 +46,14 @@ function dateInTable(table, startTime, endTime, weekDay){
 
 let nextId = 0;
 
-export const AvailableDateForm = () => {
+export const InputDateForm = () => {
   const [startTime, setStartTime] = useState("12:00");
   const [endTime, setEndTime] = useState("12:00");
   const [weekDay, setWeekDay] = useState("mon");
-  const [availableDates, setAvailableDates] = useState([])
+  const [availableDates, setAvailableDates] = useState<InputTerm[]>([])
+;
   
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const [start_hrs, start_mins] = startTime.split(':')
     const [end_hrs, end_mins] = endTime.split(':')
@@ -62,12 +72,12 @@ export const AvailableDateForm = () => {
           ...availableDates,
           { id: nextId++, startTime: startTime, endTime: endTime, weekDay: weekDay }
         ]);
-        alert('Dodano zajęcia od ' + startTime + ' do ' + endTime + ' w każdy ' + getDayFromShortcut(weekDay));
+        //alert('Dodano zajęcia od ' + startTime + ' do ' + endTime + ' w każdy ' + getDayFromShortcut(weekDay));
       }
     }
   }
 
-  const sendTerms = (e) => {
+  const sendTerms = (e : React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if(availableDates.length <= 1){
       alert('Nie można przesłać - zbyt mało dodanych terminów')
@@ -80,7 +90,9 @@ export const AvailableDateForm = () => {
   }
     
   return (
-    <div style={{textAlign: "center"}}>
+    <div style={{textAlign: "center", 
+                fontFamily:"system-ui"}}>
+
       <h1>Dodawanie terminów</h1>
       <form onSubmit={e => { handleSubmit(e) }}>       
         <label>
