@@ -1,32 +1,33 @@
 export enum Day {
-    Monday = "Monday",
-    Tuesday = "Tuesday",
-    Wednesday = "Wednesday",
-    Thursday = "Thursday",
-    Friday = "Friday"
-};
+  Monday = 'Monday',
+  Tuesday = 'Tuesday',
+  Wednesday = 'Wednesday',
+  Thursday = 'Thursday',
+  Friday = 'Friday',
+}
 
-export const getDays = (): Day[] => Object.values(Day).filter(day => typeof day === 'string');
+export const getDays = (): Day[] =>
+  Object.values(Day).filter((day) => typeof day === 'string');
 
 export interface Vote {
-    id: number;
-    studentId: number;
-    possibility: boolean;
+  id: number;
+  studentId: number;
+  possibility: boolean;
 }
 
 export interface Term {
-    id: number;
-    startTime: any;
-    endTime: any;
-    dayOfWeek: Day
-    voteList: Vote[]
+  id: number;
+  startTime: any;
+  endTime: any;
+  dayOfWeek: Day;
+  voteList: Vote[];
 }
 
 export interface Student {
-    id: number;
-    name: string;
-    surname: string;
-    album: number;
-    mail: string;
-    generalComment: string;
+  id: number;
+  name: string;
+  surname: string;
+  album: number;
+  mail: string;
+  generalComment: string;
 }
