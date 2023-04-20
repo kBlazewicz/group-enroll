@@ -1,4 +1,4 @@
-package pl.edu.agh.server;
+package pl.edu.agh.server.vote;
 
 import org.springframework.stereotype.Service;
 
@@ -21,19 +21,21 @@ public class VoteService {
         return repository.findAll();
     }
     public Vote getVote(Long id) {
-        return repository.findById(id).orElseThrow(() -> null);
+        return repository.findById(id).orElseThrow(() -> new VoteNotFoundException(id));
     }
     public Vote save(Vote vote) {
         return repository.save(vote);
     }
-    public boolean deleteForm(Vote vote) {
-        if (repository.findById(vote.getId()).isPresent()) {
-            repository.delete(vote);
-            return true;
-        }
-        return false;
+    public List<Vote> saveMany(List<Vote> votes) {
+        return repository.saveAll(votes);
     }
-    public void updateForm(Vote vote) {
+    public void deleteVote(Long id) {
+        repository.deleteById(id);
+    }
+    public void deleteVote(Vote vote) {
+        repository.delete(vote);
+    }
+    public void updateVote(Vote vote) {
         repository.save(vote);
     }
 

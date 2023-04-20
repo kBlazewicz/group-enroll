@@ -1,26 +1,24 @@
-package pl.edu.agh.server;
+package pl.edu.agh.server.vote;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class Vote {
     @Id
-    @GeneratedValue
-    @Getter
-    @Setter
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
 
-    @Setter
-    @Getter
     @Nonnull
     private Long studentId;
 
-
-    public Vote() {}
 
     public Vote(long studentId, long termId, boolean possibility, String comment) {
         this.studentId = studentId;
@@ -29,8 +27,6 @@ public class Vote {
         this.comment = comment;
     }
 
-    @Getter
-    @Setter
     @Nonnull
     private Long termId;
 
@@ -38,21 +34,16 @@ public class Vote {
     //student and term classes
 //    @ManyToOne
 //    @Nonnull
-//    @Getter
-//    @Setter
+
 //    private Student student;
 //    @ManyToOne
 //    @Nonnull
-//    @Getter
-//    @Setter
+
 //    private Term term;
-    @Getter
-    @Setter
+
     @Nonnull
     private boolean possibility;
 
-    @Getter
-    @Setter
     private String comment;
 
 }

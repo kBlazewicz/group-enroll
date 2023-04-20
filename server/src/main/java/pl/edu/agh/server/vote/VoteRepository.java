@@ -1,4 +1,4 @@
-package pl.edu.agh.server;
+package pl.edu.agh.server.vote;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
