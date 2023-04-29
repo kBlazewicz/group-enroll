@@ -1,8 +1,8 @@
-import { InputDateForm } from "./components/teacher-form/InputDateForm";
-import React from 'react';
+import { StudentsForm } from "./components/students-form/StudentsForm";
 
 export const App = () => {
   return (
-    <InputDateForm></InputDateForm>
+    <StudentsForm></StudentsForm>
     );
 }
+
