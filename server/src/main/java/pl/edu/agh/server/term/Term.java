@@ -5,8 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.edu.agh.server.WeekDay;
+import pl.edu.agh.server.vote.Vote;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,9 +22,8 @@ public class Term {
     LocalTime startTime;
     LocalTime endTime;
     WeekDay dayOfWeek;
-//    TODO: uncomment voteList after merge with Vote
-//    @OneToMany
-//    List<Vote> votelist;
+    @OneToMany
+    List<Vote> votelist;
 
     public Term(LocalTime startTime, LocalTime endTime, WeekDay dayOfWeek) {
         this.startTime = startTime;
