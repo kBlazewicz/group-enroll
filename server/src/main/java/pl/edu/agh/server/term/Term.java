@@ -1,12 +1,16 @@
 package pl.edu.agh.server.term;
 
 import jakarta.persistence.*;
-import pl.edu.agh.server.Vote;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pl.edu.agh.server.WeekDay;
 
 import java.time.LocalTime;
-import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "terms")
 public class Term {
@@ -20,9 +24,6 @@ public class Term {
 //    @OneToMany
 //    List<Vote> votelist;
 
-    public Term() {
-    }
-
     public Term(LocalTime startTime, LocalTime endTime, WeekDay dayOfWeek) {
         this.startTime = startTime;
         this.endTime = endTime;
@@ -35,52 +36,4 @@ public class Term {
         this.endTime = endTime;
         this.dayOfWeek = dayOfWeek;
     }
-
-//    public List<Vote> getVotelist() {
-//        return votelist;
-//    }
-//
-//    public void setVotelist(List<Vote> votelist) {
-//        this.votelist = votelist;
-//    }
-
-    public long getTermId() {
-        return termId;
-    }
-
-    public void setTermId(long termId) {
-        this.termId = termId;
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public WeekDay getDayOfWeek() {
-        return dayOfWeek;
-    }
-
-    public void setDayOfWeek(WeekDay dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
-//
-//    public List<Vote> getVotelist() {
-//        return votelist;
-//    }
-//
-//    public void setVotelist(List<Vote> votelist) {
-//        this.votelist = votelist;
-//    }
 }
