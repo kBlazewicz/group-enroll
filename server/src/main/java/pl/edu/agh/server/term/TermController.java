@@ -2,11 +2,8 @@ package pl.edu.agh.server.term;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.agh.server.WeekDay;
 
-import java.time.LocalTime;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/terms")
@@ -29,24 +26,7 @@ public class TermController {
     }
 
     @PostMapping
-    public void createNewTerm(@RequestBody Term term){
-        termService.createNewTerm(term);
+    public void createNewTerm(@RequestBody List<Term> terms){
+        termService.createNewTerms(terms);
     }
-
-    @DeleteMapping(path="{termId}")
-    public void deleteTerm(@PathVariable("termId") Long termId){
-        termService.deleteTerm(termId);
-    }
-
-    @PutMapping("/{termId}")
-    public void updateTerm(@PathVariable Long termId, @RequestBody Term term) {
-        termService.updateTerm(termId, term);
-    }
-
-//    TODO: fix patch
-    @PatchMapping(path = "{termId}")
-    public Term updateTermByFields(@PathVariable Long termId, Map<String, Object> fields){
-        return termService.updateTermByFields(termId, fields);
-    }
-
 }
