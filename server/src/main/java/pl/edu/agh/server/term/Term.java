@@ -29,11 +29,4 @@ public class Term {
         this.endTime = endTime;
         this.dayOfWeek = dayOfWeek;
     }
-
-    public Term(long id, LocalTime startTime, LocalTime endTime, WeekDay dayOfWeek) {
-        this.termId = id;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.dayOfWeek = dayOfWeek;
-    }
 }

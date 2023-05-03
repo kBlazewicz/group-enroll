@@ -15,7 +15,6 @@ public class TermConfig {
     CommandLineRunner commandLineRunner(TermRepository termRepository) {
         return args -> {
             Term wednesday = new Term(
-                    1L,
                     LocalTime.of(10, 0, 0),
                     LocalTime.of(11, 30, 0),
                     WeekDay.WEDNESDAY
