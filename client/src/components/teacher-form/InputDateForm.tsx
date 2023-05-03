@@ -1,40 +1,16 @@
 import React from 'react';
 import { useState } from 'react';
-
-
-const daysShortcuts = [
-  {shortcut: "mon", pol_name: "Poniedziałek"},
-  {shortcut: "tue", pol_name: "Wtorek"},
-  {shortcut: "wed", pol_name: "Środa"},
-  {shortcut: "thu", pol_name: "Czwartek"},
-  {shortcut: "fri", pol_name: "Piątek"},
-  {shortcut: "sat", pol_name: "Sobota"},
-  {shortcut: "sun", pol_name: "Niedziela"},   
-]
+import { Day } from '../../types/types';
 
 
 export interface InputTerm {
-  id: number;
   startTime: string;
   endTime: string;
   weekDay: string
 }
 
 
-function getDayFromShortcut(shortcut: string){
-  let full_name;
-
-  daysShortcuts.forEach( elem => {
-    if(elem.shortcut === shortcut){
-      full_name = elem.pol_name;
-    }
-  })
-
-  return full_name;
-}
-
-
-function dateInTable(table:InputTerm[], startTime:string, endTime:string, weekDay:string){
+function isDateInTable(table:InputTerm[], startTime:string, endTime:string, weekDay:string){
   let flag = false;
   table.forEach(elem => {
     if(elem.startTime === startTime && elem.endTime === endTime && elem.weekDay === weekDay){
@@ -44,12 +20,11 @@ function dateInTable(table:InputTerm[], startTime:string, endTime:string, weekDa
   return flag;
 }
 
-let nextId = 0;
 
 export const InputDateForm = () => {
   const [startTime, setStartTime] = useState("12:00");
   const [endTime, setEndTime] = useState("12:00");
-  const [weekDay, setWeekDay] = useState("mon");
+  const [weekDay, setWeekDay] = useState("Monday");
   const [availableDates, setAvailableDates] = useState<InputTerm[]>([])
 ;
   
@@ -64,15 +39,14 @@ export const InputDateForm = () => {
     }
     else{
 
-        if(dateInTable(availableDates, startTime, endTime, weekDay)){
+        if(isDateInTable(availableDates, startTime, endTime, weekDay)){
           alert('Podany termin został już wcześniej dodany!');
         }
         else{
         setAvailableDates([
           ...availableDates,
-          { id: nextId++, startTime: startTime, endTime: endTime, weekDay: weekDay }
+          { startTime: startTime, endTime: endTime, weekDay: weekDay }
         ]);
-        //alert('Dodano zajęcia od ' + startTime + ' do ' + endTime + ' w każdy ' + getDayFromShortcut(weekDay));
       }
     }
   }
@@ -94,7 +68,7 @@ export const InputDateForm = () => {
                 fontFamily:"system-ui"}}>
 
       <h1>Dodawanie terminów</h1>
-      <form onSubmit={e => { handleSubmit(e) }}>       
+      <form onSubmit={e => handleSubmit(e)}>       
         <label>
           Godzina rozpoczęcia:
             <input
@@ -127,10 +101,10 @@ export const InputDateForm = () => {
             onChange={e => setWeekDay(e.target.value)}
             style={{margin: "10px",
                     padding:"2px"}}>
-            {daysShortcuts.map(day => (
-              <option value={day.shortcut}
-                      key={day.shortcut}>
-                {day.pol_name}
+            {Object.keys(Day).map(day => (
+              <option value={day}
+                      key={day}>
+                {day}
               </option>
             ))}           
           </select>
@@ -152,11 +126,11 @@ export const InputDateForm = () => {
 
       <h1>Dodane terminy</h1>
       <div>
-        {availableDates.map(date => (
-          <div key={date.id}>
+        {availableDates.map((date, i) => (
+          <div key={i}>
             {date.startTime + ' - ' + 
             date.endTime + ',  ' +
-            getDayFromShortcut(date.weekDay)} <br/>
+            date.weekDay} <br/>
           </div>
         ))}
       </div>
@@ -164,7 +138,7 @@ export const InputDateForm = () => {
       <br/>
 
       <div>
-        <button onClick={e => {sendTerms(e)}}
+        <button onClick={e => sendTerms(e)}
         style={{padding: "6px 12px"}}>
           Prześlij terminy
         </button>
