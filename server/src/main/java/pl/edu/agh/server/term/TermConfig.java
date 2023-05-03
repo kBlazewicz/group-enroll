@@ -9,7 +9,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Configuration
-public class VoteConfig {
+public class TermConfig {
 
     @Bean
     CommandLineRunner commandLineRunner(TermRepository termRepository) {

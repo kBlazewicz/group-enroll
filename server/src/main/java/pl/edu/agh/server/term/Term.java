@@ -1,6 +1,7 @@
 package pl.edu.agh.server.term;
 
 import jakarta.persistence.*;
+import pl.edu.agh.server.Vote;
 import pl.edu.agh.server.WeekDay;
 
 import java.time.LocalTime;
@@ -10,10 +11,13 @@ import java.util.List;
 @Table(name = "terms")
 public class Term {
     @Id
-    long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    long termId;
     LocalTime startTime;
     LocalTime endTime;
     WeekDay dayOfWeek;
+//    TODO: uncomment voteList after merge with Vote
+//    @OneToMany
 //    List<Vote> votelist;
 
     public Term() {
@@ -26,19 +30,26 @@ public class Term {
     }
 
     public Term(long id, LocalTime startTime, LocalTime endTime, WeekDay dayOfWeek) {
-        this.id = id;
+        this.termId = id;
         this.startTime = startTime;
         this.endTime = endTime;
         this.dayOfWeek = dayOfWeek;
+    }
+
+//    public List<Vote> getVotelist() {
+//        return votelist;
+//    }
+//
+//    public void setVotelist(List<Vote> votelist) {
 //        this.votelist = votelist;
+//    }
+
+    public long getTermId() {
+        return termId;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public void setTermId(long termId) {
+        this.termId = termId;
     }
 
     public LocalTime getStartTime() {
