@@ -3,10 +3,25 @@ import { useState } from 'react';
 import { Day } from '../../types/types';
 
 
+type DayMap = {
+  [key: string]: Day;
+}
+
+const days: DayMap = {
+  "Monday": Day.Monday,
+  "Tuesday": Day.Tuesday,
+  "Wednesday": Day.Wednesday,
+  "Thursday": Day.Thursday,
+  "Friday": Day.Friday,
+  "Saturday": Day.Saturday,
+  "Sunday": Day.Sunday
+};
+
+
 export interface InputTerm {
   startTime: string;
   endTime: string;
-  weekDay: string
+  weekDay: Day
 }
 
 
@@ -39,13 +54,13 @@ export const InputDateForm = () => {
     }
     else{
 
-        if(isDateInTable(availableDates, startTime, endTime, weekDay)){
+        if(isDateInTable(availableDates, startTime, endTime, days[weekDay])){
           alert('Podany termin został już wcześniej dodany!');
         }
         else{
         setAvailableDates([
           ...availableDates,
-          { startTime: startTime, endTime: endTime, weekDay: weekDay }
+          { startTime: startTime, endTime: endTime, weekDay: days[weekDay]}
         ]);
       }
     }
@@ -62,7 +77,13 @@ export const InputDateForm = () => {
         }
     )}
   }
-    
+
+  const deleteTerm = (e : React.MouseEvent<HTMLButtonElement>, termToDelete: InputTerm) => {
+    e.preventDefault();
+    const newList = availableDates.filter((item) => (item !== termToDelete ));
+    setAvailableDates(newList);
+  }
+
   return (
     <div style={{textAlign: "center", 
                 fontFamily:"system-ui"}}>
@@ -104,7 +125,7 @@ export const InputDateForm = () => {
             {Object.keys(Day).map(day => (
               <option value={day}
                       key={day}>
-                {day}
+                {days[day]}
               </option>
             ))}           
           </select>
@@ -130,7 +151,14 @@ export const InputDateForm = () => {
           <div key={i}>
             {date.startTime + ' - ' + 
             date.endTime + ',  ' +
-            date.weekDay} <br/>
+            date.weekDay}
+
+            <button onClick={e => deleteTerm(e, date)}
+              style={{padding: "6px 12px", margin: "10px"}}>
+              Usuń
+            </button>
+            <br/>
+
           </div>
         ))}
       </div>

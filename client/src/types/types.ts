@@ -1,9 +1,11 @@
 export enum Day {
-    Monday = "Monday",
-    Tuesday = "Tuesday",
-    Wednesday = "Wednesday",
-    Thursday = "Thursday",
-    Friday = "Friday"
+    Monday = "Poniedziałek",
+    Tuesday = "Wtorek",
+    Wednesday = "Środa",
+    Thursday = "Czwartek",
+    Friday = "Piątek",
+    Saturday = "Sobota",
+    Sunday = "Niedziela"
 };
 
 export const getDays = (): Day[] => Object.values(Day).filter(day => typeof day === 'string');
