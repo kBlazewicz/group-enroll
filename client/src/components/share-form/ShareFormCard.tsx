@@ -12,6 +12,7 @@ const useStyles = makeStyles(theme => ({
     snackbarContent: {
         display: 'flex',
         alignItems: 'center',
+        width: '40%',
     },
     snackbarMessage: {
         marginLeft: theme.spacing(1),
