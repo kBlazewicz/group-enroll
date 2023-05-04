@@ -6,6 +6,7 @@ import FormCreator from "./components/layout/FormCreator";
 import FormAnswer from "./components/layout/FormAnswer";
 import Result from "./components/layout/Result";
 import { Container, Stack } from "@mui/material";
+import { InputDateForm } from "./components/teacher-form/InputDateForm";
 
 export const App = () => {
   return (
@@ -30,7 +31,8 @@ export const App = () => {
         <Route path="/form answers" element={
           <FormAnswer>
             {/* tutaj dodajemy kompoenenty dla formularza studenta */}
-            <div>HEllo</div><div>Form answe</div>
+            <div>HEllo</div><div>Form answer</div>
+            <InputDateForm></InputDateForm>
           </FormAnswer>} />
         <Route path="/results" element={
           <Result>
