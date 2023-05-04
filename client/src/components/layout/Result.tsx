@@ -14,7 +14,7 @@ const Result: React.FC<Props> = ({ children }) => {
                 alignItems: 'center',
                 height: '100%',
                 width: '90%',
-                margin: '10px'
+                margin: '1rem',
             }}
         >
             {children.map((child, index) => (
