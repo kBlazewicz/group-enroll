@@ -27,12 +27,12 @@ export const App = () => {
           <FormCreator>
             {/* tutaj dodajemy kompoenenty dla formularza prowadzącego */}
             <div>HEllo</div><div>Form creator</div>
+            <InputDateForm></InputDateForm>
           </FormCreator>} />
         <Route path="/form answers" element={
           <FormAnswer>
             {/* tutaj dodajemy kompoenenty dla formularza studenta */}
             <div>HEllo</div><div>Form answer</div>
-            <InputDateForm></InputDateForm>
           </FormAnswer>} />
         <Route path="/results" element={
           <Result>
