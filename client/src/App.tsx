@@ -1,14 +1,22 @@
+import { Container, Stack } from "@mui/material";
+import ShareFormCard from "./components/share-form/ShareFormCard";
 import { StudentsForm } from "./components/students-form/StudentsForm";
 import { InputDateForm } from "./components/teacher-form/InputDateForm";
 
 export const App = () => {
   return (
-    <div>
+    <Stack style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '40%',
+    }} >
       <InputDateForm></InputDateForm>
-      <br/>
+      <br />
       <StudentsForm></StudentsForm>
-      
-    </div>
-    );
+      <br />
+      <ShareFormCard></ShareFormCard>
+    </Stack >
+  );
 }
 
