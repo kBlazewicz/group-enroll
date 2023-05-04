@@ -12,6 +12,10 @@ export const fetchTerms = async (): Promise<Term[]> => {
     return days;
 }
 
+export const fetchFormLink = async (): Promise<string> => {
+    return "https://forms.gle/9x6U1k6U1zY2ZK6J8";
+}
+
 export const sendStudentData = async (studentData: StudentData) => {
     const student: Student = {
         name: studentData.name,
