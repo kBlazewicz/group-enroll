@@ -13,9 +13,7 @@ export const App = () => {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center',
-      padding: 0,
-      margin: 0,
+      height: '100%'
     }}>
       <ResponsiveAppBar></ResponsiveAppBar>
       <Routes>
@@ -38,6 +36,9 @@ export const App = () => {
           <Result>
             {/* tutaj dodajemy kompoenenty dla wynikow */}
             <div>HEllo</div><div>Results</div><StudentsForm></StudentsForm>
+            <div>HEllo</div><div>Results</div><StudentsForm></StudentsForm>
+            <div>HEllo</div><div>Results</div><StudentsForm></StudentsForm>
+
           </Result>} />
       </Routes>
     </Stack>
