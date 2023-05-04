@@ -122,7 +122,7 @@ export const InputDateForm = () => {
             onChange={e => setWeekDay(e.target.value)}
             style={{margin: "10px",
                     padding:"2px"}}>
-            {Object.keys(Day).map(day => (
+            {Object.keys(days).map(day => (
               <option value={day}
                       key={day}>
                 {days[day]}
