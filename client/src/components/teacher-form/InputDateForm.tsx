@@ -84,6 +84,18 @@ export const InputDateForm = () => {
     setAvailableDates(newList);
   }
 
+
+  const editTerm = (e : React.MouseEvent<HTMLButtonElement>, termToEdit: InputTerm) => {
+    e.preventDefault();
+    console.log(termToEdit)
+    setStartTime(termToEdit.startTime)
+    setEndTime(termToEdit.endTime)
+    setWeekDay(termToEdit.weekDay)
+
+    const newList = availableDates.filter((item) => (item !== termToEdit ));
+    setAvailableDates(newList);
+  }
+
   return (
     <div style={{textAlign: "center", 
                 fontFamily:"system-ui"}}>
@@ -154,9 +166,15 @@ export const InputDateForm = () => {
             date.weekDay}
 
             <button onClick={e => deleteTerm(e, date)}
-              style={{padding: "6px 12px", margin: "10px"}}>
+              style={{padding: "6px 12px", margin: "10px 10px 10px 20px"}}>
               Usuń
             </button>
+
+            <button onClick={e => editTerm(e, date)}
+              style={{padding: "6px 12px", margin: "10px"}}>
+              Edytuj
+            </button>
+
             <br/>
 
           </div>
