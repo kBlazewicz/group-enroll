@@ -25,10 +25,21 @@ export interface Term {
 }
 
 export interface Student {
-    id: number;
+    id?: number;
     name: string;
     surname: string;
     album: number;
     mail: string;
-    generalComment: string;
+    fieldOfStudy: string;
+    faculty: string;
+    generalComment?: string;
+}
+
+export interface StudentData {
+    name: string;
+    surname: string;
+    album: string;
+    email: string;
+    faculty: string;
+    fieldOfStudy: string;
 }
