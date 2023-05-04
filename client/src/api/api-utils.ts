@@ -1,4 +1,4 @@
-import { Day, Term } from "../types/types";
+import { Day, Student, StudentData, Term } from "../types/types";
 
 const days: Term[] = [
     { id: 0, startTime: "15:00", endTime: "16:30", dayOfWeek: Day.Monday, voteList: [] },
@@ -15,3 +15,18 @@ export const fetchTerms = async (): Promise<Term[]> => {
 export const fetchFormLink = async (): Promise<string> => {
     return "https://forms.gle/9x6U1k6U1zY2ZK6J8";
 }
+
+export const sendStudentData = async (studentData: StudentData) => {
+    const student: Student = {
+        name: studentData.name,
+        surname: studentData.surname,
+        album: parseInt(studentData.album),
+        mail: studentData.email,
+        fieldOfStudy: studentData.fieldOfStudy,
+        faculty: studentData.faculty,
+    };
+
+    console.log("Received data: ", student);
+
+    return Math.floor(Math.random() * 1000);
+};
