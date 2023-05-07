@@ -3,7 +3,9 @@ export enum Day {
     Tuesday = "Tuesday",
     Wednesday = "Wednesday",
     Thursday = "Thursday",
-    Friday = "Friday"
+    Friday = "Friday",
+    Saturday = "Saturday",
+    Sunday = "Sunday"
 };
 
 export const getDays = (): Day[] => Object.values(Day).filter(day => typeof day === 'string');
@@ -23,10 +25,21 @@ export interface Term {
 }
 
 export interface Student {
-    id: number;
+    id?: number;
     name: string;
     surname: string;
     album: number;
     mail: string;
-    generalComment: string;
+    fieldOfStudy: string;
+    faculty: string;
+    generalComment?: string;
+}
+
+export interface StudentData {
+    name: string;
+    surname: string;
+    album: string;
+    email: string;
+    faculty: string;
+    fieldOfStudy: string;
 }
