@@ -8,10 +8,10 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
-      - '5433:5432'
+      - '5432:5432'
     volumes: 
-      - db:/var/lib/postgresql/data
-      - ./database/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - db_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   server:
     build:
@@ -20,14 +20,14 @@ services:
     ports:
       - "8081:8080"
     restart: always
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5433/postgres
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     depends_on:
       - db
-    
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/group_enroll_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=org.postgresql.Driver    
+      - SPRING_JPA_HIBERNATE_DDL-AUTO=create-drop
 
   client:
     build:
@@ -40,5 +40,5 @@ services:
       - server
 
 volumes:
-  db:
+  db_data:
     driver: local
