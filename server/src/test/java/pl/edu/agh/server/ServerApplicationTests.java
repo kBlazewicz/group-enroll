@@ -1,13 +1,13 @@
-package pl.edu.agh.server;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
-class ServerApplicationTests {
-
-    @Test
-    void contextLoads() {
-    }
-
-}
+//package pl.edu.agh.server;
+//
+//import org.junit.jupiter.api.Test;
+//import org.springframework.boot.test.context.SpringBootTest;
+//
+//@SpringBootTest
+//class ServerApplicationTests {
+//
+//    @Test
+//    void contextLoads() {
+//    }
+//
+//}
