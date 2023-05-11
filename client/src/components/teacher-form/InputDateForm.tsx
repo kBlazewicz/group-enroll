@@ -41,12 +41,14 @@ export const InputDateForm = () => {
   const [endTime, setEndTime] = useState("12:00");
   const [weekDay, setWeekDay] = useState("Monday");
   const [availableDates, setAvailableDates] = useState<InputTerm[]>([])
-;
+  const [shadow, setShadow] = useState(false);
+  const [editing, setEditing] = useState(false);
   
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const [start_hrs, start_mins] = startTime.split(':')
     const [end_hrs, end_mins] = endTime.split(':')
+    setEditing(false)
 
     if(end_hrs < start_hrs || (end_hrs === start_hrs && end_mins < start_mins)){
       alert('Godzina rozpoczęcia zajęć jest wcześniejsza niż godzina zakończenia!');
@@ -84,24 +86,34 @@ export const InputDateForm = () => {
     setAvailableDates(newList);
   }
 
-
-  const editTerm = (e : React.MouseEvent<HTMLButtonElement>, termToEdit: InputTerm) => {
+    const editTerm = (e : React.MouseEvent<HTMLButtonElement>, termToEdit: InputTerm) => {
     e.preventDefault();
     console.log(termToEdit)
     setStartTime(termToEdit.startTime)
     setEndTime(termToEdit.endTime)
     setWeekDay(termToEdit.weekDay)
+    setEditing(true)
+    setShadow(true)
 
     const newList = availableDates.filter((item) => (item !== termToEdit ));
     setAvailableDates(newList);
+
+    setTimeout(function(){
+      setShadow(false)
+    }, 300); 
   }
+
 
   return (
     <div style={{textAlign: "center", 
                 fontFamily:"system-ui"}}>
 
       <h1>Dodawanie terminów</h1>
-      <form onSubmit={e => handleSubmit(e)}>       
+      <form onSubmit={e => handleSubmit(e)} style={{padding: '12px 48px',
+                                                    width: 'max-content',
+                                                    margin: 'auto',
+                                                    borderRadius: '6px',
+                                                    boxShadow: shadow ? '8px 8px 32px -8px #4dabf5' : 'none' }}>       
         <label>
           Godzina rozpoczęcia:
             <input
@@ -150,7 +162,7 @@ export const InputDateForm = () => {
           <input
             name="submit"
             type="submit"
-            value="Dodaj"
+            value={editing ? "Zapisz zmiany" : "Dodaj"}
             style={{padding: "6px 12px"}}/>
         </label>
           
