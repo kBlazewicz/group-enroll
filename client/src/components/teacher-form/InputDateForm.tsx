@@ -8,27 +8,27 @@ type DayMap = {
 }
 
 const days: DayMap = {
-  "Monday": Day.Monday,
-  "Tuesday": Day.Tuesday,
-  "Wednesday": Day.Wednesday,
-  "Thursday": Day.Thursday,
-  "Friday": Day.Friday,
-  "Saturday": Day.Saturday,
-  "Sunday": Day.Sunday
+  "MONDAY": Day.Monday,
+  "TUESDAY": Day.Tuesday,
+  "WEDNESDAY": Day.Wednesday,
+  "THURSDAY": Day.Thursday,
+  "FRIDAY": Day.Friday,
+  "SATURDAY": Day.Saturday,
+  "SUNDAY": Day.Sunday
 };
 
 
 export interface InputTerm {
   startTime: string;
   endTime: string;
-  weekDay: Day
+  dayOfWeek: Day
 }
 
 
 function isDateInTable(table:InputTerm[], startTime:string, endTime:string, weekDay:string){
   let flag = false;
   table.forEach(elem => {
-    if(elem.startTime === startTime && elem.endTime === endTime && elem.weekDay === weekDay){
+    if(elem.startTime === startTime && elem.endTime === endTime && elem.dayOfWeek === weekDay){
       flag = true;
     }
   })
@@ -39,7 +39,7 @@ function isDateInTable(table:InputTerm[], startTime:string, endTime:string, week
 export const InputDateForm = () => {
   const [startTime, setStartTime] = useState("12:00");
   const [endTime, setEndTime] = useState("12:00");
-  const [weekDay, setWeekDay] = useState("Monday");
+  const [weekDay, setWeekDay] = useState(Day.Monday);
   const [availableDates, setAvailableDates] = useState<InputTerm[]>([])
   const [shadow, setShadow] = useState(false);
   const [editing, setEditing] = useState(false);
@@ -62,7 +62,7 @@ export const InputDateForm = () => {
         else{
         setAvailableDates([
           ...availableDates,
-          { startTime: startTime, endTime: endTime, weekDay: days[weekDay]}
+          { startTime: startTime, endTime: endTime, dayOfWeek: days[weekDay]}
         ]);
       }
     }
@@ -73,20 +73,14 @@ export const InputDateForm = () => {
     if(availableDates.length <= 1){
       alert('Nie można przesłać - zbyt mało dodanych terminów')
     }else{
-      console.log(
-        {
-          availableDates
-        }
-    )}
+      console.log(JSON.stringify(availableDates))}
 
-    fetch('http://localhost:8081/terms/', {
+    fetch('http://localhost:8081/terms', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        availableDates
-      })
+      body: JSON.stringify(availableDates)
     })
     .then(response => response.json())
     .then(data => console.log(data))
@@ -103,7 +97,7 @@ export const InputDateForm = () => {
     e.preventDefault();
     setStartTime(termToEdit.startTime)
     setEndTime(termToEdit.endTime)
-    setWeekDay(termToEdit.weekDay)
+    setWeekDay(termToEdit.dayOfWeek)
     setEditing(true)
     setShadow(true)
 
@@ -155,7 +149,7 @@ export const InputDateForm = () => {
           <select 
             name="weekDay"
             value={weekDay} 
-            onChange={e => setWeekDay(e.target.value)}
+            onChange={e => setWeekDay(days[e.target.value])}
             style={{margin: "10px",
                     padding:"2px"}}>
             {Object.keys(days).map(day => (
@@ -187,7 +181,7 @@ export const InputDateForm = () => {
           <div key={i}>
             {date.startTime + ' - ' + 
             date.endTime + ',  ' +
-            date.weekDay}
+            date.dayOfWeek}
 
             <button onClick={e => deleteTerm(e, date)}
               style={{padding: "6px 12px", margin: "10px 10px 10px 20px"}}>
