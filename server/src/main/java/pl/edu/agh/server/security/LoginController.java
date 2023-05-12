@@ -1,63 +1,54 @@
 package pl.edu.agh.server.security;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
-
 @RestController
-@RequestMapping("/login")
+@RequiredArgsConstructor
 public class LoginController {
 
-    private final AuthenticationManager authenticationManager;
-    private final long expirationTime;
-    private final String secret;
+  private final UserAuthorizationService userAuthorizationService;
 
-    public LoginController(
-            AuthenticationManager authenticationManager,
-            @Value("${jwt.expirationTime}") long expirationTime,
-            @Value("${jwt.secret}") String secret) {
-        this.authenticationManager = authenticationManager;
-        this.expirationTime = expirationTime;
-        this.secret = secret;
-    }
+  @PostMapping("/login")
+  public Token login(@RequestBody LoginCredentials loginCredentials) {
+    return new Token(userAuthorizationService.authenticate(loginCredentials.getUsername(),
+        loginCredentials.getPassword()));
+  }
 
-    @PostMapping
-    public Token login(@RequestBody LoginCredentials loginCredentials) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginCredentials.getUsername(), loginCredentials.getPassword())
-        );
+  @PostMapping("/register")
+  public Token register(@RequestBody RegisterCredentials registerCredentials) {
+    return new Token(userAuthorizationService.registerUser(registerCredentials.getUsername(),
+        registerCredentials.getPassword(),
+        registerCredentials.getRepeatPassword()));
+  }
 
-        UserDetails principal = (UserDetails) authentication.getPrincipal();
+  @Getter
+  private static class LoginCredentials {
 
-        String token = JWT.create()
-                .withSubject(principal.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
-                .sign(Algorithm.HMAC256(secret));
+    private String username;
+    private String password;
+  }
 
-        return new Token(token);
-    }
+  @Getter
+  private static class RegisterCredentials {
 
-    @Getter
-    private static class LoginCredentials {
-        private String username;
-        private String password;
-    }
+    @NotBlank
+    private String username;
+    @NotBlank
+    private String password;
+    @NotBlank
+    private String repeatPassword;
+  }
 
-    @Getter
-    @AllArgsConstructor
-    private static class Token {
-        private String token;
-    }
+  @Getter
+  @AllArgsConstructor
+  private static class Token {
+
+    private String token;
+  }
 }
