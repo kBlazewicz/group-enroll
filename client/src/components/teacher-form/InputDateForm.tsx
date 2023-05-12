@@ -78,6 +78,19 @@ export const InputDateForm = () => {
           availableDates
         }
     )}
+
+    fetch('http://localhost:8081/terms/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        availableDates
+      })
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
   }
 
   const deleteTerm = (e : React.MouseEvent<HTMLButtonElement>, termToDelete: InputTerm) => {
@@ -86,9 +99,8 @@ export const InputDateForm = () => {
     setAvailableDates(newList);
   }
 
-    const editTerm = (e : React.MouseEvent<HTMLButtonElement>, termToEdit: InputTerm) => {
+  const editTerm = (e : React.MouseEvent<HTMLButtonElement>, termToEdit: InputTerm) => {
     e.preventDefault();
-    console.log(termToEdit)
     setStartTime(termToEdit.startTime)
     setEndTime(termToEdit.endTime)
     setWeekDay(termToEdit.weekDay)
