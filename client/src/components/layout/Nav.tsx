@@ -12,7 +12,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from "react-router-dom";
 
-const pages = ['Form Creator', 'Form Answers', 'Results'];
+const pages = ['Form Creator', 'Form Answers', 'Results', ''];
 const settings = ['Login', 'Register'];
 
 function ResponsiveAppBar() {
@@ -52,13 +52,15 @@ function ResponsiveAppBar() {
 
                     <Box sx={{ flexGrow: 1, display: 'flex' }}>
                         {pages.map((page) => (
-                            <Button
-                                key={page}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                {page}
-                                <Link style={{ textDecoration: "none", color: "white" }} to={`/${page.toLowerCase()}`} >{page}</Link>
-                            </Button>
+                            <Link style={{ textDecoration: "none", color: "white" }} to={`/${page.toLowerCase()}`} >
+                                <Button
+                                    key={page}
+                                    sx={{ my: 2, color: 'white', display: 'block' }}
+                                >
+                                    {page}
+                                </Button>
+                            </Link>
+
                         ))}
                     </Box>
 

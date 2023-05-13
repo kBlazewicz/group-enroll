@@ -3,10 +3,7 @@ import { StudentsForm } from "./components/students-form/StudentsForm";
 import { Routes, Route } from "react-router-dom";
 import { Stack } from "@mui/material";
 import { InputDateForm } from "./components/teacher-form/InputDateForm";
-import { Home } from "./components/layout/Home";
-import { FormAnswer } from "./components/layout/FormAnswer";
-import { FormCreator } from "./components/layout/FormCreator";
-import { Result } from "./components/layout/Result";
+import { LayoutGrid } from "./components/layout/LayoutGrid";
 import { ShareFormCard } from "./components/share-form/ShareFormCard";
 import { StudentDataForm } from "./components/student-data-form/StudentDataForm";
 
@@ -17,32 +14,33 @@ export const App = () => {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      height: '100%'
+      height: '100%',
+      gap: '10rem',
     }}>
       <ResponsiveAppBar></ResponsiveAppBar>
       <Routes>
         <Route path="/" element={
-          <Home>
+          <LayoutGrid>
             {/* tutaj dodajemy kompoenenty dla strony wejściowej, nie wiem jeszcze co tu ma być */}
             <ShareFormCard></ShareFormCard>
-          </Home>} />
+          </LayoutGrid>} />
         <Route path="/form creator" element={
-          <FormCreator>
+          <LayoutGrid>
             {/* tutaj dodajemy kompoenenty dla formularza prowadzącego */}
             <InputDateForm></InputDateForm>
             <ShareFormCard></ShareFormCard>
-          </FormCreator>} />
+          </LayoutGrid>} />
         <Route path="/form answers" element={
-          <FormAnswer>
+          <LayoutGrid>
             {/* tutaj dodajemy kompoenenty dla formularza studenta */}
             <StudentDataForm></StudentDataForm>
             <StudentsForm></StudentsForm>
-          </FormAnswer>} />
+          </LayoutGrid>} />
         <Route path="/results" element={
-          <Result>
+          <LayoutGrid>
             {/* tutaj dodajemy kompoenenty dla wynikow */}
             <StudentsForm></StudentsForm>
-          </Result>} />
+          </LayoutGrid>} />
       </Routes>
     </Stack>
   );
