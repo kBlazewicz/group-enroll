@@ -10,6 +10,7 @@ import { InputDateForm } from "./components/teacher-form/InputDateForm";
 import StudentDataForm from "./components/student-data-form/StudentDataForm";
 import ShareFormCard from "./components/share-form/ShareFormCard";
 import LoginForm from "./components/authorization/Login";
+import RegisterForm from "./components/authorization/Register";
 
 export const App = () => {
   return (
@@ -45,14 +46,18 @@ export const App = () => {
             {/* tutaj dodajemy kompoenenty dla wynikow */}
             <div></div><StudentsForm></StudentsForm>
           </Result>} />
-
         <Route path="/login" element={
           <Result>
             <div></div>
             <LoginForm></LoginForm>
           </Result>} />
+        <Route path="/register" element={
+          <Result>
+            <div></div>
+            <RegisterForm></RegisterForm>
+          </Result>} />
       </Routes>
-    </Stack>
+    </Stack >
   );
 }
 

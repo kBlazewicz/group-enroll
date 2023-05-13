@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { AuthManagerService } from '../../services/AuthManagerService';
 
 
 const pages = ['Form Creator', 'Form Answers', 'Results'];
@@ -26,7 +27,7 @@ const settings = {
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+    const [isLoggedIn, setIsLoggedIn] = React.useState(AuthManagerService.isLoggedIn());
     const navigate = useNavigate();
 
 
@@ -49,20 +50,26 @@ function ResponsiveAppBar() {
         handleCloseUserMenu();
 
         if (option === "Logout") {
-            // Wylogowanie użytkownika
-            setIsLoggedIn(false);
-            // Dodatkowe czynności po wylogowaniu, jeśli potrzebne
-
-            // Przekierowanie do innej strony
-            navigate("/logout");
+            AuthManagerService.logOut();
+            navigate("/");
         } else if (option === "Login") {
-            // Przekierowanie do strony logowania
             navigate("/login");
         } else if (option === "Register") {
-            // Przekierowanie do strony rejestracji
             navigate("/register");
         }
     };
+
+    React.useEffect(() => {
+        const handleLoginStatusChange = (isLoggedIn: boolean) => {
+            setIsLoggedIn(isLoggedIn);
+        };
+
+        AuthManagerService.setLoginStatusCallback(handleLoginStatusChange);
+
+        return () => {
+            AuthManagerService.setLoginStatusCallback(() => { });
+        };
+    }, []);
 
     return (
         <AppBar style={{

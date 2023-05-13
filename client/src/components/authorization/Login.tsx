@@ -58,7 +58,6 @@ const LoginForm = () => {
                             value={username}
                             onChange={handleUsernameChange}
                             required
-                            className={`input-field ${isLoginFailed ? 'input-field-error' : ''}`}
                             style={{ width: '100%' }}
                         />
                         <TextField
@@ -67,7 +66,6 @@ const LoginForm = () => {
                             value={password}
                             onChange={handlePasswordChange}
                             required
-                            className={`input-field ${isLoginFailed ? 'input-field-error' : ''}`}
                             style={{ width: '100%' }}
                         />
                         <Button type="submit" variant="contained" color="primary" size="medium" style={{ width: '50%' }}>
