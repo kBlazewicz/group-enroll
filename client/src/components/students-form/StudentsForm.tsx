@@ -48,7 +48,7 @@ export const StudentsForm = () => {
     useEffect(() => {
         const loadData = async () => {
             const data = await fetchTerms();
-            setTerms(data);
+            setTerms(data);            
         }
         loadData();
     }, [])
@@ -95,7 +95,7 @@ export const StudentsForm = () => {
                 </List >
             </CardContent>
             <CardActions>
-                <SubmitStudentsFormButton />
+                <SubmitStudentsFormButton termsToSend={checkedTerms}/>
             </CardActions>
         </Card>
     )

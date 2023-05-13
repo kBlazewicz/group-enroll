@@ -11,7 +11,8 @@ export enum Day {
 export const getDays = (): Day[] => Object.values(Day).filter(day => typeof day === 'string');
 
 export interface Vote {
-    id: number;
+    id?: number;
+    termId: number;
     studentId: number;
     possibility: boolean;
 }
