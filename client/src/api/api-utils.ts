@@ -1,4 +1,5 @@
 import { Day, Student, StudentData, Term } from "../types/types";
+import { InputTerm } from "../components/teacher-form/InputDateForm";
 
 const days: Term[] = [
     { id: 0, startTime: "15:00", endTime: "16:30", dayOfWeek: Day.Monday, voteList: [] },
@@ -30,3 +31,19 @@ export const sendStudentData = async (studentData: StudentData) => {
 
     return Math.floor(Math.random() * 1000);
 };
+
+
+export async function createNewTerms(availableDates: InputTerm[]) {
+    try {
+      const response = await fetch('http://localhost:8081/terms', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(availableDates)
+      });      
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }

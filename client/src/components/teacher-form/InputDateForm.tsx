@@ -1,21 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Day } from '../../types/types';
-
-
-type DayMap = {
-  [key: string]: Day;
-}
-
-const days: DayMap = {
-  "MONDAY": Day.Monday,
-  "TUESDAY": Day.Tuesday,
-  "WEDNESDAY": Day.Wednesday,
-  "THURSDAY": Day.Thursday,
-  "FRIDAY": Day.Friday,
-  "SATURDAY": Day.Saturday,
-  "SUNDAY": Day.Sunday
-};
+import {createNewTerms} from '../../api/api-utils'
 
 
 export interface InputTerm {
@@ -56,13 +42,13 @@ export const InputDateForm = () => {
     }
     else{
 
-        if(isDateInTable(availableDates, startTime, endTime, days[weekDay])){
+        if(isDateInTable(availableDates, startTime, endTime, weekDay)){
           alert('Podany termin został już wcześniej dodany!');
         }
         else{
         setAvailableDates([
           ...availableDates,
-          { startTime: startTime, endTime: endTime, dayOfWeek: days[weekDay]}
+          { startTime: startTime, endTime: endTime, dayOfWeek: weekDay}
         ]);
       }
     }
@@ -73,20 +59,10 @@ export const InputDateForm = () => {
     if(availableDates.length <= 1){
       alert('Nie można przesłać - zbyt mało dodanych terminów')
     }else{
-      console.log(JSON.stringify(availableDates))}
-
-    fetch('http://localhost:8081/terms', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(availableDates)
-    })
-    .then(response => {
-      console.log(response)
-    })
-    .then(data => console.log(data))
-    .catch(error => console.error(error));
+      console.log(JSON.stringify(availableDates))
+      createNewTerms(availableDates);
+      setAvailableDates([])
+  }
   }
 
   const deleteTerm = (e : React.MouseEvent<HTMLButtonElement>, termToDelete: InputTerm) => {
@@ -151,13 +127,13 @@ export const InputDateForm = () => {
           <select 
             name="weekDay"
             value={weekDay} 
-            onChange={e => setWeekDay(days[e.target.value])}
             style={{margin: "10px",
-                    padding:"2px"}}>
-            {Object.keys(days).map(day => (
+                    padding:"2px"}}
+            onChange={e => setWeekDay(e.target.value as Day)}>
+            {Object.values(Day).map(day => (
               <option value={day}
                       key={day}>
-                {days[day]}
+                {day as string}
               </option>
             ))}           
           </select>
