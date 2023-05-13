@@ -5,7 +5,7 @@ import Home from "./components/layout/Home";
 import FormCreator from "./components/layout/FormCreator";
 import FormAnswer from "./components/layout/FormAnswer";
 import Result from "./components/layout/Result";
-import { Stack } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import { InputDateForm } from "./components/teacher-form/InputDateForm";
 import StudentDataForm from "./components/student-data-form/StudentDataForm";
 import ShareFormCard from "./components/share-form/ShareFormCard";
@@ -30,30 +30,31 @@ export const App = () => {
         <Route path="/form creator" element={
           <FormCreator>
             {/* tutaj dodajemy kompoenenty dla formularza prowadzącego */}
-            <div></div>
+            <Container></Container>
             <InputDateForm></InputDateForm>
             <ShareFormCard></ShareFormCard>
           </FormCreator>} />
         <Route path="/form answers" element={
           <FormAnswer>
             {/* tutaj dodajemy kompoenenty dla formularza studenta */}
-            <div></div>
+            <Container></Container>
             <StudentDataForm></StudentDataForm>
             <StudentsForm></StudentsForm>
           </FormAnswer>} />
         <Route path="/results" element={
           <Result>
             {/* tutaj dodajemy kompoenenty dla wynikow */}
-            <div></div><StudentsForm></StudentsForm>
+            <Container></Container>
+            <StudentsForm></StudentsForm>
           </Result>} />
         <Route path="/login" element={
           <Result>
-            <div></div>
+            <Container></Container>
             <LoginForm></LoginForm>
           </Result>} />
         <Route path="/register" element={
           <Result>
-            <div></div>
+            <Container></Container>
             <RegisterForm></RegisterForm>
           </Result>} />
       </Routes>

@@ -1,6 +1,6 @@
 import { Day, Student, StudentData, Term } from "../types/types";
 
-const basePath = "http://localhost:8081"
+const baseURL = "http://localhost:8081"
 
 const days: Term[] = [
     { id: 0, startTime: "15:00", endTime: "16:30", dayOfWeek: Day.Monday, voteList: [] },
@@ -34,7 +34,7 @@ export const sendStudentData = async (studentData: StudentData) => {
 };
 
 export const sendLoginRequest = async (username: string, password: string) => {
-    const endpoint = basePath + '/login';
+    const endpoint = baseURL + '/login';
     const requestBody = JSON.stringify({ username, password });
 
     const response = await fetch(endpoint, {
@@ -50,7 +50,7 @@ export const sendLoginRequest = async (username: string, password: string) => {
 
 
 export const sendRegisterRequest = async (username: string, password: string, repeatPassword: string) => {
-    const endpoint = basePath + '/register';
+    const endpoint = baseURL + '/register';
     const requestBody = JSON.stringify({ username, password, repeatPassword });
 
     const response = await fetch(endpoint, {
