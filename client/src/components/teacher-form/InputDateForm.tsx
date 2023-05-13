@@ -82,7 +82,9 @@ export const InputDateForm = () => {
       },
       body: JSON.stringify(availableDates)
     })
-    .then(response => response.json())
+    .then(response => {
+      console.log(response)
+    })
     .then(data => console.log(data))
     .catch(error => console.error(error));
   }
