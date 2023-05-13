@@ -13,13 +13,22 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 const pages = ['Form Creator', 'Form Answers', 'Results'];
-const settings = ['Logout'];
+const settings = {
+    loggedIn: ['Logout'],
+    loggedOut: ['Login', 'Register'],
+};
+
 
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+    const navigate = useNavigate();
+
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -34,6 +43,25 @@ function ResponsiveAppBar() {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const handleMenuOptionClick = (option: string) => {
+        handleCloseUserMenu();
+
+        if (option === "Logout") {
+            // Wylogowanie użytkownika
+            setIsLoggedIn(false);
+            // Dodatkowe czynności po wylogowaniu, jeśli potrzebne
+
+            // Przekierowanie do innej strony
+            navigate("/logout");
+        } else if (option === "Login") {
+            // Przekierowanie do strony logowania
+            navigate("/login");
+        } else if (option === "Register") {
+            // Przekierowanie do strony rejestracji
+            navigate("/register");
+        }
     };
 
     return (
@@ -152,12 +180,19 @@ function ResponsiveAppBar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
+                            {isLoggedIn
+                                ? settings.loggedIn.map((setting) => (
+                                    <MenuItem key={setting} onClick={() => handleMenuOptionClick(setting)}>
+                                        <Typography textAlign="center">{setting}</Typography>
+                                    </MenuItem>
+                                ))
+                                : settings.loggedOut.map((setting) => (
+                                    <MenuItem key={setting} onClick={() => handleMenuOptionClick(setting)}>
+                                        <Typography textAlign="center">{setting}</Typography>
+                                    </MenuItem>
+                                ))}
                         </Menu>
+
                     </Box>
                 </Toolbar>
             </Container>

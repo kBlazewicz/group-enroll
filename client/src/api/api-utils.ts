@@ -1,5 +1,7 @@
 import { Day, Student, StudentData, Term } from "../types/types";
 
+const link = "http://localhost:8081"
+
 const days: Term[] = [
     { id: 0, startTime: "15:00", endTime: "16:30", dayOfWeek: Day.Monday, voteList: [] },
     { id: 1, startTime: "14:00", endTime: "15:30", dayOfWeek: Day.Monday, voteList: [] },
@@ -29,4 +31,19 @@ export const sendStudentData = async (studentData: StudentData) => {
     console.log("Received data: ", student);
 
     return Math.floor(Math.random() * 1000);
+};
+
+export const sendLoginRequest = async (username: string, password: string) => {
+    const endpoint = link + '/login';
+    const requestBody = JSON.stringify({ username, password });
+
+    const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: requestBody,
+    });
+
+    return response;
 };
