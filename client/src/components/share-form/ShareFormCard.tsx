@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ShareFormCard = () => {
+export const ShareFormCard = () => {
     const classes = useStyles();
     const [formLink, setFormLink] = useState('');
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
@@ -93,5 +93,3 @@ const ShareFormCard = () => {
         </Card>
     );
 };
-
-export default ShareFormCard;

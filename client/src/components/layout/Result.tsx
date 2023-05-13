@@ -1,10 +1,6 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
-interface Props {
-    children: ReactNode[];
-}
-
-const Result: React.FC<Props> = ({ children }) => {
+export const Result = ({ children }: { children: any }) => {
     return (
         <div
             style={{
@@ -17,13 +13,8 @@ const Result: React.FC<Props> = ({ children }) => {
                 margin: '1rem',
             }}
         >
-            {children.map((child, index) => (
-                <div key={index} style={{ margin: '1rem 0' }}>
-                    {child}
-                </div>
-            ))}
+            {children}
         </div>
     );
 };
 
-export default Result;

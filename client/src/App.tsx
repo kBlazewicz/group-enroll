@@ -1,14 +1,15 @@
 import ResponsiveAppBar from "./components/layout/Nav";
 import { StudentsForm } from "./components/students-form/StudentsForm";
 import { Routes, Route } from "react-router-dom";
-import Home from "./components/layout/Home";
-import FormCreator from "./components/layout/FormCreator";
-import FormAnswer from "./components/layout/FormAnswer";
-import Result from "./components/layout/Result";
 import { Stack } from "@mui/material";
 import { InputDateForm } from "./components/teacher-form/InputDateForm";
-import StudentDataForm from "./components/student-data-form/StudentDataForm";
-import ShareFormCard from "./components/share-form/ShareFormCard";
+import { Home } from "./components/layout/Home";
+import { FormAnswer } from "./components/layout/FormAnswer";
+import { FormCreator } from "./components/layout/FormCreator";
+import { Result } from "./components/layout/Result";
+import { ShareFormCard } from "./components/share-form/ShareFormCard";
+import { StudentDataForm } from "./components/student-data-form/StudentDataForm";
+
 
 export const App = () => {
   return (
@@ -23,26 +24,24 @@ export const App = () => {
         <Route path="/" element={
           <Home>
             {/* tutaj dodajemy kompoenenty dla strony wejściowej, nie wiem jeszcze co tu ma być */}
-            <div>Home page</div><ShareFormCard></ShareFormCard>
+            <ShareFormCard></ShareFormCard>
           </Home>} />
         <Route path="/form creator" element={
           <FormCreator>
             {/* tutaj dodajemy kompoenenty dla formularza prowadzącego */}
-            <div></div>
             <InputDateForm></InputDateForm>
             <ShareFormCard></ShareFormCard>
           </FormCreator>} />
         <Route path="/form answers" element={
           <FormAnswer>
             {/* tutaj dodajemy kompoenenty dla formularza studenta */}
-            <div></div>
             <StudentDataForm></StudentDataForm>
             <StudentsForm></StudentsForm>
           </FormAnswer>} />
         <Route path="/results" element={
           <Result>
             {/* tutaj dodajemy kompoenenty dla wynikow */}
-            <div></div><StudentsForm></StudentsForm>
+            <StudentsForm></StudentsForm>
           </Result>} />
       </Routes>
     </Stack>

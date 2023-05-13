@@ -5,7 +5,7 @@ import { sendStudentData } from "../../api/api-utils";
 import "./StudentDataForm.css";
 import { Typography } from "@mui/material";
 
-const StudentDataForm: React.FC = () => {
+export const StudentDataForm: React.FC = () => {
     const [studentData, setStudentData] = useState<StudentData>({
         name: "",
         surname: "",
@@ -111,5 +111,3 @@ const StudentDataForm: React.FC = () => {
         </Card>
     );
 };
-
-export default StudentDataForm;

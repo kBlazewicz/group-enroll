@@ -16,7 +16,6 @@ const pages = ['Form Creator', 'Form Answers', 'Results'];
 const settings = ['Login', 'Register'];
 
 function ResponsiveAppBar() {
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -31,7 +30,6 @@ function ResponsiveAppBar() {
         <AppBar style={{
             marginTop: 0,
             marginBottom: '2vh',
-            color: 'blue',
         }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
@@ -58,6 +56,7 @@ function ResponsiveAppBar() {
                                 key={page}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
+                                {page}
                                 <Link style={{ textDecoration: "none", color: "white" }} to={`/${page.toLowerCase()}`} >{page}</Link>
                             </Button>
                         ))}
