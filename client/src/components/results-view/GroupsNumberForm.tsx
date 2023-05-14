@@ -12,9 +12,9 @@ export const GroupsNumberForm = () => {
         }
     }
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        gerateGroups(groupsNumber)
+        await gerateGroups(groupsNumber)
       }
 
       return (   
