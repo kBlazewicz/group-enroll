@@ -54,13 +54,12 @@ export const InputDateForm = () => {
     }
   }
 
-  const sendTerms = (e : React.MouseEvent<HTMLButtonElement>) => {
+  const sendTerms = async (e : React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if(availableDates.length <= 1){
       alert('Nie można przesłać - zbyt mało dodanych terminów')
     }else{
-      console.log(JSON.stringify(availableDates))
-      createNewTerms(availableDates);
+      await createNewTerms(availableDates);
       setAvailableDates([])
   }
   }

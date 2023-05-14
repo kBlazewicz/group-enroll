@@ -9,6 +9,8 @@ const days: Term[] = [
     { id: 4, startTime: "15:00", endTime: "16:30", dayOfWeek: Day.Tuesday, voteList: [] }
 ];
 
+const baseUrl = 'http://localhost:8081'
+
 export const fetchTerms = async (): Promise<Term[]> => {
     return days;
 }
@@ -35,14 +37,15 @@ export const sendStudentData = async (studentData: StudentData) => {
 
 export async function createNewTerms(availableDates: InputTerm[]) {
     try {
-      const response = await fetch('http://localhost:8081/terms', {
+      const termsUrl = `${baseUrl}/terms`;
+      const response = await fetch(termsUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(availableDates)
       });      
-      console.log(response);
+      return response.json
     } catch (error) {
       console.error(error);
     }
