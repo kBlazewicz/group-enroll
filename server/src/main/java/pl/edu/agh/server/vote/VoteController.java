@@ -35,9 +35,9 @@ public class VoteController {
     }
 
 
-    @GetMapping("/votes/{id}")
-    EntityModel<Vote> getForm(@PathVariable Long id) {
-        Vote vote = voteService.getVote(id);
+        @GetMapping("/votes/{id}")
+        EntityModel<Vote> getForm(@PathVariable Long id) {
+            Vote vote = voteService.getVote(id);
         return assembler.toModel(vote);
     }
 

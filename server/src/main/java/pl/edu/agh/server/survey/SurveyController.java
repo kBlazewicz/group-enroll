@@ -1,10 +1,10 @@
 package pl.edu.agh.server.survey;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pl.edu.agh.server.term.Term;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/survey")
@@ -16,8 +16,13 @@ public class SurveyController {
         this.surveyService = surveyService;
     }
 
+    @PostMapping
+    public String createSurvey(@RequestBody List<Term> terms){
+        return surveyService.createSurvey(terms);
+    }
+
     @GetMapping(path = "{linkCode}")
-    public Survey getSurvey(@PathVariable("linkCode") String surveylinkCode){
-        return surveyService.getSurvey(surveylinkCode);
+    public Survey getSurvey(@PathVariable("linkCode") String surveyLinkCode){
+        return surveyService.getSurvey(surveyLinkCode);
     }
 }
