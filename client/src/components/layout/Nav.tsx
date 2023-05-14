@@ -52,14 +52,14 @@ function ResponsiveAppBar() {
 
                     <Box sx={{ flexGrow: 1, display: 'flex' }}>
                         {pages.map((page) => (
-                            <Link style={{ textDecoration: "none", color: "white" }} to={`/${page.toLowerCase()}`} >
+                            <a style={{ textDecoration: "none", color: "white" }} href={`/${page.toLowerCase()}`} >
                                 <Button
                                     key={page}
                                     sx={{ my: 2, color: 'white', display: 'block' }}
                                 >
                                     {page}
                                 </Button>
-                            </Link>
+                            </a>
 
                         ))}
                     </Box>

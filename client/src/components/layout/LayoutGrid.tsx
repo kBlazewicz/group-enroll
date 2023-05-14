@@ -8,9 +8,11 @@ export const LayoutGrid = ({ children }: { children: any }) => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                height: '100%',
+                height: '90%',
                 width: '90%',
-                margin: '1rem',
+                margin: '4rem',
+                padding: '2rem',
+                gap: '2rem',
             }}
         >
             {children}
