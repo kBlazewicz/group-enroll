@@ -28,7 +28,7 @@ public class TermConfig {
             );
 
             termRepository.saveAll(
-                    List.of(wednesday,tuesday)
+                    List.of(wednesday, tuesday)
             );
         };
     }
