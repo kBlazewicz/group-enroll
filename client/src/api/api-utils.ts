@@ -1,4 +1,5 @@
 import { Student, StudentData, Term, Vote } from "../types/types";
+import { InputTerm } from "../components/teacher-form/InputDateForm";
 
 
 const baseUrl = "http://localhost:8080";
@@ -40,3 +41,28 @@ export const sendVotes = async (votes: Vote[]) => {
     
     return response;
 }
+
+export const generateGroups =async (numberOfGroups:number) => {
+    console.log(numberOfGroups);
+    
+    // API interaction
+    
+}
+
+
+export async function createNewTerms(availableDates: InputTerm[]) {
+    try {
+      const termsUrl = `${baseUrl}/terms`;
+      const response = await fetch(termsUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(availableDates)
+      });      
+      return response.json
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
