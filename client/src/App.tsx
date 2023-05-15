@@ -6,7 +6,8 @@ import { InputDateForm } from "./components/teacher-form/InputDateForm";
 import { LayoutGrid } from "./components/layout/LayoutGrid";
 import { ShareFormCard } from "./components/share-form/ShareFormCard";
 import { StudentDataForm } from "./components/student-data-form/StudentDataForm";
-
+import LoginForm from "./components/authorization/Login";
+import RegisterForm from "./components/authorization/Register";
 
 export const App = () => {
   return (
@@ -40,9 +41,19 @@ export const App = () => {
           <LayoutGrid>
             {/* tutaj dodajemy kompoenenty dla wynikow */}
             <StudentsForm></StudentsForm>
+          </Result>} />
+        <Route path="/login" element={
+          <Result>
+            <LoginForm></LoginForm>
+          </Result>} />
+        <Route path="/register" element={
+          <Result>
+            <RegisterForm></RegisterForm>
+          </Result>} />
+            <StudentsForm></StudentsForm>
           </LayoutGrid>} />
       </Routes>
-    </Stack>
+    </Stack >
   );
 }
 

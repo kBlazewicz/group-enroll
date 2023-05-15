@@ -1,6 +1,8 @@
 import { Day, Student, StudentData, Term } from "../types/types";
 import { InputTerm } from "../components/teacher-form/InputDateForm";
 
+const baseURL = "http://localhost:8081"
+
 const days: Term[] = [
     { id: 0, startTime: "15:00", endTime: "16:30", dayOfWeek: Day.Monday, voteList: [] },
     { id: 1, startTime: "14:00", endTime: "15:30", dayOfWeek: Day.Monday, voteList: [] },
@@ -8,8 +10,6 @@ const days: Term[] = [
     { id: 3, startTime: "15:00", endTime: "16:30", dayOfWeek: Day.Thursday, voteList: [] },
     { id: 4, startTime: "15:00", endTime: "16:30", dayOfWeek: Day.Tuesday, voteList: [] }
 ];
-
-const baseUrl = 'http://localhost:8081'
 
 export const fetchTerms = async (): Promise<Term[]> => {
     return days;
@@ -34,12 +34,42 @@ export const sendStudentData = async (studentData: StudentData) => {
     return Math.floor(Math.random() * 1000);
 };
 
+export const sendLoginRequest = async (username: string, password: string) => {
+    const endpoint = baseURL + '/login';
+    const requestBody = JSON.stringify({ username, password });
+
+    const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: requestBody,
+    });
+
+    return response;
+};
+
+
+export const sendRegisterRequest = async (username: string, password: string, repeatPassword: string) => {
+    const endpoint = baseURL + '/register';
+    const requestBody = JSON.stringify({ username, password, repeatPassword });
+
+    const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: requestBody,
+    });
+
+    return response;
+};
 
 export const generateGroups =async (numberOfGroups:number) => {
     console.log(numberOfGroups);
-    
+
     // API interaction
-    
+
 }
 
 
@@ -52,7 +82,7 @@ export async function createNewTerms(availableDates: InputTerm[]) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(availableDates)
-      });      
+      });
       return response.json
     } catch (error) {
       console.error(error);
