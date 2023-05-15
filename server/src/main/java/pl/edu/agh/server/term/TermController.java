@@ -26,7 +26,7 @@ public class TermController {
     }
 
     @PostMapping
-    public void createNewTerm(@RequestBody List<Term> terms){
-        termService.createNewTerms(terms);
+    public String createNewTerm(@RequestBody List<Term> terms){
+        return termService.createNewTerms(terms);
     }
 }
