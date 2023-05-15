@@ -17,6 +17,19 @@ public class Vote {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    @Nonnull
+    private Student student;
+    @ManyToOne
+    @JoinColumn(name = "term_id", nullable = false)
+    @Nonnull
+    private Term term;
+
+    @Nonnull
+    private boolean possibility;
+
+    private String comment;
 
     public Vote(Student student, Term term, boolean possibility, String comment) {
         this.student = student;
@@ -25,19 +38,5 @@ public class Vote {
         this.comment = comment;
 
     }
-
-    @ManyToOne
-    @JoinColumn(name="student_id", nullable=false)
-    @Nonnull
-    private Student student;
-    @ManyToOne
-    @JoinColumn(name="term_id", nullable=false)
-    @Nonnull
-    private Term term;
-
-    @Nonnull
-    private boolean possibility;
-
-    private String comment;
 
 }

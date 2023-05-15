@@ -23,7 +23,7 @@ public class Term {
     LocalTime startTime;
     LocalTime endTime;
     WeekDay dayOfWeek;
-    @OneToMany(mappedBy="term")
+    @OneToMany(mappedBy = "term")
     Set<Vote> votes;
 
     public Term(LocalTime startTime, LocalTime endTime, WeekDay dayOfWeek) {
@@ -34,13 +34,12 @@ public class Term {
     }
 
     public Term(LocalTime startTime, LocalTime endTime, WeekDay dayOfWeek, Set<Vote> votes) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.dayOfWeek = dayOfWeek;
+        this(startTime, endTime, dayOfWeek);
         this.votes = votes;
     }
 
     public void addVote(Vote vote) {
+        if (votes == null) votes = new HashSet<>();
         votes.add(vote);
     }
 }

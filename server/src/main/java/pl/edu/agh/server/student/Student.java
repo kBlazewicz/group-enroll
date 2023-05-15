@@ -31,17 +31,7 @@ public class Student {
     @Nonnull
     private String fieldOfStudy;
 
-    public Student(String name, String surname, String album, String email, String faculty, String fieldOfStudy, Set<Vote> votes) {
-        this.name = name;
-        this.surname = surname;
-        this.album = album;
-        this.email = email;
-        this.faculty = faculty;
-        this.fieldOfStudy = fieldOfStudy;
-        this.votes = votes;
-    }
-
-    @OneToMany(mappedBy="student")
+    @OneToMany(mappedBy = "student")
     private Set<Vote> votes;
 
     public Student(String name, String surname, String album, String email, String faculty, String fieldOfStudy) {
@@ -52,6 +42,11 @@ public class Student {
         this.faculty = faculty;
         this.fieldOfStudy = fieldOfStudy;
         this.votes = new HashSet<>();
+    }
+
+    public Student(String name, String surname, String album, String email, String faculty, String fieldOfStudy, Set<Vote> votes) {
+        this(name, surname, album, email, faculty, fieldOfStudy);
+        this.votes = votes;
     }
 
     public void addVote(Vote vote) {

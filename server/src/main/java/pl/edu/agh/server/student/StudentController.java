@@ -5,26 +5,20 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.agh.server.vote.Vote;
-import pl.edu.agh.server.vote.VoteService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 public class StudentController {
 
     private final StudentService studentService;
-    private final VoteService voteService;
+    private final StudentConverter studentConverter;
     private final ObjectMapper objectMapper;
+
     @GetMapping("/students")
     public List<StudentDTO> getStudents() {
         return studentService.getStudents().stream().map(StudentDTO::new).toList();
@@ -39,15 +33,16 @@ public class StudentController {
 
     @PostMapping
     public List<StudentDTO> saveStudents(@RequestBody List<StudentDTO> studentDTOS) {
-        List<Student> students = studentDTOS.stream().map(this::getStudentFromDTO).toList();
+        List<Student> students = studentDTOS.stream().map(studentConverter::getStudentFromDTO).toList();
         studentService.saveMany(students);
         return studentDTOS;
     }
 
     @PostMapping("student")
     public long saveStudent(@RequestBody StudentDTO student) {
-        return studentService.save(getStudentFromDTO(student)).getId();
+        return studentService.save(studentConverter.getStudentFromDTO(student)).getId();
     }
+
     @DeleteMapping("/students/{id}")
     public void deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
@@ -60,13 +55,7 @@ public class StudentController {
             Student student = studentService.getStudent(id);
             StudentDTO studentDTO = new StudentDTO(student);
             StudentDTO patchedStudentDTO = applyPatchToStudent(patch, studentDTO);
-            student.setAlbum(patchedStudentDTO.getAlbum());
-            student.setName(patchedStudentDTO.getName());
-            student.setSurname(patchedStudentDTO.getSurname());
-            student.setEmail(patchedStudentDTO.getEmail());
-            student.setFaculty(patchedStudentDTO.getFaculty());
-            student.setFieldOfStudy(patchedStudentDTO.getFieldOfStudy());
-            student.setVotes(patchedStudentDTO.getVotes().stream().map(voteService::getVote).collect(Collectors.toSet()));
+            studentConverter.applyChangesFromDTO(student, patchedStudentDTO);
             studentService.updateStudent(student);
             return patchedStudentDTO;
         } catch (JsonPatchException | JsonProcessingException | NoSuchElementException e) {
@@ -79,40 +68,4 @@ public class StudentController {
         return objectMapper.treeToValue(patched, StudentDTO.class);
     }
 
-
-    public Student getStudentFromDTO(StudentDTO studentDTO) {
-        Set<Vote> votes = studentDTO.getVotes().stream().map(voteService::getVote).collect(Collectors.toSet());
-        return new Student(studentDTO.getName(), studentDTO.getSurname(), studentDTO.getAlbum(), studentDTO.getEmail(),
-                studentDTO.getFaculty(), studentDTO.getFieldOfStudy(), votes);
-    }
-    @Getter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    private static class StudentDTO {
-
-        private long id;
-
-        private String name;
-
-        private String surname;
-
-        private String album;
-
-        private String email;
-        private String faculty;
-        private String fieldOfStudy;
-
-        private Set<Long> votes;
-
-        public StudentDTO(Student student) {
-            this.id = student.getId();
-            this.name = student.getName();
-            this.surname = student.getSurname();
-            this.album = student.getAlbum();
-            this.email = student.getEmail();
-            this.faculty = student.getFaculty();
-            this.fieldOfStudy = student.getFieldOfStudy();
-            this.votes = student.getVotes().stream().map(Vote::getId).collect(Collectors.toSet());
-        }
-    }
 }
