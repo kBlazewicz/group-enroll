@@ -42,7 +42,7 @@ export const sendVotes = async (votes: Vote[]) => {
     return response;
 }
 
-export const generateGroups =async (numberOfGroups:number) => {
+export const generateGroups = async (numberOfGroups:number) => {
     console.log(numberOfGroups);
     
     // API interaction

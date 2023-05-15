@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from "react-router-dom";
 
-const pages = ['Form Creator', 'Form Answers', 'Results'];
+const pages = ['Form-Creator', 'Form-Answers', 'Results'];
 const settings = ['Logout'];
 
 function ResponsiveAppBar() {

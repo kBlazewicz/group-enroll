@@ -18,7 +18,7 @@ class VoteDTO {
     public VoteDTO(Vote vote) {
         this.id = vote.getId();
         this.studentId = vote.getStudent().getId();
-        this.termId = vote.getTerm().getTermId();
+        this.termId = vote.getTerm().getId();
         this.possibility = vote.isPossibility();
         this.comment = vote.getComment();
     }
