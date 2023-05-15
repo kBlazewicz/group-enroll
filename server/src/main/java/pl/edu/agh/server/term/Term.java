@@ -40,9 +40,4 @@ public class Term {
         this(startTime, endTime, dayOfWeek);
         this.votes = votes;
     }
-
-    public void addVote(Vote vote) {
-        if (votes == null) votes = new HashSet<>();
-        votes.add(vote);
-    }
 }
