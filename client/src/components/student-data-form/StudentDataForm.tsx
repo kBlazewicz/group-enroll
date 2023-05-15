@@ -4,7 +4,7 @@ import { StudentData } from "../../types/types";
 import { sendStudentData } from "../../api/api-utils";
 import { Typography } from "@mui/material";
 
-const StudentDataForm: React.FC = () => {
+const StudentDataForm = () => {
     const [studentData, setStudentData] = useState<StudentData>({
         name: "",
         surname: "",

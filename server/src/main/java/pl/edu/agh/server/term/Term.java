@@ -21,9 +21,7 @@ public class Term {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
-    @JsonFormat(pattern = "HH:mm")
     LocalTime startTime;
-    @JsonFormat(pattern = "HH:mm")
     LocalTime endTime;
     WeekDay dayOfWeek;
     @OneToMany(mappedBy = "term")
