@@ -31,7 +31,7 @@ export const sendStudentData = async (studentData: StudentData) => {
     return Math.floor(Math.random() * 1000);
 };
 
-export const gerateGroups =async (numberOfGroups:number) => {
+export const generateGroups =async (numberOfGroups:number) => {
     console.log(numberOfGroups);
     
     // API interaction
