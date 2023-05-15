@@ -58,17 +58,25 @@ public class StudentController {
     public StudentDTO updateStudent(@PathVariable Long id, @RequestBody JsonPatch patch) {
         try {
             Student student = studentService.getStudent(id);
-            Student patchedStudent = applyPatchToStudent(patch, student);
-            studentService.updateStudent(patchedStudent);
-            return new StudentDTO(patchedStudent);
+            StudentDTO studentDTO = new StudentDTO(student);
+            StudentDTO patchedStudentDTO = applyPatchToStudent(patch, studentDTO);
+            student.setAlbum(patchedStudentDTO.getAlbum());
+            student.setName(patchedStudentDTO.getName());
+            student.setSurname(patchedStudentDTO.getSurname());
+            student.setEmail(patchedStudentDTO.getEmail());
+            student.setFaculty(patchedStudentDTO.getFaculty());
+            student.setFieldOfStudy(patchedStudentDTO.getFieldOfStudy());
+            student.setVotes(patchedStudentDTO.getVotes().stream().map(voteService::getVote).collect(Collectors.toSet()));
+            studentService.updateStudent(student);
+            return patchedStudentDTO;
         } catch (JsonPatchException | JsonProcessingException | NoSuchElementException e) {
             return null;
         }
     }
 
-    private Student applyPatchToStudent(JsonPatch patch, Student student) throws JsonPatchException, JsonProcessingException {
-        JsonNode patched = patch.apply(objectMapper.convertValue(student, JsonNode.class));
-        return objectMapper.treeToValue(patched, Student.class);
+    private StudentDTO applyPatchToStudent(JsonPatch patch, StudentDTO studentDTO) throws JsonPatchException, JsonProcessingException {
+        JsonNode patched = patch.apply(objectMapper.convertValue(studentDTO, JsonNode.class));
+        return objectMapper.treeToValue(patched, StudentDTO.class);
     }
 
 

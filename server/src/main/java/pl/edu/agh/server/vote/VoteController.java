@@ -64,17 +64,22 @@ public class VoteController {
     public VoteDTO updateVote(@PathVariable Long id, @RequestBody JsonPatch patch) {
         try {
             Vote vote = voteService.getVote(id);
-            Vote patchedVote = applyPatchToVote(patch, vote);
-            voteService.updateVote(patchedVote);
-            return new VoteDTO(patchedVote);
+            VoteDTO voteDTO = new VoteDTO(vote);
+            VoteDTO patchedVoteDTO = applyPatchToVote(patch, voteDTO);
+            vote.setStudent(studentService.getStudent(patchedVoteDTO.getStudentId()));
+            vote.setTerm(termService.getTerm(patchedVoteDTO.getTermId()));
+            vote.setPossibility(patchedVoteDTO.isPossibility());
+            vote.setComment(patchedVoteDTO.getComment());
+            voteService.updateVote(vote);
+            return patchedVoteDTO;
         } catch (JsonPatchException | JsonProcessingException | NoSuchElementException e) {
             return null;
         }
     }
 
-    private Vote applyPatchToVote(JsonPatch patch, Vote vote) throws JsonPatchException, JsonProcessingException {
-        JsonNode patched = patch.apply(objectMapper.convertValue(vote, JsonNode.class));
-        return objectMapper.treeToValue(patched, Vote.class);
+    private VoteDTO applyPatchToVote(JsonPatch patch, VoteDTO voteDTO) throws JsonPatchException, JsonProcessingException {
+        JsonNode patched = patch.apply(objectMapper.convertValue(voteDTO, JsonNode.class));
+        return objectMapper.treeToValue(patched, VoteDTO.class);
     }
 
 
