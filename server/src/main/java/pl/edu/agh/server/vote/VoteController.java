@@ -5,84 +5,101 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.IanaLinkRelations;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.hateoas.EntityModel;
+import pl.edu.agh.server.student.Student;
+import pl.edu.agh.server.student.StudentService;
+import pl.edu.agh.server.term.Term;
+import pl.edu.agh.server.term.TermService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequiredArgsConstructor
 public class VoteController {
 
     private final VoteService voteService;
+    private final StudentService studentService;
+    private final TermService termService;
     private final ObjectMapper objectMapper;
-    private final VoteModelAssembler assembler;
 
     @GetMapping("/votes")
-    CollectionModel<EntityModel<Vote>> getForms() {
-        List<EntityModel<Vote>> votes = voteService.getForms().stream()
-                .map(assembler::toModel).toList();
-        return CollectionModel.of(votes, linkTo(methodOn(VoteController.class).getForms()).withRel("votes"));
+    public List<VoteDTO> getVotes() {
+        List<Vote> votes = voteService.getVotes();
+        List<VoteDTO> voteDTOS = votes.stream().map(VoteDTO::new).toList();
+        return voteDTOS;
     }
 
 
     @GetMapping("/votes/{id}")
-    EntityModel<Vote> getForm(@PathVariable Long id) {
-        Vote vote = voteService.getVote(id);
-        return assembler.toModel(vote);
+    public VoteDTO getVote(@PathVariable Long id) {
+        return new VoteDTO(voteService.getVote(id));
     }
 
 
     @PostMapping("/votes")
-    ResponseEntity<?> saveForms(@RequestBody List<Vote> votes) {
+    public List<VoteDTO> saveVotes(@RequestBody List<VoteDTO> voteDTOS) {
+        List<Vote> votes = voteDTOS.stream().map(this::getVoteFromDTO).toList();
         votes = voteService.saveMany(votes);
-        CollectionModel<EntityModel<Vote>> votesCollection = assembler.toCollectionModel(votes);
-        return ResponseEntity.created(votesCollection.getRequiredLink("votes").toUri())
-                .body(votesCollection);
+        return voteDTOS;
     }
 
     @PostMapping("/vote")
-    ResponseEntity<?> saveForm(@RequestBody Vote vote) {
-        EntityModel<Vote> entityModel = assembler.toModel(voteService.save(vote));
-        return ResponseEntity
-                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-                .body(entityModel);
+    public VoteDTO saveVote(@RequestBody VoteDTO voteDTO) {
+        voteService.save(getVoteFromDTO(voteDTO));
+        return voteDTO;
     }
-    @DeleteMapping("/vote/{id}")
-    ResponseEntity<?> deleteVote(@PathVariable Long id) {
+    @DeleteMapping("/votes/{id}")
+    public void deleteVote(@PathVariable Long id) {
         voteService.deleteVote(id);
-        return ResponseEntity.noContent().build();
     }
 
 
     @PatchMapping(path = "/votes/{id}", consumes = "application/json-patch+json")
-    ResponseEntity<?> updateVote(@PathVariable Long id, @RequestBody JsonPatch patch) {
+    public VoteDTO updateVote(@PathVariable Long id, @RequestBody JsonPatch patch) {
         try {
             Vote vote = voteService.getVote(id);
             Vote patchedVote = applyPatchToVote(patch, vote);
             voteService.updateVote(patchedVote);
-            EntityModel<Vote> entityModel = assembler.toModel(patchedVote);
-            return ResponseEntity
-                    .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-                    .body(entityModel);
-        } catch (JsonPatchException | JsonProcessingException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return new VoteDTO(patchedVote);
+        } catch (JsonPatchException | JsonProcessingException | NoSuchElementException e) {
+            return null;
         }
     }
 
     private Vote applyPatchToVote(JsonPatch patch, Vote vote) throws JsonPatchException, JsonProcessingException {
         JsonNode patched = patch.apply(objectMapper.convertValue(vote, JsonNode.class));
         return objectMapper.treeToValue(patched, Vote.class);
+    }
+
+
+    public Vote getVoteFromDTO(VoteDTO voteDTO) {
+        Student student = studentService.getStudent(voteDTO.getStudentId());
+        Term term = termService.getTerm(voteDTO.getTermId());
+        return new Vote(student, term, voteDTO.isPossibility(), voteDTO.getComment());
+    }
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    private static class VoteDTO {
+
+        private long id;
+        private long studentId;
+        private long termId;
+        private String comment;
+        private boolean possibility;
+
+        public VoteDTO(Vote vote) {
+            this.id = vote.getId();
+            this.studentId = vote.getStudent().getId();
+            this.termId = vote.getTerm().getTermId();
+            this.possibility = vote.isPossibility();
+            this.comment = vote.getComment();
+        }
     }
 }

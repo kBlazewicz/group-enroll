@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.edu.agh.server.student.Student;
+import pl.edu.agh.server.term.Term;
 
 @Getter
 @Setter
@@ -16,30 +18,22 @@ public class Vote {
     private Long id;
 
 
-    @Nonnull
-    private Long studentId;
-
-
-    public Vote(long studentId, long termId, boolean possibility, String comment) {
-        this.studentId = studentId;
-        this.termId = termId;
+    public Vote(Student student, Term term, boolean possibility, String comment) {
+        this.student = student;
+        this.term = term;
         this.possibility = possibility;
         this.comment = comment;
+
     }
 
+    @ManyToOne
+    @JoinColumn(name="student_id", nullable=false)
     @Nonnull
-    private Long termId;
-
-    //TODO
-    //student and term classes
-//    @ManyToOne
-//    @Nonnull
-
-//    private Student student;
-//    @ManyToOne
-//    @Nonnull
-
-//    private Term term;
+    private Student student;
+    @ManyToOne
+    @JoinColumn(name="term_id", nullable=false)
+    @Nonnull
+    private Term term;
 
     @Nonnull
     private boolean possibility;

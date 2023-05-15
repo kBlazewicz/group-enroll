@@ -14,10 +14,10 @@ public class VoteService {
     }
 
 
-    public void addForm(Vote vote) {
+    public void addVote(Vote vote) {
         repository.save(vote);
     }
-    public List<Vote> getForms() {
+    public List<Vote> getVotes() {
         return repository.findAll();
     }
     public Vote getVote(Long id) {

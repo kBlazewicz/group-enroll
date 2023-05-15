@@ -8,7 +8,8 @@ import pl.edu.agh.server.WeekDay;
 import pl.edu.agh.server.vote.Vote;
 
 import java.time.LocalTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,12 +23,24 @@ public class Term {
     LocalTime startTime;
     LocalTime endTime;
     WeekDay dayOfWeek;
-    @OneToMany
-    List<Vote> votelist;
+    @OneToMany(mappedBy="term")
+    Set<Vote> votes;
 
     public Term(LocalTime startTime, LocalTime endTime, WeekDay dayOfWeek) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.dayOfWeek = dayOfWeek;
+        votes = new HashSet<>();
+    }
+
+    public Term(LocalTime startTime, LocalTime endTime, WeekDay dayOfWeek, Set<Vote> votes) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.dayOfWeek = dayOfWeek;
+        this.votes = votes;
+    }
+
+    public void addVote(Vote vote) {
+        votes.add(vote);
     }
 }
