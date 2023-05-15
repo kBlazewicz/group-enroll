@@ -1,5 +1,6 @@
 package pl.edu.agh.server.term;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,8 @@ import pl.edu.agh.server.WeekDay;
 import pl.edu.agh.server.vote.Vote;
 
 import java.time.LocalTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,15 +21,28 @@ public class Term {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long termId;
+    @JsonFormat(pattern = "HH:mm")
     LocalTime startTime;
+    @JsonFormat(pattern = "HH:mm")
     LocalTime endTime;
     WeekDay dayOfWeek;
-    @OneToMany
-    List<Vote> votelist;
+    @OneToMany(mappedBy = "term")
+    Set<Vote> votes;
 
     public Term(LocalTime startTime, LocalTime endTime, WeekDay dayOfWeek) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.dayOfWeek = dayOfWeek;
+        votes = new HashSet<>();
+    }
+
+    public Term(LocalTime startTime, LocalTime endTime, WeekDay dayOfWeek, Set<Vote> votes) {
+        this(startTime, endTime, dayOfWeek);
+        this.votes = votes;
+    }
+
+    public void addVote(Vote vote) {
+        if (votes == null) votes = new HashSet<>();
+        votes.add(vote);
     }
 }

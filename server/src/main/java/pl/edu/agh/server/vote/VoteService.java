@@ -14,27 +14,34 @@ public class VoteService {
     }
 
 
-    public void addForm(Vote vote) {
+    public void addVote(Vote vote) {
         repository.save(vote);
     }
-    public List<Vote> getForms() {
+
+    public List<Vote> getVotes() {
         return repository.findAll();
     }
+
     public Vote getVote(Long id) {
         return repository.findById(id).orElseThrow(() -> new VoteNotFoundException(id));
     }
+
     public Vote save(Vote vote) {
         return repository.save(vote);
     }
+
     public List<Vote> saveMany(List<Vote> votes) {
         return repository.saveAll(votes);
     }
+
     public void deleteVote(Long id) {
         repository.deleteById(id);
     }
+
     public void deleteVote(Vote vote) {
         repository.delete(vote);
     }
+
     public void updateVote(Vote vote) {
         repository.save(vote);
     }

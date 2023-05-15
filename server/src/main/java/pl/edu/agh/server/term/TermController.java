@@ -1,32 +1,33 @@
 package pl.edu.agh.server.term;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/terms")
+@RequiredArgsConstructor
 public class TermController {
     private final TermService termService;
-
-    @Autowired
-    public TermController(TermService termService) {
-        this.termService = termService;
-    }
+    private final TermConverter termConverter;
 
     @GetMapping
-    public List<Term> getTerms(){
-        return termService.getTerms();
+    public List<TermDTO> getTerms() {
+        return termService.getTerms().stream().map(TermDTO::new).toList();
     }
 
     @GetMapping(path = "{termId}")
-    public Term getTerm(@PathVariable("termId") Long termId){
-        return termService.getTerm(termId);
+    public TermDTO getTerm(@PathVariable("termId") Long termId) {
+        return new TermDTO(termService.getTerm(termId));
     }
 
     @PostMapping
-    public void createNewTerm(@RequestBody List<Term> terms){
+    public void createNewTerm(@RequestBody List<TermDTO> termDTOS) {
+        List<Term> terms = termDTOS.stream().map(termConverter::getTermFromDTO).toList();
         termService.createNewTerms(terms);
+
     }
+
+
 }
