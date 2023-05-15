@@ -23,11 +23,8 @@ public class TermController {
     }
 
     @PostMapping
-    public void createNewTerm(@RequestBody List<TermDTO> termDTOS) {
+    public String createNewTerms(@RequestBody List<TermDTO> termDTOS) {
         List<Term> terms = termDTOS.stream().map(termConverter::getTermFromDTO).toList();
-        termService.createNewTerms(terms);
-
+        return termService.createNewTerms(terms);
     }
-
-
 }

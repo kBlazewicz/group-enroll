@@ -12,10 +12,7 @@ import java.util.stream.Collectors;
 @Component
 public class TermConverter {
 
-    private final VoteService voteService;
-
     public Term getTermFromDTO(TermDTO termDTO) {
-        Set<Vote> votes = termDTO.getVotes().stream().map(voteService::getVote).collect(Collectors.toSet());
-        return new Term(termDTO.getStartTime(), termDTO.getEndTime(), termDTO.getDayOfWeek(), votes);
+        return new Term(termDTO.getStartTime(), termDTO.getEndTime(), termDTO.getDayOfWeek());
     }
 }

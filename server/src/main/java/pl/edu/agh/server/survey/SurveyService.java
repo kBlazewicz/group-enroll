@@ -17,11 +17,11 @@ public class SurveyService {
         return survey.linkCode;
     }
 
-    public Survey getSurvey(String surveylinkCode){
+    public List<Term> getSurvey(String surveylinkCode){
         Survey survey = surveyRepository.findBylinkCode(surveylinkCode);
         if (survey == null) {
             throw new IllegalStateException("Survey with linkCode " + surveylinkCode + " not found");
         }
-        return survey;
+        return survey.getTermlist();
     }
 }
