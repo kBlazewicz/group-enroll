@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { TextField, Button, Card, CardContent } from "@material-ui/core";
 import { StudentData } from "../../types/types";
 import { sendStudentData } from "../../api/api-utils";
-import "./StudentDataForm.css";
 import { Typography } from "@mui/material";
 
-const StudentDataForm: React.FC = () => {
+const StudentDataForm = () => {
     const [studentData, setStudentData] = useState<StudentData>({
         name: "",
         surname: "",
@@ -14,13 +13,11 @@ const StudentDataForm: React.FC = () => {
         faculty: "",
         fieldOfStudy: "",
     });
-    const [id, setId] = useState<number | null>(null);
 
     const handleSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         try {
             const id = await sendStudentData(studentData);
-            setId(id);
             console.log("Received ID:", id);
         } catch (error) {
             console.error(error);
@@ -35,8 +32,8 @@ const StudentDataForm: React.FC = () => {
     };
 
     return (
-        <Card className="form-card">
-            <CardContent className="fields-container">
+        <Card style={{minWidth: 500}}>
+            <CardContent style={{display: "flex", flexDirection: "column"}}>
                 <Typography variant="h5" component="h2">
                     Podaj swoje dane
                 </Typography>
@@ -46,7 +43,6 @@ const StudentDataForm: React.FC = () => {
                     value={studentData.name}
                     onChange={handleInputChange}
                     required
-                    className="input-field"
                 />
                 <TextField
                     label="Surname"
@@ -54,7 +50,6 @@ const StudentDataForm: React.FC = () => {
                     value={studentData.surname}
                     onChange={handleInputChange}
                     required
-                    className="input-field"
                 />
                 <TextField
                     label="Album Number"
@@ -72,7 +67,6 @@ const StudentDataForm: React.FC = () => {
                             event.preventDefault();
                         }
                     }}
-                    className="input-field"
                 />
                 <TextField
                     label="Email"
@@ -80,14 +74,12 @@ const StudentDataForm: React.FC = () => {
                     value={studentData.email}
                     onChange={handleInputChange}
                     required
-                    className="input-field"
                 />
                 <TextField
                     label="Faculty"
                     name="faculty"
                     value={studentData.faculty}
                     onChange={handleInputChange}
-                    className="input-field"
                     required
                 />
                 <TextField
@@ -95,11 +87,10 @@ const StudentDataForm: React.FC = () => {
                     name="fieldOfStudy"
                     value={studentData.fieldOfStudy}
                     onChange={handleInputChange}
-                    className="input-field"
                     required
                 />
                 <Button
-                    style={{ margin: "10px" }}
+                    style={{ marginTop: 20, width: 100 }}
                     variant="contained"
                     color="primary"
                     onClick={handleSubmit}

@@ -1,18 +1,12 @@
-import { Day, Student, StudentData, Term } from "../types/types";
+import { Student, StudentData, Term, Vote } from "../types/types";
 import { InputTerm } from "../components/teacher-form/InputDateForm";
 
-const days: Term[] = [
-    { id: 0, startTime: "15:00", endTime: "16:30", dayOfWeek: Day.Monday, voteList: [] },
-    { id: 1, startTime: "14:00", endTime: "15:30", dayOfWeek: Day.Monday, voteList: [] },
-    { id: 2, startTime: "15:00", endTime: "16:30", dayOfWeek: Day.Friday, voteList: [] },
-    { id: 3, startTime: "15:00", endTime: "16:30", dayOfWeek: Day.Thursday, voteList: [] },
-    { id: 4, startTime: "15:00", endTime: "16:30", dayOfWeek: Day.Tuesday, voteList: [] }
-];
 
-const baseUrl = 'http://localhost:8081'
+const baseUrl = "http://localhost:8080";
 
 export const fetchTerms = async (): Promise<Term[]> => {
-    return days;
+    const response = await fetch(`${baseUrl}/terms`);
+    return response.json();
 }
 
 export const fetchFormLink = async (): Promise<string> => {
@@ -34,8 +28,21 @@ export const sendStudentData = async (studentData: StudentData) => {
     return Math.floor(Math.random() * 1000);
 };
 
+export const sendVotes = async (votes: Vote[]) => {
+    const options = {
+        method: "POST", 
+        body: JSON.stringify(votes),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    };    
 
-export const generateGroups =async (numberOfGroups:number) => {
+    const response = await fetch(`${baseUrl}/votes`, options);
+    
+    return response;
+}
+
+export const generateGroups = async (numberOfGroups:number) => {
     console.log(numberOfGroups);
     
     // API interaction

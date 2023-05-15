@@ -26,14 +26,14 @@ export const App = () => {
             {/* tutaj dodajemy kompoenenty dla strony wejściowej, nie wiem jeszcze co tu ma być */}
             <div>Home page</div><ShareFormCard></ShareFormCard>
           </Home>} />
-        <Route path="/form creator" element={
+        <Route path="/form-creator" element={
           <FormCreator>
             {/* tutaj dodajemy kompoenenty dla formularza prowadzącego */}
             <div></div>
             <InputDateForm></InputDateForm>
             <ShareFormCard></ShareFormCard>
           </FormCreator>} />
-        <Route path="/form answers" element={
+        <Route path="/form-answers" element={
           <FormAnswer>
             {/* tutaj dodajemy kompoenenty dla formularza studenta */}
             <div></div>
