@@ -26,6 +26,7 @@ public class TermController {
     public void createNewTerm(@RequestBody List<TermDTO> termDTOS) {
         List<Term> terms = termDTOS.stream().map(termConverter::getTermFromDTO).toList();
         termService.createNewTerms(terms);
+
     }
 
 

@@ -2,6 +2,7 @@ package pl.edu.agh.server.term;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import pl.edu.agh.server.survey.SurveyController;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
 @Component
 public class TermService {
     private final TermRepository termRepository;
+    private final SurveyController surveyController;
 
     public List<Term> getTerms() {
         return termRepository.findAll();
@@ -19,7 +21,9 @@ public class TermService {
                 "Term  with ID " + termId + " does not exist"));
     }
 
-    public void createNewTerms(List<Term> terms) {
+
+    public String createNewTerms(List<Term> terms){
         termRepository.saveAll(terms);
+        return surveyController.createSurvey(terms);
     }
 }
