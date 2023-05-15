@@ -1,5 +1,6 @@
 package pl.edu.agh.server.term;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,9 @@ public class Term {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long termId;
+    @JsonFormat(pattern = "HH:mm")
     LocalTime startTime;
+    @JsonFormat(pattern = "HH:mm")
     LocalTime endTime;
     WeekDay dayOfWeek;
     @OneToMany
