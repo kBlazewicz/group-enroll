@@ -9,6 +9,7 @@ import { Stack } from "@mui/material";
 import { InputDateForm } from "./components/teacher-form/InputDateForm";
 import StudentDataForm from "./components/student-data-form/StudentDataForm";
 import ShareFormCard from "./components/share-form/ShareFormCard";
+import {GroupsNumberForm} from './components/results-view/GroupsNumberForm'
 
 export const App = () => {
   return (
@@ -42,7 +43,7 @@ export const App = () => {
         <Route path="/results" element={
           <Result>
             {/* tutaj dodajemy kompoenenty dla wynikow */}
-            <div></div><StudentsForm></StudentsForm>
+            <div></div><GroupsNumberForm></GroupsNumberForm>
           </Result>} />
       </Routes>
     </Stack>

@@ -35,6 +35,14 @@ export const sendStudentData = async (studentData: StudentData) => {
 };
 
 
+export const generateGroups =async (numberOfGroups:number) => {
+    console.log(numberOfGroups);
+    
+    // API interaction
+    
+}
+
+
 export async function createNewTerms(availableDates: InputTerm[]) {
     try {
       const termsUrl = `${baseUrl}/terms`;
@@ -50,3 +58,4 @@ export async function createNewTerms(availableDates: InputTerm[]) {
       console.error(error);
     }
   }
+
