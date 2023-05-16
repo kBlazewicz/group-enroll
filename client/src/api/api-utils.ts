@@ -2,7 +2,7 @@ import { Student, StudentData, Term, Vote } from "../types/types";
 import { InputTerm } from "../components/teacher-form/InputDateForm";
 
 
-const baseUrl = "http://localhost:8080";
+export const baseUrl = "http://localhost:8080";
 
 export const fetchTerms = async (): Promise<Term[]> => {
     const response = await fetch(`${baseUrl}/terms`);
@@ -59,8 +59,10 @@ export async function createNewTerms(availableDates: InputTerm[]) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(availableDates)
-      });      
-      return response.json
+      });
+      if (response.ok) {
+        return response.text();
+      }
     } catch (error) {
       console.error(error);
     }

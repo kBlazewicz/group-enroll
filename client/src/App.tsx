@@ -6,9 +6,7 @@ import FormCreator from "./components/layout/FormCreator";
 import FormAnswer from "./components/layout/FormAnswer";
 import Result from "./components/layout/Result";
 import { Stack } from "@mui/material";
-import { InputDateForm } from "./components/teacher-form/InputDateForm";
 import StudentDataForm from "./components/student-data-form/StudentDataForm";
-import ShareFormCard from "./components/share-form/ShareFormCard";
 import {GroupsNumberForm} from './components/results-view/GroupsNumberForm'
 
 export const App = () => {
@@ -24,15 +22,10 @@ export const App = () => {
         <Route path="/" element={
           <Home>
             {/* tutaj dodajemy kompoenenty dla strony wejściowej, nie wiem jeszcze co tu ma być */}
-            <div>Home page</div><ShareFormCard></ShareFormCard>
-          </Home>} />
-        <Route path="/form-creator" element={
-          <FormCreator>
-            {/* tutaj dodajemy kompoenenty dla formularza prowadzącego */}
+            <div>Home page</div>
             <div></div>
-            <InputDateForm></InputDateForm>
-            <ShareFormCard></ShareFormCard>
-          </FormCreator>} />
+          </Home>} />
+        <Route path="/form-creator" element={<FormCreator />}/>
         <Route path="/form-answers" element={
           <FormAnswer>
             {/* tutaj dodajemy kompoenenty dla formularza studenta */}
