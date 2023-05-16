@@ -1,9 +1,8 @@
-import { Day, Student, Term, Vote } from "../types/types";
+import { Student, Term, Vote } from "../types/types";
 import { InputTerm } from "../components/teacher-form/InputDateForm";
-import axios from 'axios';
 
 
-const baseURL = "http://localhost:8080"
+export const baseUrl = "http://localhost:8080"
 
 
 export const fetchTerms = async (): Promise<Term[]> => {
@@ -16,7 +15,7 @@ export const fetchFormLink = async (): Promise<string> => {
 }
 
 export const sendStudentData = async (student: Student): Promise<number> => {
-    const endpoint = baseURL + '/student';
+    const endpoint = baseUrl + '/student';
     const requestBody = JSON.stringify(student);
     const response = await fetch(endpoint, {
         method: 'POST',
@@ -35,7 +34,7 @@ export const sendStudentData = async (student: Student): Promise<number> => {
 };
 
 export const sendLoginRequest = async (username: string, password: string) => {
-    const endpoint = baseURL + '/login';
+    const endpoint = baseUrl + '/login';
     const requestBody = JSON.stringify({ username, password });
 
     const response = await fetch(endpoint, {
@@ -64,7 +63,7 @@ export const sendVotes = async (votes: Vote[]) => {
 }
 
 export const sendRegisterRequest = async (username: string, password: string, repeatPassword: string) => {
-    const endpoint = baseURL + '/register';
+    const endpoint = baseUrl + '/register';
     const requestBody = JSON.stringify({ username, password, repeatPassword });
 
     const response = await fetch(endpoint, {
@@ -78,7 +77,7 @@ export const sendRegisterRequest = async (username: string, password: string, re
     return response;
 };
 
-export const generateGroups = async (numberOfGroups:number) => {
+export const generateGroups = async (numberOfGroups: number) => {
     console.log(numberOfGroups);
 
     // API interaction
@@ -88,17 +87,17 @@ export const generateGroups = async (numberOfGroups:number) => {
 
 export async function createNewTerms(availableDates: InputTerm[]) {
     try {
-      const termsUrl = `${baseUrl}/terms`;
-      const response = await fetch(termsUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(availableDates)
-      });
-      if (response.ok) {
-        return response.text();
-      }
+        const termsUrl = `${baseUrl}/terms`;
+        const response = await fetch(termsUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(availableDates)
+        });
+        if (response.ok) {
+            return response.text();
+        }
     } catch (error) {
         console.error(error);
     }

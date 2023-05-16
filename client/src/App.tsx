@@ -1,13 +1,13 @@
-import ResponsiveAppBar from "./components/layout/Nav";
 import { StudentsForm } from "./components/students-form/StudentsForm";
 import { Routes, Route } from "react-router-dom";
 import { Stack } from "@mui/material";
-import { InputDateForm } from "./components/teacher-form/InputDateForm";
 import { LayoutGrid } from "./components/layout/LayoutGrid";
-import { ShareFormCard } from "./components/share-form/ShareFormCard";
 import { StudentDataForm } from "./components/student-data-form/StudentDataForm";
-import LoginForm from "./components/authorization/Login";
-import RegisterForm from "./components/authorization/Register";
+import { GroupsNumberForm } from "./components/results-view/GroupsNumberForm";
+import { LoginForm } from "./components/authorization/Login";
+import { RegisterForm } from "./components/authorization/Register";
+import { FormCreator } from "./components/layout/FormCreator";
+import ResponsiveAppBar from "./components/layout/Nav";
 
 export const App = () => {
   return (
@@ -22,25 +22,18 @@ export const App = () => {
       <Routes>
         <Route path="/" element={
           <LayoutGrid>
-            {/* tutaj dodajemy kompoenenty dla strony wejściowej, nie wiem jeszcze co tu ma być */}
-            <ShareFormCard></ShareFormCard>
+            <div>Home page</div>
           </LayoutGrid>} />
-        <Route path="/form creator" element={
+        <Route path="/form-creator" element={
+          <FormCreator />} />
+        <Route path="/form-answers" element={
           <LayoutGrid>
-            {/* tutaj dodajemy kompoenenty dla formularza prowadzącego */}
-            <InputDateForm></InputDateForm>
-            <ShareFormCard></ShareFormCard>
-          </LayoutGrid>} />
-        <Route path="/form answers" element={
-          <LayoutGrid>
-            {/* tutaj dodajemy kompoenenty dla formularza studenta */}
             <StudentDataForm></StudentDataForm>
             <StudentsForm></StudentsForm>
           </LayoutGrid>} />
         <Route path="/results" element={
           <LayoutGrid>
-            {/* tutaj dodajemy kompoenenty dla wynikow */}
-            <StudentsForm></StudentsForm>
+            <GroupsNumberForm></GroupsNumberForm>
           </LayoutGrid>} />
         <Route path="/login" element={
           <LayoutGrid>

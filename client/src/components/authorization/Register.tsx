@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import { sendRegisterRequest } from '../../api/api-utils';
 import { AuthManagerService } from '../../services/AuthManagerService';
 
-const RegisterForm = () => {
+export const RegisterForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
@@ -73,14 +73,14 @@ const RegisterForm = () => {
                 <form onSubmit={handleSubmit} style={{ width: '90%' }}>
                     <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
                         <TextField
-                            label="Username"
+                            label="Nazwa użytkownika"
                             value={username}
                             onChange={handleUsernameChange}
                             required
                             style={{ width: '100%' }}
                         />
                         <TextField
-                            label="Password"
+                            label="Hasło"
                             type="password"
                             value={password}
                             onChange={handlePasswordChange}
@@ -88,7 +88,7 @@ const RegisterForm = () => {
                             style={{ width: '100%' }}
                         />
                         <TextField
-                            label="Repeat Password"
+                            label="Powtórz hasło"
                             type="password"
                             value={repeatPassword}
                             onChange={handleRepeatPasswordChange}
@@ -97,14 +97,14 @@ const RegisterForm = () => {
                         />
                         <Button type="submit" variant="contained" color="primary" size="medium" style={{ width: '50%' }} disabled={!isPasswordsIdentical}
                         >
-                            Submit
+                            Wyślij
                         </Button>
                     </Box>
                 </form>
             </CardContent>
             {isLoginFailed && (
                 <Typography variant="body2" color="error" align="center">
-                    Bad Credentials
+                    Złe dane rejestracji
                 </Typography>
             )}
             {isServerError && (
@@ -115,11 +115,9 @@ const RegisterForm = () => {
 
             {!isPasswordsIdentical && (
                 <Typography variant="body2" color="error" align="center">
-                    Passwords are not identical
+                    Hasła nie są identyczne
                 </Typography>
             )}
         </Card>
     );
 };
-
-export default RegisterForm;

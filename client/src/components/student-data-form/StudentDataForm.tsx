@@ -5,7 +5,7 @@ import { sendStudentData } from "../../api/api-utils";
 import { Typography } from "@mui/material";
 
 export const StudentDataForm = () => {
-    const [studentData, setStudentData] = useState<StudentData>({
+    const [studentData, setStudentData] = useState<Student>({
         name: "",
         surname: "",
         album: 0,
@@ -46,8 +46,8 @@ export const StudentDataForm = () => {
     };
 
     return (
-        <Card style={{minWidth: 500}}>
-            <CardContent style={{display: "flex", flexDirection: "column"}}>
+        <Card style={{ minWidth: 500 }}>
+            <CardContent style={{ display: "flex", flexDirection: "column" }}>
                 <Typography variant="h5" component="h2">
                     Podaj swoje dane
                 </Typography>
@@ -120,7 +120,7 @@ export const StudentDataForm = () => {
                     onClick={handleSubmit}
                     size="medium"
                 >
-                    Submit
+                    Wyślij
                 </Button>
             </CardContent>
         </Card>

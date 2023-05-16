@@ -10,15 +10,14 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { AuthManagerService } from '../../services/AuthManagerService';
 
 
 const pages = ['Form-Creator', 'Form-Answers', 'Results'];
 const settings = {
-    loggedIn: ['Logout'],
-    loggedOut: ['Login', 'Register'],
+    loggedIn: ['Wyloguj'],
+    loggedOut: ['Logowanie', 'Rejestracja'],
 };
 
 
@@ -39,12 +38,12 @@ function ResponsiveAppBar() {
     const handleMenuOptionClick = (option: string) => {
         handleCloseUserMenu();
 
-        if (option === "Logout") {
+        if (option === "Wyloguj") {
             AuthManagerService.logOut();
             navigate("/");
-        } else if (option === "Login") {
+        } else if (option === "Logowanie") {
             navigate("/login");
-        } else if (option === "Register") {
+        } else if (option === "Rejestracja") {
             navigate("/register");
         }
     };
@@ -124,8 +123,8 @@ function ResponsiveAppBar() {
                         >
                             {isLoggedIn
                                 ? [
-                                    <MenuItem key="logout" onClick={() => handleMenuOptionClick('Logout')}>
-                                        <Typography textAlign="center">Logout</Typography>
+                                    <MenuItem key="logout" onClick={() => handleMenuOptionClick('Wyloguj')}>
+                                        <Typography textAlign="center">Wyloguj</Typography>
                                     </MenuItem>,
                                     <MenuItem key="username" disabled>
                                         <Typography textAlign="center" sx={{ color: 'green' }}>

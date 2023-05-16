@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { InputDateForm } from '../teacher-form/InputDateForm';
-import ShareFormCard from '../share-form/ShareFormCard';
+import { ShareFormCard } from '../share-form/ShareFormCard';
 
 
-const FormCreator = () => {
+export const FormCreator = () => {
     const [isShareFormVisible, setIsShareFormVisible] = useState<boolean>(false);
     const [surveyCode, setSurveyCode] = useState<string>("");
-    
+
     const handleDatesSent = (surveyCode: string) => {
         setIsShareFormVisible(true);
         setSurveyCode(surveyCode)
@@ -30,4 +30,3 @@ const FormCreator = () => {
     );
 };
 
-export default FormCreator;

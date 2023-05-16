@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import { sendLoginRequest } from '../../api/api-utils';
 import { AuthManagerService } from '../../services/AuthManagerService';
 
-const LoginForm = () => {
+export const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isLoginFailed, setIsLoginFailed] = useState(false);
@@ -54,14 +54,14 @@ const LoginForm = () => {
                 <form onSubmit={handleSubmit} style={{ width: '90%' }}>
                     <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
                         <TextField
-                            label="Username"
+                            label="Nazwa użytkownika"
                             value={username}
                             onChange={handleUsernameChange}
                             required
                             style={{ width: '100%' }}
                         />
                         <TextField
-                            label="Password"
+                            label="Hasło"
                             type="password"
                             value={password}
                             onChange={handlePasswordChange}
@@ -69,14 +69,14 @@ const LoginForm = () => {
                             style={{ width: '100%' }}
                         />
                         <Button type="submit" variant="contained" color="primary" size="medium" style={{ width: '50%' }}>
-                            Submit
+                            Wyślij
                         </Button>
                     </Box>
                 </form>
             </CardContent>
             {isLoginFailed && (
                 <Typography variant="body2" color="error" align="center">
-                    Bad Credentials
+                    Złe dane logowania
                 </Typography>
             )}
             {isServerError && (
@@ -87,5 +87,3 @@ const LoginForm = () => {
         </Card>
     );
 };
-
-export default LoginForm;
