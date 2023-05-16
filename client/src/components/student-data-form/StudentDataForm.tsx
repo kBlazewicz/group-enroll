@@ -14,13 +14,11 @@ export const StudentDataForm: React.FC = () => {
         faculty: "",
         fieldOfStudy: "",
     });
-    const [id, setId] = useState<number | null>(null);
 
     const handleSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         try {
             const id = await sendStudentData(studentData);
-            setId(id);
             console.log("Received ID:", id);
             setStudentData({
                 name: "",
@@ -55,7 +53,7 @@ export const StudentDataForm: React.FC = () => {
                     Podaj swoje dane
                 </Typography>
                 <TextField
-                    label="Name"
+                    label="Imię"
                     name="name"
                     value={studentData.name}
                     onChange={handleInputChange}
@@ -63,7 +61,7 @@ export const StudentDataForm: React.FC = () => {
                     className="input-field"
                 />
                 <TextField
-                    label="Surname"
+                    label="Naziwsko"
                     name="surname"
                     value={studentData.surname}
                     onChange={handleInputChange}
@@ -71,7 +69,7 @@ export const StudentDataForm: React.FC = () => {
                     className="input-field"
                 />
                 <TextField
-                    label="Album Number"
+                    label="Numer albumu"
                     name="album"
                     value={studentData.album}
                     onChange={(event) => {
@@ -106,7 +104,7 @@ export const StudentDataForm: React.FC = () => {
                     className="input-field"
                 />
                 <TextField
-                    label="Faculty"
+                    label="Wydział"
                     name="faculty"
                     value={studentData.faculty}
                     onChange={handleInputChange}
@@ -114,7 +112,7 @@ export const StudentDataForm: React.FC = () => {
                     required
                 />
                 <TextField
-                    label="Field of Study"
+                    label="Kierunek"
                     name="fieldOfStudy"
                     value={studentData.fieldOfStudy}
                     onChange={handleInputChange}
