@@ -2,7 +2,8 @@ import { Student, Term, Vote } from "../types/types";
 import { InputTerm } from "../components/teacher-form/InputDateForm";
 
 
-export const baseUrl = "http://localhost:8080"
+export const baseUrl = "http://localhost:8081"
+export const baseFrontendUrl = "http://localhost:3001"
 
 
 export const fetchTerms = async (): Promise<Term[]> => {

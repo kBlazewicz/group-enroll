@@ -3,7 +3,8 @@ import { Card, CardContent, Typography, TextField, Button, Grid, Snackbar, Snack
 import { FileCopyOutlined as FileCopyIcon, CheckCircleOutlineOutlined as CheckCircleIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
-import { baseUrl } from '../../api/api-utils';
+import { baseFrontendUrl } from '../../api/api-utils';
+
 
 const useStyles = makeStyles(theme => ({
     success: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 export const ShareFormCard = ({ surveyCode } : { surveyCode: string }) => {
     const classes = useStyles();
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
-    const formLink = `${baseUrl}/survey/${surveyCode}`;
+    const formLink = `${baseFrontendUrl}/survey/${surveyCode}`;
 
     const handleCopyLink = () => {
         navigator.clipboard.writeText(formLink);
