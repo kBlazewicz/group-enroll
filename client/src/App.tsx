@@ -41,16 +41,14 @@ export const App = () => {
           <LayoutGrid>
             {/* tutaj dodajemy kompoenenty dla wynikow */}
             <StudentsForm></StudentsForm>
-          </Result>} />
+          </LayoutGrid>} />
         <Route path="/login" element={
-          <Result>
+          <LayoutGrid>
             <LoginForm></LoginForm>
-          </Result>} />
+          </LayoutGrid>} />
         <Route path="/register" element={
-          <Result>
+          <LayoutGrid>
             <RegisterForm></RegisterForm>
-          </Result>} />
-            <StudentsForm></StudentsForm>
           </LayoutGrid>} />
       </Routes>
     </Stack >

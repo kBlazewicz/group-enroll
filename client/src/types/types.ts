@@ -34,12 +34,3 @@ export interface Student {
     faculty: string;
     generalComment?: string;
 }
-
-export interface StudentData {
-    name: string;
-    surname: string;
-    album: string;
-    email: string;
-    faculty: string;
-    fieldOfStudy: string;
-}

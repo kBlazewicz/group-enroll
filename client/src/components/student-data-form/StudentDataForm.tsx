@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { TextField, Button, Card, CardContent } from "@material-ui/core";
-import { StudentData } from "../../types/types";
+import { Student } from "../../types/types";
 import { sendStudentData } from "../../api/api-utils";
 import "./StudentDataForm.css";
 import { Typography } from "@mui/material";
 
 export const StudentDataForm: React.FC = () => {
-    const [studentData, setStudentData] = useState<StudentData>({
+    const [studentData, setStudentData] = useState<Student>({
         name: "",
         surname: "",
-        album: "",
-        email: "",
+        album: 0,
+        mail: "",
         faculty: "",
         fieldOfStudy: "",
     });
@@ -22,6 +22,14 @@ export const StudentDataForm: React.FC = () => {
             const id = await sendStudentData(studentData);
             setId(id);
             console.log("Received ID:", id);
+            setStudentData({
+                name: "",
+                surname: "",
+                album: 0,
+                mail: "",
+                faculty: "",
+                fieldOfStudy: "",
+            });
         } catch (error) {
             console.error(error);
         }
@@ -32,6 +40,12 @@ export const StudentDataForm: React.FC = () => {
             ...studentData,
             [event.target.name]: event.target.value,
         });
+    };
+
+    const isValidEmail = (mail: string) => {
+        if (mail.length === 0) return true;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(mail);
     };
 
     return (
@@ -60,26 +74,35 @@ export const StudentDataForm: React.FC = () => {
                     label="Album Number"
                     name="album"
                     value={studentData.album}
-                    onChange={handleInputChange}
+                    onChange={(event) => {
+                        const value = parseInt(event.target.value, 10);
+                        if (!isNaN(value)) {
+                            setStudentData((prevData) => ({
+                                ...prevData,
+                                album: value,
+                            }));
+                        }
+                    }}
                     required
                     inputMode="numeric"
                     onKeyPress={(event) => {
                         const keyCode = event.keyCode || event.which;
                         const keyValue = String.fromCharCode(keyCode);
                         const isNumber = /^\d+$/.test(keyValue);
-                        const isLengthValid = studentData.album.length < 8;
-                        if (!isNumber || !isLengthValid) {
+                        if (!isNumber) {
                             event.preventDefault();
                         }
                     }}
                     className="input-field"
                 />
                 <TextField
-                    label="Email"
-                    name="email"
-                    value={studentData.email}
+                    label="Mail"
+                    name="mail"
+                    value={studentData.mail}
                     onChange={handleInputChange}
                     required
+                    error={!isValidEmail(studentData.mail)}
+                    helperText={isValidEmail(studentData.mail) ? '' : 'Invalid email address'}
                     className="input-field"
                 />
                 <TextField

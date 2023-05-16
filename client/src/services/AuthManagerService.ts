@@ -1,6 +1,7 @@
 var isLoggedIn = false;
 var token = "";
 var username = "";
+var studentId = -1;
 var loginStatusCallback: (isLoggedIn: boolean) => void = () => { };
 
 export const AuthManagerService = {
@@ -39,6 +40,15 @@ export const AuthManagerService = {
         return username;
     },
 
+    setStudentId: function (newStudentId: number) {
+        studentId = newStudentId;
+        localStorage.setItem("studentId", newStudentId.toString());
+    },
+
+    getStudentId: function () {
+        return studentId;
+    },
+
     setLoginStatusCallback: function (callback: (isLoggedIn: boolean) => void) {
         loginStatusCallback = callback;
     },
@@ -47,11 +57,15 @@ export const AuthManagerService = {
         const storedIsLoggedIn = localStorage.getItem("isLoggedIn");
         const storedToken = localStorage.getItem("token");
         const storedUsername = localStorage.getItem("username");
+        const storedStudentId = localStorage.getItem("studentId");
 
         if (storedIsLoggedIn === "true" && storedToken && storedUsername) {
             isLoggedIn = true;
             token = storedToken;
             username = storedUsername;
+        }
+        if (storedStudentId) {
+            studentId = parseInt(storedStudentId);
         }
     },
 };
