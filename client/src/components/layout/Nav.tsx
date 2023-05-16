@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthManagerService } from '../../services/AuthManagerService';
 
 
-const pages = ['Form Creator', 'Form Answers', 'Results'];
+const pages = ['Form-Creator', 'Form-Answers', 'Results'];
 const settings = {
     loggedIn: ['Logout'],
     loggedOut: ['Login', 'Register'],

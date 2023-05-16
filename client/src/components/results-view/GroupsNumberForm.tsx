@@ -15,7 +15,7 @@ export const GroupsNumberForm = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         await generateGroups(groupsNumber)
-    }
+      }
 
     return (
         <div style={{

@@ -20,10 +20,8 @@ import java.util.Set;
 public class Term {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long termId;
-    @JsonFormat(pattern = "HH:mm")
+    long id;
     LocalTime startTime;
-    @JsonFormat(pattern = "HH:mm")
     LocalTime endTime;
     WeekDay dayOfWeek;
     @OneToMany(mappedBy = "term")
@@ -39,10 +37,5 @@ public class Term {
     public Term(LocalTime startTime, LocalTime endTime, WeekDay dayOfWeek, Set<Vote> votes) {
         this(startTime, endTime, dayOfWeek);
         this.votes = votes;
-    }
-
-    public void addVote(Vote vote) {
-        if (votes == null) votes = new HashSet<>();
-        votes.add(vote);
     }
 }

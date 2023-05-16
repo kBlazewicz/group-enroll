@@ -69,7 +69,7 @@ export const StudentsForm = () => {
 
 
     return (
-        <Card sx={{ minWidth: 500 }}>
+        <Card component={Paper} sx={{ minWidth: 500 }}>
             <CardContent>
                 <List
                     sx={{ maxWidth: 500, maxHeight: 500, overflow: 'auto' }}
@@ -95,7 +95,7 @@ export const StudentsForm = () => {
                 </List >
             </CardContent>
             <CardActions>
-                <SubmitStudentsFormButton />
+                <SubmitStudentsFormButton termsToSend={checkedTerms}/>
             </CardActions>
         </Card>
     )

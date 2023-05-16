@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { TextField, Button, Card, CardContent } from "@material-ui/core";
 import { Student } from "../../types/types";
 import { sendStudentData } from "../../api/api-utils";
-import "./StudentDataForm.css";
 import { Typography } from "@mui/material";
 
-export const StudentDataForm: React.FC = () => {
-    const [studentData, setStudentData] = useState<Student>({
+export const StudentDataForm = () => {
+    const [studentData, setStudentData] = useState<StudentData>({
         name: "",
         surname: "",
         album: 0,
@@ -47,8 +46,8 @@ export const StudentDataForm: React.FC = () => {
     };
 
     return (
-        <Card className="form-card">
-            <CardContent className="fields-container">
+        <Card style={{minWidth: 500}}>
+            <CardContent style={{display: "flex", flexDirection: "column"}}>
                 <Typography variant="h5" component="h2">
                     Podaj swoje dane
                 </Typography>
@@ -58,7 +57,6 @@ export const StudentDataForm: React.FC = () => {
                     value={studentData.name}
                     onChange={handleInputChange}
                     required
-                    className="input-field"
                 />
                 <TextField
                     label="Naziwsko"
@@ -66,7 +64,6 @@ export const StudentDataForm: React.FC = () => {
                     value={studentData.surname}
                     onChange={handleInputChange}
                     required
-                    className="input-field"
                 />
                 <TextField
                     label="Numer albumu"
@@ -91,7 +88,6 @@ export const StudentDataForm: React.FC = () => {
                             event.preventDefault();
                         }
                     }}
-                    className="input-field"
                 />
                 <TextField
                     label="Mail"
@@ -108,7 +104,6 @@ export const StudentDataForm: React.FC = () => {
                     name="faculty"
                     value={studentData.faculty}
                     onChange={handleInputChange}
-                    className="input-field"
                     required
                 />
                 <TextField
@@ -116,11 +111,10 @@ export const StudentDataForm: React.FC = () => {
                     name="fieldOfStudy"
                     value={studentData.fieldOfStudy}
                     onChange={handleInputChange}
-                    className="input-field"
                     required
                 />
                 <Button
-                    style={{ margin: "10px" }}
+                    style={{ marginTop: 20, width: 100 }}
                     variant="contained"
                     color="primary"
                     onClick={handleSubmit}

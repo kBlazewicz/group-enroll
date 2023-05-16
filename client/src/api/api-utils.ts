@@ -1,20 +1,14 @@
-import { Day, Student, Term } from "../types/types";
+import { Day, Student, Term, Vote } from "../types/types";
 import { InputTerm } from "../components/teacher-form/InputDateForm";
 import axios from 'axios';
 
 
 const baseURL = "http://localhost:8080"
 
-const days: Term[] = [
-    { id: 0, startTime: "15:00", endTime: "16:30", dayOfWeek: Day.Monday, voteList: [] },
-    { id: 1, startTime: "14:00", endTime: "15:30", dayOfWeek: Day.Monday, voteList: [] },
-    { id: 2, startTime: "15:00", endTime: "16:30", dayOfWeek: Day.Friday, voteList: [] },
-    { id: 3, startTime: "15:00", endTime: "16:30", dayOfWeek: Day.Thursday, voteList: [] },
-    { id: 4, startTime: "15:00", endTime: "16:30", dayOfWeek: Day.Tuesday, voteList: [] }
-];
 
 export const fetchTerms = async (): Promise<Term[]> => {
-    return days;
+    const response = await fetch(`${baseUrl}/terms`);
+    return response.json();
 }
 
 export const fetchFormLink = async (): Promise<string> => {
@@ -55,6 +49,19 @@ export const sendLoginRequest = async (username: string, password: string) => {
     return response;
 };
 
+export const sendVotes = async (votes: Vote[]) => {
+    const options = {
+        method: "POST",
+        body: JSON.stringify(votes),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    };
+
+    const response = await fetch(`${baseUrl}/votes`, options);
+
+    return response;
+}
 
 export const sendRegisterRequest = async (username: string, password: string, repeatPassword: string) => {
     const endpoint = baseURL + '/register';
@@ -71,7 +78,7 @@ export const sendRegisterRequest = async (username: string, password: string, re
     return response;
 };
 
-export const generateGroups = async (numberOfGroups: number) => {
+export const generateGroups = async (numberOfGroups:number) => {
     console.log(numberOfGroups);
 
     // API interaction
@@ -81,15 +88,17 @@ export const generateGroups = async (numberOfGroups: number) => {
 
 export async function createNewTerms(availableDates: InputTerm[]) {
     try {
-        const termsUrl = `${baseURL}/terms`;
-        const response = await fetch(termsUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(availableDates)
-        });
-        return response.json
+      const termsUrl = `${baseUrl}/terms`;
+      const response = await fetch(termsUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(availableDates)
+      });
+      if (response.ok) {
+        return response.text();
+      }
     } catch (error) {
         console.error(error);
     }

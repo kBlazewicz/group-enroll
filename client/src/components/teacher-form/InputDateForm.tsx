@@ -22,7 +22,7 @@ function isDateInTable(table:InputTerm[], startTime:string, endTime:string, week
 }
 
 
-export const InputDateForm = () => {
+export const InputDateForm = ({ onDatesSent } : { onDatesSent : (surveyCode: string) => void}) => {
   const [startTime, setStartTime] = useState("12:00");
   const [endTime, setEndTime] = useState("12:00");
   const [weekDay, setWeekDay] = useState(Day.Monday);
@@ -59,7 +59,12 @@ export const InputDateForm = () => {
     if(availableDates.length <= 1){
       alert('Nie można przesłać - zbyt mało dodanych terminów')
     }else{
-      await createNewTerms(availableDates);
+      const url = await createNewTerms(availableDates);
+      
+      if (url) {
+        onDatesSent(url);
+      }
+
       setAvailableDates([])
   }
   }
