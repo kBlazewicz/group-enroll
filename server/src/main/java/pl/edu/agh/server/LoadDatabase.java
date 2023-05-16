@@ -30,13 +30,13 @@ public class LoadDatabase {
         return args -> {
             Student student = new Student("Jan", "Dzban", "457912", "dzban@wp.pl", "WIEiT", "Informatyka");
 
-            Term wednesday = new Term(LocalTime.of(10, 0, 0), LocalTime.of(11, 30, 0), WeekDay.WEDNESDAY);
-            Term tuesday = new Term(LocalTime.of(13, 0, 0), LocalTime.of(14, 30, 0), WeekDay.TUESDAY);
-            Term monday = new Term(LocalTime.of(12, 0, 0), LocalTime.of(13, 30, 0), WeekDay.MONDAY);
-
-            termRepository.saveAll(
-                    List.of(wednesday, tuesday, monday)
-            );
+//            Term wednesday = new Term(LocalTime.of(10, 0, 0), LocalTime.of(11, 30, 0), WeekDay.WEDNESDAY);
+//            Term tuesday = new Term(LocalTime.of(13, 0, 0), LocalTime.of(14, 30, 0), WeekDay.TUESDAY);
+//            Term monday = new Term(LocalTime.of(12, 0, 0), LocalTime.of(13, 30, 0), WeekDay.MONDAY);
+//
+//            termRepository.saveAll(
+//                    List.of(wednesday, tuesday, monday)
+//            );
 
             log.info("Preloading" + studentRepository.save(student));
             log.info("JWT token for admin: " + authorizationService.registerUser("admin", "test","test"));

@@ -1,10 +1,17 @@
-import React, { ReactNode } from 'react';
+import React, { useState } from 'react';
+import { InputDateForm } from '../teacher-form/InputDateForm';
+import { ShareFormCard } from '../share-form/ShareFormCard';
 
-interface Props {
-    children: ReactNode[];
-}
 
-const FormCreator: React.FC<Props> = ({ children }) => {
+export const FormCreator = () => {
+    const [isShareFormVisible, setIsShareFormVisible] = useState<boolean>(false);
+    const [surveyCode, setSurveyCode] = useState<string>("");
+
+    const handleDatesSent = (surveyCode: string) => {
+        setIsShareFormVisible(true);
+        setSurveyCode(surveyCode)
+    }
+
     return (
         <div
             style={{
@@ -14,16 +21,12 @@ const FormCreator: React.FC<Props> = ({ children }) => {
                 alignItems: 'center',
                 height: '100%',
                 width: '90%',
-                margin: '1rem',
+                marginTop: '5rem',
             }}
         >
-            {children.map((child, index) => (
-                <div key={index} style={{ margin: '1rem 0' }}>
-                    {child}
-                </div>
-            ))}
+            <InputDateForm onDatesSent={handleDatesSent}></InputDateForm>
+            {isShareFormVisible ? <ShareFormCard surveyCode={surveyCode}></ShareFormCard> : null}
         </div>
     );
 };
 
-export default FormCreator;

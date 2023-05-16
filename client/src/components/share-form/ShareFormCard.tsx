@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, Typography, TextField, Button, Grid, Snackbar, SnackbarContent, IconButton } from '@material-ui/core';
 import { FileCopyOutlined as FileCopyIcon, CheckCircleOutlineOutlined as CheckCircleIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
-import { fetchFormLink } from '../../api/api-utils';
+import { baseUrl } from '../../api/api-utils';
 
 const useStyles = makeStyles(theme => ({
     success: {
@@ -20,18 +20,10 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ShareFormCard = () => {
+export const ShareFormCard = ({ surveyCode } : { surveyCode: string }) => {
     const classes = useStyles();
-    const [formLink, setFormLink] = useState('');
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const link = await fetchFormLink();
-            setFormLink(link);
-        };
-        fetchData();
-    }, []);
+    const formLink = `${baseUrl}/survey/${surveyCode}`;
 
     const handleCopyLink = () => {
         navigator.clipboard.writeText(formLink);
@@ -93,5 +85,3 @@ const ShareFormCard = () => {
         </Card>
     );
 };
-
-export default ShareFormCard;

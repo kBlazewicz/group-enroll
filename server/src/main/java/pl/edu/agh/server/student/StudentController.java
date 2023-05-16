@@ -19,37 +19,37 @@ public class StudentController {
     private final StudentConverter studentConverter;
     private final ObjectMapper objectMapper;
 
-    @GetMapping("/students")
+    @GetMapping("/student")
     public List<StudentDTO> getStudents() {
         return studentService.getStudents().stream().map(StudentDTO::new).toList();
     }
 
 
-    @GetMapping("/students/{id}")
+    @GetMapping("/student/{id}")
     public StudentDTO getStudent(@PathVariable Long id) {
         return new StudentDTO(studentService.getStudent(id));
     }
 
 
-    @PostMapping
+    @PostMapping("/student/many")
     public List<StudentDTO> saveStudents(@RequestBody List<StudentDTO> studentDTOS) {
         List<Student> students = studentDTOS.stream().map(studentConverter::getStudentFromDTO).toList();
         studentService.saveMany(students);
         return studentDTOS;
     }
 
-    @PostMapping("student")
+    @PostMapping("/student")
     public long saveStudent(@RequestBody StudentDTO student) {
         return studentService.save(studentConverter.getStudentFromDTO(student)).getId();
     }
 
-    @DeleteMapping("/students/{id}")
+    @DeleteMapping("/student/{id}")
     public void deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
     }
 
 
-    @PatchMapping(path = "/students/{id}", consumes = "application/json-patch+json")
+    @PatchMapping(path = "/student/{id}", consumes = "application/json-patch+json")
     public StudentDTO updateStudent(@PathVariable Long id, @RequestBody JsonPatch patch) {
         try {
             Student student = studentService.getStudent(id);

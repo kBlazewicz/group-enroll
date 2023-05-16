@@ -48,7 +48,7 @@ export const StudentsForm = () => {
     useEffect(() => {
         const loadData = async () => {
             const data = await fetchTerms();
-            setTerms(data);            
+            setTerms(data);
         }
         loadData();
     }, [])

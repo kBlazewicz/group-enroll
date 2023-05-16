@@ -6,8 +6,8 @@ import { generateGroups } from '../../api/api-utils'
 export const GroupsNumberForm = () => {
     const [groupsNumber, setGroupsNumber] = useState<number>(10);
 
-    const handleGroupsNumberChange =(e : React.ChangeEvent<HTMLInputElement>) =>{
-        if(e.target.value != null){
+    const handleGroupsNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value != null) {
             setGroupsNumber(parseInt(e.target.value))
         }
     }
@@ -17,37 +17,39 @@ export const GroupsNumberForm = () => {
         await generateGroups(groupsNumber)
       }
 
-      return (   
-        <div style={{ textAlign: "center", 
-                      fontFamily: "system-ui",  
-                      margin: "12px"}}>
+    return (
+        <div style={{
+            textAlign: "center",
+            fontFamily: "system-ui",
+            margin: "12px"
+        }}>
 
             <form onSubmit={handleSubmit}>
                 <InputLabel>
                     <Typography variant="h5">
-                    Liczba grup
+                        Liczba grup
                     </Typography>
                 </InputLabel>
-                
-                <TextField
-                required
-                name="groupsNum"
-                type="number"
-                inputProps={{ min: "2", max: "20" }}
-                value={groupsNumber.toString()}
-                onChange={handleGroupsNumberChange}
-                style={{ margin: "10px", padding: "6px 12px" }}/>
 
-                <br/>
+                <TextField
+                    required
+                    name="groupsNum"
+                    type="number"
+                    inputProps={{ min: "2", max: "20" }}
+                    value={groupsNumber.toString()}
+                    onChange={handleGroupsNumberChange}
+                    style={{ margin: "10px", padding: "6px 12px" }} />
+
+                <br />
 
                 <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                style={{ padding: "6px 12px" }}>
-                Wygeneruj
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    style={{ padding: "6px 12px" }}>
+                    Wygeneruj
                 </Button>
             </form>
         </div>
-        )
+    )
 }

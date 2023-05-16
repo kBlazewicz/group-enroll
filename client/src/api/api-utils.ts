@@ -1,8 +1,9 @@
-import { Student, StudentData, Term, Vote } from "../types/types";
+import { Student, Term, Vote } from "../types/types";
 import { InputTerm } from "../components/teacher-form/InputDateForm";
 
 
-const baseUrl = "http://localhost:8080";
+export const baseUrl = "http://localhost:8080"
+
 
 export const fetchTerms = async (): Promise<Term[]> => {
     const response = await fetch(`${baseUrl}/terms`);
@@ -13,56 +14,92 @@ export const fetchFormLink = async (): Promise<string> => {
     return "https://forms.gle/9x6U1k6U1zY2ZK6J8";
 }
 
-export const sendStudentData = async (studentData: StudentData) => {
-    const student: Student = {
-        name: studentData.name,
-        surname: studentData.surname,
-        album: parseInt(studentData.album),
-        mail: studentData.email,
-        fieldOfStudy: studentData.fieldOfStudy,
-        faculty: studentData.faculty,
-    };
+export const sendStudentData = async (student: Student): Promise<number> => {
+    const endpoint = baseUrl + '/student';
+    const requestBody = JSON.stringify(student);
+    const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: requestBody,
+    });
 
-    console.log("Received data: ", student);
+    if (response.ok) {
+        const studentId = await response.json();
+        return studentId as number;
+    } else {
+        throw new Error('Failed to send student data');
+    }
+};
 
-    return Math.floor(Math.random() * 1000);
+export const sendLoginRequest = async (username: string, password: string) => {
+    const endpoint = baseUrl + '/login';
+    const requestBody = JSON.stringify({ username, password });
+
+    const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: requestBody,
+    });
+
+    return response;
 };
 
 export const sendVotes = async (votes: Vote[]) => {
     const options = {
-        method: "POST", 
+        method: "POST",
         body: JSON.stringify(votes),
         headers: {
             "Content-Type": "application/json"
         }
-    };    
+    };
 
     const response = await fetch(`${baseUrl}/votes`, options);
-    
+
     return response;
 }
 
-export const generateGroups = async (numberOfGroups:number) => {
+export const sendRegisterRequest = async (username: string, password: string, repeatPassword: string) => {
+    const endpoint = baseUrl + '/register';
+    const requestBody = JSON.stringify({ username, password, repeatPassword });
+
+    const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: requestBody,
+    });
+
+    return response;
+};
+
+export const generateGroups = async (numberOfGroups: number) => {
     console.log(numberOfGroups);
-    
+
     // API interaction
-    
+
 }
 
 
 export async function createNewTerms(availableDates: InputTerm[]) {
     try {
-      const termsUrl = `${baseUrl}/terms`;
-      const response = await fetch(termsUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(availableDates)
-      });      
-      return response.json
+        const termsUrl = `${baseUrl}/terms`;
+        const response = await fetch(termsUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(availableDates)
+        });
+        if (response.ok) {
+            return response.text();
+        }
     } catch (error) {
-      console.error(error);
+        console.error(error);
     }
-  }
+}
 
