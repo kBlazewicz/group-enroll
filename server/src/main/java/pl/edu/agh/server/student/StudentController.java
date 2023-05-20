@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,16 +52,16 @@ public class StudentController {
 
 
     @PatchMapping(path = "/student/{id}", consumes = "application/json-patch+json")
-    public StudentDTO updateStudent(@PathVariable Long id, @RequestBody JsonPatch patch) {
+    public ResponseEntity<?> updateStudent(@PathVariable Long id, @RequestBody JsonPatch patch) {
         try {
             Student student = studentService.getStudent(id);
             StudentDTO studentDTO = new StudentDTO(student);
             StudentDTO patchedStudentDTO = applyPatchToStudent(patch, studentDTO);
             studentConverter.applyChangesFromDTO(student, patchedStudentDTO);
             studentService.updateStudent(student);
-            return patchedStudentDTO;
+            return ResponseEntity.ok().body(patchedStudentDTO);
         } catch (JsonPatchException | JsonProcessingException | NoSuchElementException e) {
-            return null;
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
         }
     }
 

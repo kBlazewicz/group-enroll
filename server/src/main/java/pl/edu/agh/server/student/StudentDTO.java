@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-class StudentDTO {
+public class StudentDTO {
 
     private long id;
 

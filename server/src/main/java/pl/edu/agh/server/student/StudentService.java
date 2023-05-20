@@ -23,7 +23,7 @@ public class StudentService {
 
     public Student getStudent(Long id) {
         try {
-            return repository.findById(id).orElseThrow(() -> new RuntimeException("Student with id: " + id + "not found"));
+            return repository.findById(id).orElseThrow(() -> new IllegalStateException("Student with id: " + id + "not found"));
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
             return null;
