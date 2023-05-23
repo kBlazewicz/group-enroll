@@ -37,6 +37,7 @@ export const GroupsList: React.FC<GroupsListProps> = ({ groups, votes }) => {
             </ul>
         </>
 
+
     )
 
 }

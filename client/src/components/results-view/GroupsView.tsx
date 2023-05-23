@@ -35,6 +35,7 @@ export function GroupsView() {
             <GroupsList groups={groups} votes={votes}></GroupsList>
             <GroupsExport groups={groups} votes={votes}></GroupsExport>
 
+
         </div>
     )
 }
