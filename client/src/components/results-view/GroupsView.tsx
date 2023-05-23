@@ -13,7 +13,7 @@ export function GroupsView() {
     return (
         <div style={{textAlign: "center", fontFamily:"system-ui"}}>
             <GroupsNumberForm onSubmit={renderGroups}></GroupsNumberForm>
-            <h1>Generated groups</h1>
+            <h2>Generated groups</h2>
             <GroupsList groups={groups}></GroupsList>
         </div>
     )

@@ -13,7 +13,8 @@ export const GroupsList: React.FC<GroupsListProps> = ({ groups }) => {
             {groups.map(group => {
                 return (
                     <li key={group.term.id}>
-                        <h2>Group {group.term.id}</h2>
+                        {/* <h2>Group {ind + 1}</h2> */}
+                        <h3>{group.term.dayOfWeek} {group.term.startTime} - {group.term.endTime}</h3>
                         <ul style={{listStyleType: "none", paddingLeft: 0, marginLeft: 0}}>
                             {group.students.map(student => {
                                 return (
