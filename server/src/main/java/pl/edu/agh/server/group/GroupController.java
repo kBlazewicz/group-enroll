@@ -1,10 +1,8 @@
 package pl.edu.agh.server.group;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.SneakyThrows;
+import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.server.algorithm.SimulatedAnnealing;
 import pl.edu.agh.server.algorithm.Solution;
 import pl.edu.agh.server.student.Student;
@@ -13,10 +11,8 @@ import pl.edu.agh.server.term.Term;
 import pl.edu.agh.server.term.TermService;
 import pl.edu.agh.server.vote.Vote;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 @RestController
 @RequestMapping("/groups")
@@ -24,6 +20,7 @@ import java.util.List;
 public class GroupController {
     private final TermService termService;
     private final StudentService studentService;
+    private final GroupService groupService;
     private final GroupConverter groupConverter;
 
     @GetMapping(path = "{numberOfGroups}")
@@ -59,5 +56,26 @@ public class GroupController {
         return groups.stream().map(GroupDTO::new).toList();
     }
 
+//    @SneakyThrows
+//    @PostMapping("/export")
+//    public void exportToExcel(@RequestBody List<GroupDTO> groupDTOS, HttpServletResponse response){
+//        System.out.println("1");
+//        response.setContentType("application/octet-stream");
+//
+//        String headerKey = "Content-Disposition";
+//        String headerValue = "attachment;filename=courses.xls";
+//
+//        response.setHeader(headerKey, headerValue);
+//
+//        groupService.exportToExcel(groupDTOS, response);
+//
+//        response.flushBuffer();
+//    }
+
+    @SneakyThrows
+    @PostMapping("/export")
+    public void exportToExcel(@RequestBody List<GroupDTO> groupDTOS, HttpServletResponse response){
+        System.out.println("1");
+    }
 
 }
