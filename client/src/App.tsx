@@ -8,6 +8,7 @@ import { LoginForm } from "./components/authorization/Login";
 import { RegisterForm } from "./components/authorization/Register";
 import { FormCreator } from "./components/layout/FormCreator";
 import ResponsiveAppBar from "./components/layout/Nav";
+import { GroupsView } from "./components/results-view/GroupsView";
 
 export const App = () => {
   return (
@@ -33,7 +34,7 @@ export const App = () => {
           </LayoutGrid>} />
         <Route path="/results" element={
           <LayoutGrid>
-            <GroupsNumberForm></GroupsNumberForm>
+            <GroupsView></GroupsView>
           </LayoutGrid>} />
         <Route path="/login" element={
           <LayoutGrid>

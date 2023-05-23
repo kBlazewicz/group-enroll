@@ -1,4 +1,4 @@
-import { Student, Term, Vote } from "../types/types";
+import { Student, Term, Vote, Group } from "../types/types";
 import { InputTerm } from "../components/teacher-form/InputDateForm";
 
 
@@ -77,11 +77,11 @@ export const sendRegisterRequest = async (username: string, password: string, re
     return response;
 };
 
-export const generateGroups = async (numberOfGroups: number) => {
+export const generateGroups = async (numberOfGroups: number): Promise<Group[]> => {
     console.log(numberOfGroups);
 
-    // API interaction
-
+    const response = await fetch(`${baseUrl}/groups/${numberOfGroups}`);
+    return response.json();
 }
 
 

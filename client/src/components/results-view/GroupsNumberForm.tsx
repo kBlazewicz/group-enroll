@@ -2,8 +2,9 @@ import { Button, TextField, InputLabel, Typography } from '@material-ui/core';
 import React from 'react';
 import { useState } from 'react';
 import { generateGroups } from '../../api/api-utils'
+import { Group } from "../../types/types";
 
-export const GroupsNumberForm = () => {
+export const GroupsNumberForm = ({ onSubmit } : { onSubmit : (groups: Group[]) => void}) => {
     const [groupsNumber, setGroupsNumber] = useState<number>(10);
 
     const handleGroupsNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -12,9 +13,9 @@ export const GroupsNumberForm = () => {
         }
     }
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        await generateGroups(groupsNumber)
+        generateGroups(groupsNumber).then((groups) => onSubmit(groups))
       }
 
     return (
