@@ -34,6 +34,7 @@ export function GroupsView() {
             <GroupsNumberForm onSubmit={renderGroups} students={students} terms={terms}></GroupsNumberForm>
             <GroupsList groups={groups} votes={votes}></GroupsList>
             <GroupsExport groups={groups} votes={votes}></GroupsExport>
+
         </div>
     )
 }
