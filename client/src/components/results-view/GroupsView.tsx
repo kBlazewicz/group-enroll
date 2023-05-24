@@ -31,7 +31,7 @@ export function GroupsView() {
     return (
         <div style={{textAlign: "center", fontFamily:"system-ui"}}>
             <VotesSummary votes={votes} terms={terms} students={students}></VotesSummary>
-            <GroupsNumberForm onSubmit={renderGroups}></GroupsNumberForm>
+            <GroupsNumberForm onSubmit={renderGroups} students={students} terms={terms}></GroupsNumberForm>
             <GroupsList groups={groups} votes={votes}></GroupsList>
             <GroupsExport groups={groups} votes={votes}></GroupsExport>
         </div>

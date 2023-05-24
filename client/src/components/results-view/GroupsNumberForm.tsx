@@ -2,9 +2,15 @@ import { Button, TextField, InputLabel, Typography } from '@material-ui/core';
 import React from 'react';
 import { useState } from 'react';
 import { generateGroups } from '../../api/api-utils'
-import { Group } from "../../types/types";
+import { Group, Student, Term } from "../../types/types";
 
-export const GroupsNumberForm = ({ onSubmit } : { onSubmit : (groups: Group[]) => void}) => {
+interface GroupsNumberFormProps {
+    onSubmit: (groups: Group[]) => void;
+    students: Student[];
+    terms: Term[];
+}
+
+export const GroupsNumberForm: React.FC<GroupsNumberFormProps> = ({ onSubmit, students, terms }) => {
     const [groupsNumber, setGroupsNumber] = useState<number>(10);
 
     const handleGroupsNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +42,7 @@ export const GroupsNumberForm = ({ onSubmit } : { onSubmit : (groups: Group[]) =
                     required
                     name="groupsNum"
                     type="number"
-                    inputProps={{ min: "1", max: "20" }}
+                    inputProps={{ min: "2", max: Math.min(students.length / 2, terms.length) }}
                     value={groupsNumber.toString()}
                     onChange={handleGroupsNumberChange}
                     style={{ margin: "10px", padding: "6px 12px" }} />
