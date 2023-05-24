@@ -33,6 +33,11 @@ export const sendStudentData = async (student: Student): Promise<number> => {
     }
 };
 
+export const fetchStudents = async (): Promise<Student[]> => {
+    const response = await fetch(`${baseUrl}/student`);
+    return response.json();
+}
+
 export const sendLoginRequest = async (username: string, password: string) => {
     const endpoint = baseUrl + '/login';
     const requestBody = JSON.stringify({ username, password });
