@@ -18,7 +18,11 @@ export const VotesSummary: React.FC<VotesSummaryProps> = ({ terms, students, vot
             }}>
                 <li style={{ margin: 5, padding: 5, backgroundColor: "#49c46a50", borderRadius: 3, paddingLeft: 0 }}>
                     <ul style={{ listStyleType: "none" }}>
+<<<<<<< HEAD
                         <li style={{ marginBottom: 15 }}><b>{votes.length !== 0 && "Imię i nazwisko"}</b></li>
+=======
+                        <li style={{ marginBottom: 15 }}><b>Imię i nazwisko</b></li>
+>>>>>>> a15c9b0 (Added votes summary in the results view)
                         {students.map(student => {
                             return (
                                 <li key={student.id}>
