@@ -60,6 +60,11 @@ export const sendVotes = async (votes: Vote[]) => {
     const response = await fetch(`${baseUrl}/votes`, options);
 
     return response;
+};
+
+export const fetchVotes = async (): Promise<Vote[]> => {
+    const response = await fetch(`${baseUrl}/votes`);
+    return response.json();
 }
 
 export const sendRegisterRequest = async (username: string, password: string, repeatPassword: string) => {

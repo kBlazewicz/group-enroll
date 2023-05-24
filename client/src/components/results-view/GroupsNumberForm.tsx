@@ -36,7 +36,7 @@ export const GroupsNumberForm = ({ onSubmit } : { onSubmit : (groups: Group[]) =
                     required
                     name="groupsNum"
                     type="number"
-                    inputProps={{ min: "2", max: "20" }}
+                    inputProps={{ min: "1", max: "20" }}
                     value={groupsNumber.toString()}
                     onChange={handleGroupsNumberChange}
                     style={{ margin: "10px", padding: "6px 12px" }} />

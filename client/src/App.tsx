@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import { Stack } from "@mui/material";
 import { LayoutGrid } from "./components/layout/LayoutGrid";
 import { StudentDataForm } from "./components/student-data-form/StudentDataForm";
-import { GroupsNumberForm } from "./components/results-view/GroupsNumberForm";
 import { LoginForm } from "./components/authorization/Login";
 import { RegisterForm } from "./components/authorization/Register";
 import { FormCreator } from "./components/layout/FormCreator";
