@@ -23,7 +23,7 @@ public class VoteService {
     }
 
     public Vote getVote(Long id) {
-        return repository.findById(id).orElseThrow(() -> new VoteNotFoundException(id));
+        return repository.findById(id).orElseThrow(() -> new IllegalStateException("Vote with id: " + id + " does not exist"));
     }
 
     public Vote save(Vote vote) {

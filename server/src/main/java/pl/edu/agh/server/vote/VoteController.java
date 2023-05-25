@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,16 +55,16 @@ public class VoteController {
 
 
     @PatchMapping(path = "/votes/{id}", consumes = "application/json-patch+json")
-    public VoteDTO updateVote(@PathVariable Long id, @RequestBody JsonPatch patch) {
+    public ResponseEntity<?> updateVote(@PathVariable Long id, @RequestBody JsonPatch patch) {
         try {
             Vote vote = voteService.getVote(id);
             VoteDTO voteDTO = new VoteDTO(vote);
             VoteDTO patchedVoteDTO = applyPatchToVote(patch, voteDTO);
             voteConverter.applyChangesFromDTO(vote, patchedVoteDTO);
             voteService.updateVote(vote);
-            return patchedVoteDTO;
+            return ResponseEntity.ok(patchedVoteDTO);
         } catch (JsonPatchException | JsonProcessingException | NoSuchElementException e) {
-            return null;
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
         }
     }
 

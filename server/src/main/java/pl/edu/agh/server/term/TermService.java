@@ -1,14 +1,13 @@
 package pl.edu.agh.server.term;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-import pl.edu.agh.server.survey.SurveyController;
+import org.springframework.stereotype.Service;
 import pl.edu.agh.server.survey.SurveyService;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-@Component
+@Service
 public class TermService {
     private final TermRepository termRepository;
     private final SurveyService surveyService;
