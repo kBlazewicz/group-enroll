@@ -22,7 +22,7 @@ export const GroupsNumberForm: React.FC<GroupsNumberFormProps> = ({ onSubmit, st
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         generateGroups(groupsNumber).then((groups) => onSubmit(groups))
-      }
+    }
 
     return (
         <div style={{

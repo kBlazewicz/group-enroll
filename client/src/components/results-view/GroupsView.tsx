@@ -13,23 +13,23 @@ export function GroupsView() {
     const [students, setStudents] = useState<Student[]>([]);
 
     useEffect(() => {
-            Promise.all([
-                fetchVotes(),
-                fetchTerms(),
-                fetchStudents(),
-            ]).then(([votes, terms, students]) => {
-                setVotes(votes);
-                setTerms(terms);
-                setStudents(students);
-            })
-        }, [])
+        Promise.all([
+            fetchVotes(),
+            fetchTerms(),
+            fetchStudents(),
+        ]).then(([votes, terms, students]) => {
+            setVotes(votes);
+            setTerms(terms);
+            setStudents(students);
+        })
+    }, [])
 
     function renderGroups(groups: Group[]) {
         setGroups(groups);
     }
 
     return (
-        <div style={{textAlign: "center", fontFamily:"system-ui"}}>
+        <div style={{ textAlign: "center", fontFamily: "system-ui" }}>
             <VotesSummary votes={votes} terms={terms} students={students}></VotesSummary>
             <GroupsNumberForm onSubmit={renderGroups} students={students} terms={terms}></GroupsNumberForm>
             <GroupsList groups={groups} votes={votes}></GroupsList>

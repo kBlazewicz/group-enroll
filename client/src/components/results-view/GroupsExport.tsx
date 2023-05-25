@@ -3,7 +3,7 @@ import { CSVLink } from "react-csv";
 
 interface GroupExportProps {
     groups: Group[];
-    votes : Vote[];
+    votes: Vote[];
 }
 
 export const GroupsExport: React.FC<GroupExportProps> = ({ groups, votes }) => {
@@ -18,8 +18,8 @@ export const GroupsExport: React.FC<GroupExportProps> = ({ groups, votes }) => {
         }
         return votes.some(
             vote => vote.studentId === studentId &&
-            vote.termId === termId &&
-            vote.possibility
+                vote.termId === termId &&
+                vote.possibility
         ) ? "happy" : "unhappy";
     }
 
@@ -35,7 +35,7 @@ export const GroupsExport: React.FC<GroupExportProps> = ({ groups, votes }) => {
     }
 
     return (
-        <form style={{textAlign: "center", fontFamily:"system-ui"}}>
+        <form style={{ textAlign: "center", fontFamily: "system-ui" }}>
             <CSVLink data={csvData}>Pobierz grupy</CSVLink>
         </form>
     )

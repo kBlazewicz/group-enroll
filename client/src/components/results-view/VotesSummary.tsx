@@ -1,4 +1,5 @@
 import { Term, Student, Vote } from "../../types/types";
+import { Paper, Card, Typography, List, ListItem, ListItemText, Divider } from "@mui/material";
 
 interface VotesSummaryProps {
     terms: Term[];
@@ -9,44 +10,54 @@ interface VotesSummaryProps {
 export const VotesSummary: React.FC<VotesSummaryProps> = ({ terms, students, votes }) => {
     return (
         <>
-            <h2>Podsumowanie ankiety</h2>
-            {votes.length === 0 && "No votes generated"}
-            <ul style={{
-                listStyleType: "none",
-                display: "flex",
-                flexDirection: "row",
-            }}>
-                <li style={{ margin: 5, padding: 5, backgroundColor: "#49c46a50", borderRadius: 3, paddingLeft: 0 }}>
-                    <ul style={{ listStyleType: "none" }}>
-                        <li style={{ marginBottom: 15 }}><b>{votes.length !== 0 && "Imię i nazwisko"}</b></li>
-                        {students.map(student => {
-                            return (
-                                <li key={student.id}>
-                                    {student.name} {student.surname}
-                                </li>
-                            )
-                        })}
-                    </ul>
-                </li>
-                {terms.map(term => {
-                    return (
-                        <li key={term.id} style={{ margin: 5, padding: 5, backgroundColor: "#4287f550", borderRadius: 3 }}>
-                            <b>{term.dayOfWeek}</b>
-                            <p style={{ padding: 0, margin: 0 }}>{term.startTime} - {term.endTime}</p>
-                            <ul style={{ listStyleType: "none" }}>
-                                {students.map(student => {
-                                    return (
-                                        <li key={student.id}>
-                                            {votes.some(vote => vote.termId === term.id && vote.studentId === student.id && vote.possibility) ? "Tak" : "Nie"}
-                                        </li>
-                                    )
-                                })}
-                            </ul>
-                        </li>
-                    )
-                })
-                }
-            </ul>
+            <Card component={Paper} sx={{ minWidth: 500 }}>
+                <Typography variant="h4">Podsumowanie ankiety</Typography>
+                <List sx={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start' }}>
+                    {terms.map(term => {
+                        return (
+                            <ListItem key={term.id}>
+                                <Typography variant="h5" sx={{ fontWeight: 'bold' }}> {term.dayOfWeek}
+                                    <Typography variant="h6" sx={{ color: 'grey' }}>{term.startTime} {term.endTime}</Typography>
+                                    <Divider />
+
+                                    <Typography variant="h6">Mogą</Typography>
+                                    <List>
+                                        {students.filter(student => {
+                                            return votes.some(vote => vote.termId === term.id && vote.studentId === student.id && vote.possibility)
+                                        }).sort((studentA, studentB) => {
+                                            return studentA.surname.localeCompare(studentB.surname)
+                                        }).map(student => {
+                                            return (
+                                                <ListItem key={student.id}>
+                                                    <ListItemText primary={`${student.surname} ${student.name}`} />
+                                                </ListItem>
+                                            )
+                                        })
+                                        }
+                                    </List>
+                                    <Divider />
+
+                                    <Typography variant="h6">Nie mogą</Typography>
+                                    <List>
+                                        {students.filter(student => {
+                                            return votes.some(vote => vote.termId === term.id && vote.studentId === student.id && !vote.possibility)
+                                        }).sort((studentA, studentB) => {
+                                            return studentA.surname.localeCompare(studentB.surname)
+                                        }).map(student => {
+                                            return (
+                                                <ListItem key={student.id}>
+                                                    <ListItemText primary={`${student.surname} ${student.name}`} />
+                                                </ListItem>
+                                            )
+                                        })
+                                        }
+                                    </List>
+                                </Typography>
+                            </ListItem>
+                        )
+                    })}
+                </List>
+            </Card>
         </>
     )
 }
