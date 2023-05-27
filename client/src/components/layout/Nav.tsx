@@ -12,19 +12,49 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from "react-router-dom";
 import { AuthManagerService } from '../../services/AuthManagerService';
+import { getUserRole } from '../../api/api-utils';
+import { useEffect, useState } from 'react';
 
 
-const pages = ['Form-Creator', 'Form-Answers', 'Results'];
+const pages = {
+    TUTOR: ['Form-Creator', 'Results'],
+    USER: ['Form-Answers'],
+};
+
 const settings = {
     loggedIn: ['Wyloguj'],
     loggedOut: ['Logowanie', 'Rejestracja'],
 };
-
+var pagesToShow: string[] = [];
 
 function ResponsiveAppBar() {
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-    const [isLoggedIn, setIsLoggedIn] = React.useState(AuthManagerService.isLoggedIn());
+    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(AuthManagerService.isLoggedIn());
+    const [pagesToShow, setPagesToShow] = useState(pages.USER);
+
     const navigate = useNavigate();
+    const fetchUserRole = async () => {
+        const username = AuthManagerService.getUserName();
+        if (!username) return "ROLE_USER";
+
+        try {
+            const role = await getUserRole(username);
+            console.log('User role:', role);
+            if (role === "ROLE_USER") {
+                setPagesToShow(pages.USER);
+            } else if (role === "ROLE_TUTOR") {
+                setPagesToShow(pages.TUTOR);
+            }
+        } catch (error) {
+            console.error('Failed to fetch user role:', error);
+            const role = "ROLE_USER";
+            setPagesToShow(pages.USER);
+        }
+    };
+
+    useEffect(() => {
+        fetchUserRole();
+    }, []);
 
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -48,7 +78,7 @@ function ResponsiveAppBar() {
         }
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         const handleLoginStatusChange = (isLoggedIn: boolean) => {
             setIsLoggedIn(isLoggedIn);
         };
@@ -85,7 +115,7 @@ function ResponsiveAppBar() {
 
 
                     <Box sx={{ flexGrow: 1, display: 'flex' }}>
-                        {pages.map((page) => (
+                        {pagesToShow.map((page) => (
                             <a style={{ textDecoration: "none", color: "white" }} href={`/${page.toLowerCase()}`} >
                                 <Button
                                     key={page}

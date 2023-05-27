@@ -103,3 +103,14 @@ export async function createNewTerms(availableDates: InputTerm[]) {
     }
 }
 
+export const getUserRole = async (username: string): Promise<string> => {
+    const endpoint = `${baseUrl}/user-role/${username}`;
+    const response = await fetch(endpoint);
+
+    if (response.ok) {
+        const userRole = await response.json();
+        return userRole as string;
+    } else {
+        throw new Error('Failed to fetch user role');
+    }
+};

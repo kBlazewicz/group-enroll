@@ -1,5 +1,6 @@
 package pl.edu.agh.server.security;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,18 +18,21 @@ public class UserRoleController {
 
   @GetMapping("/{username}")
   public UserRole getUserRole(@PathVariable("username") String username) {
-    return userRepository.findByUsername(username).stream()
+    return userRepository.findUserRoleByUsername(username).stream()
         .filter(userRole -> userRole == UserRole.ROLE_TUTOR).findFirst().orElse(UserRole.ROLE_USER);
   }
 
   @PatchMapping("/{username}/add")
-  public void addUserRole(@PathVariable("username") String username, @Param("role") UserRole role) {
-    userRepository.findByUsername(username).add(role);
+  public void setUserRole(@PathVariable("username") String username, @Param("role") UserRole role) {
+    User user = userRepository.findByUsername(username);
+    user.setAuthorities(List.of(role));
+    userRepository.save(user);
   }
 
   @PatchMapping("/{username}/remove")
-  public void removeUserRole(@PathVariable("username") String username,
-      @Param("role") UserRole role) {
-    userRepository.findByUsername(username).remove(role);
+  public void resetUserRole(@PathVariable("username") String username) {
+    User user = userRepository.findByUsername(username);
+    user.setAuthorities(List.of(UserRole.ROLE_USER));
+    userRepository.save(user);
   }
 }

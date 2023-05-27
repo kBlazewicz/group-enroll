@@ -13,13 +13,16 @@ export const AuthManagerService = {
         isLoggedIn = true;
         loginStatusCallback(isLoggedIn);
         localStorage.setItem("isLoggedIn", "true");
+        window.location.reload();
     },
 
     logOut: function () {
         isLoggedIn = false;
         this.setToken("");
+        username = "";
         loginStatusCallback(isLoggedIn);
         localStorage.setItem("isLoggedIn", "false");
+        window.location.reload();
     },
 
     getToken: function () {
