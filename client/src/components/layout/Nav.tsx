@@ -25,14 +25,13 @@ const settings = {
     loggedIn: ['Wyloguj'],
     loggedOut: ['Logowanie', 'Rejestracja'],
 };
-var pagesToShow: string[] = [];
 
 function ResponsiveAppBar() {
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const [isLoggedIn, setIsLoggedIn] = useState(AuthManagerService.isLoggedIn());
     const [pagesToShow, setPagesToShow] = useState(pages.USER);
-
     const navigate = useNavigate();
+
     const fetchUserRole = async () => {
         const username = AuthManagerService.getUserName();
         if (!username) return "ROLE_USER";
@@ -52,11 +51,6 @@ function ResponsiveAppBar() {
         }
     };
 
-    useEffect(() => {
-        fetchUserRole();
-    }, []);
-
-
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
@@ -69,14 +63,18 @@ function ResponsiveAppBar() {
         handleCloseUserMenu();
 
         if (option === "Wyloguj") {
+            navigate("/form-answers");
             AuthManagerService.logOut();
-            navigate("/");
         } else if (option === "Logowanie") {
             navigate("/login");
         } else if (option === "Rejestracja") {
             navigate("/register");
         }
     };
+
+    useEffect(() => {
+        fetchUserRole();
+    }, []);
 
     useEffect(() => {
         const handleLoginStatusChange = (isLoggedIn: boolean) => {

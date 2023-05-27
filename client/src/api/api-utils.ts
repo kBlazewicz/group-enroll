@@ -1,5 +1,6 @@
 import { Student, Term, Vote } from "../types/types";
 import { InputTerm } from "../components/teacher-form/InputDateForm";
+import { AuthManagerService } from "../services/AuthManagerService";
 
 
 export const baseUrl = "http://localhost:8080"
@@ -11,6 +12,7 @@ export const fetchTerms = async (): Promise<Term[]> => {
 }
 
 export const fetchFormLink = async (): Promise<string> => {
+    // 'Authorization': `Bearer ${AuthManagerService.getToken()}`,  // Dodaj token do nagłówka 'Authorization'
     return "https://forms.gle/9x6U1k6U1zY2ZK6J8";
 }
 
@@ -79,6 +81,7 @@ export const sendRegisterRequest = async (username: string, password: string, re
 
 export const generateGroups = async (numberOfGroups: number) => {
     console.log(numberOfGroups);
+    // 'Authorization': `Bearer ${AuthManagerService.getToken()}`,, // Dodaj token do nagłówka 'Authorization'
 
     // API interaction
 
@@ -87,11 +90,12 @@ export const generateGroups = async (numberOfGroups: number) => {
 
 export async function createNewTerms(availableDates: InputTerm[]) {
     try {
-        const termsUrl = `${baseUrl}/terms`;
+        const termsUrl = `${baseUrl}/tutor/terms`;
         const response = await fetch(termsUrl, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${AuthManagerService.getToken()}`,
             },
             body: JSON.stringify(availableDates)
         });
