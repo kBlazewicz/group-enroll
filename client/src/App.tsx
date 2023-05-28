@@ -1,4 +1,3 @@
-import { StudentsForm } from "./components/students-form/StudentsForm";
 import { Routes, Route } from "react-router-dom";
 import { Stack } from "@mui/material";
 import { LayoutGrid } from "./components/layout/LayoutGrid";
@@ -29,7 +28,6 @@ export const App = () => {
         <Route path="/form-answers" element={
           <LayoutGrid>
             <StudentDataForm></StudentDataForm>
-            <StudentsForm></StudentsForm>
           </LayoutGrid>} />
         <Route path="/results" element={
           <LayoutGrid>
