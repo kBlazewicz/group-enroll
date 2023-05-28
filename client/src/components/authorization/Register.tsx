@@ -48,8 +48,8 @@ export const RegisterForm = () => {
                 console.log('Received token:', data.token);
                 AuthManagerService.setToken(data.token);
                 AuthManagerService.setUserName(username);
-                AuthManagerService.logIn();
                 navigate('/');
+                AuthManagerService.logIn();
             } else {
                 console.log('Register failed');
                 setIsLoginFailed(true);

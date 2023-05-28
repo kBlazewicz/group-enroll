@@ -6,23 +6,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/terms")
 @RequiredArgsConstructor
 public class TermController {
     private final TermService termService;
     private final TermConverter termConverter;
 
-    @GetMapping
+    @GetMapping("/terms")
     public List<TermDTO> getTerms() {
         return termService.getTerms().stream().map(TermDTO::new).toList();
     }
 
-    @GetMapping(path = "{termId}")
+    @GetMapping(path = "/terms{termId}")
     public TermDTO getTerm(@PathVariable("termId") Long termId) {
         return new TermDTO(termService.getTerm(termId));
     }
 
-    @PostMapping
+    @PostMapping("/tutor/terms")
     public String createNewTerms(@RequestBody List<TermDTO> termDTOS) {
         List<Term> terms = termDTOS.stream().map(termConverter::getTermFromDTO).toList();
         return termService.createNewTerms(terms);

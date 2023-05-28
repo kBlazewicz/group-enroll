@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { Stack } from "@mui/material";
 import { LayoutGrid } from "./components/layout/LayoutGrid";
 import { StudentDataForm } from "./components/student-data-form/StudentDataForm";
@@ -45,4 +45,3 @@ export const App = () => {
     </Stack >
   );
 }
-
