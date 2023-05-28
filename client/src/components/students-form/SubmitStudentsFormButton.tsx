@@ -15,17 +15,20 @@ const convertToVotes = (votedTerms: Term[], studentId: number): Vote[] => {
 export const SubmitStudentsFormButton = ({termsToSend, studentId} : {termsToSend: Term[], studentId: number}) => {
     const handleOnClick = async () => {
         if(studentId < 0 ){
-            alert("Do przesłania głosów konieczne jest wcześniejsze przesłanie swoich danych!")
+            alert("Przesłanie zaznaczonych terminów będzie możliwe dopiero wtedy, gdy zatwierdzisz formularz ze swoimi danymi!");
         }
         else{
-        const votes = convertToVotes(termsToSend, studentId)
-        await sendVotes(votes); 
+            const votes = convertToVotes(termsToSend, studentId)
+            await sendVotes(votes); 
+            alert("Zaznaczone terminy zostały przesłane. \nDziękujemy za wypełnienie ankiety.");
         }
     }
 
     return (
-        <Button variant='contained' onClick={handleOnClick}>
-            Submit
-        </Button>
+        <div style={{textAlign: 'center', margin:'auto'}}>
+            <Button variant='contained' onClick={handleOnClick}>
+                Submit
+            </Button>
+        </div>
     )
 }
