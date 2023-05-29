@@ -23,7 +23,10 @@ export const GroupsList: React.FC<GroupsListProps> = ({ groups, votes }) => {
                     {groups.map(group => {
                         return (
                             <ListItem key={group.term.id}>
-                                <Typography variant="h5" sx={{ fontWeight: 'bold' }}> {group.term.dayOfWeek}
+                                <div style={{textAlign: 'center'}}>
+                                <Typography variant="h5" sx={{ fontWeight: 'bold' }}> {group.term.dayOfWeek} </Typography>
+
+                                <div>
                                     <Typography variant="h6" sx={{ color: 'grey' }}>{group.term.startTime} {group.term.endTime}</Typography>
                                     <Divider />
 
@@ -59,7 +62,8 @@ export const GroupsList: React.FC<GroupsListProps> = ({ groups, votes }) => {
                                         })
                                         }
                                     </List>
-                                </Typography>
+                                </div>
+                                </div>
                             </ListItem>
                         )
                     }
