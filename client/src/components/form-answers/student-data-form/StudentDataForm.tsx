@@ -19,24 +19,25 @@ export const StudentDataForm = ({onStudentSave} : {onStudentSave: (studentId: nu
 
     const handleSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
-        try {
-            const id = await sendStudentData(studentData);
-            console.log("Received ID:", id);
-            setSavedStudentId(id);
-            
-            onStudentSave(savedStudentId);
+        if (isValidEmail(studentData.mail) && isValidAlbum(studentData.album)) {
+            try {
+                const id = await sendStudentData(studentData);
+                setSavedStudentId(id);
 
-            setStudentData({
-                name: "",
-                surname: "",
-                album: 0,
-                mail: "",
-                faculty: "",
-                fieldOfStudy: "",
-            });
+                onStudentSave(savedStudentId);
+                
+                setStudentData({
+                    name: "",
+                    surname: "",
+                    album: 0,
+                    mail: "",
+                    faculty: "",
+                    fieldOfStudy: "",
+                });
 
-        } catch (error) {
-            console.error(error);
+            } catch (error) {
+                console.error(error);
+            }
         }
     };
 
@@ -53,6 +54,11 @@ export const StudentDataForm = ({onStudentSave} : {onStudentSave: (studentId: nu
         return emailRegex.test(mail);
     };
 
+    const isValidAlbum = (index: number) => {
+        return (index >= 0 && index < 1000000)
+    }
+
+    
     return (
         <div>
             <Card style={{ minWidth: 500 }}>
@@ -100,6 +106,8 @@ export const StudentDataForm = ({onStudentSave} : {onStudentSave: (studentId: nu
                                     event.preventDefault();
                                 }
                             }}
+                            error={!isValidAlbum(studentData.album)}
+                            helperText={isValidAlbum(studentData.album) ? '' : 'Invalid album number'}
                         />
                         <br/><br/>
                         <TextField
