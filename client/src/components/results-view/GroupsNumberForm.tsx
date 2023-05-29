@@ -3,6 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import { generateGroups } from '../../api/api-utils'
 import { Group, Student, Term } from "../../types/types";
+import { FormControl } from '@mui/material';
 
 interface GroupsNumberFormProps {
     onSubmit: (groups: Group[]) => void;
@@ -14,13 +15,12 @@ export const GroupsNumberForm: React.FC<GroupsNumberFormProps> = ({ onSubmit, st
     const [groupsNumber, setGroupsNumber] = useState<number>(10);
 
     const handleGroupsNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value != null) {
+        if (e.target.value) {
             setGroupsNumber(parseInt(e.target.value))
         }
     }
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const handleSubmit = () => {
         generateGroups(groupsNumber).then((groups) => onSubmit(groups))
     }
 
@@ -30,8 +30,7 @@ export const GroupsNumberForm: React.FC<GroupsNumberFormProps> = ({ onSubmit, st
             fontFamily: "system-ui",
             margin: "12px"
         }}>
-
-            <form onSubmit={handleSubmit}>
+            <FormControl>
                 <InputLabel>
                     <Typography variant="h5">
                         Liczba grup
@@ -53,10 +52,12 @@ export const GroupsNumberForm: React.FC<GroupsNumberFormProps> = ({ onSubmit, st
                     type="submit"
                     variant="contained"
                     color="primary"
-                    style={{ padding: "6px 12px" }}>
+                    style={{ padding: "6px 12px" }}
+                    onClick={handleSubmit}>
                     Wygeneruj
                 </Button>
-            </form>
+                
+            </FormControl>
         </div>
     )
 }

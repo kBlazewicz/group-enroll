@@ -21,7 +21,7 @@ public class TermController {
         return new TermDTO(termService.getTerm(termId));
     }
 
-    @PostMapping("/tutor/terms")
+    @PostMapping("/terms")
     public String createNewTerms(@RequestBody List<TermDTO> termDTOS) {
         List<Term> terms = termDTOS.stream().map(termConverter::getTermFromDTO).toList();
         return termService.createNewTerms(terms);

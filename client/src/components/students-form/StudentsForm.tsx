@@ -41,7 +41,7 @@ const groupTermsByDay = (terms: Term[]): TermsByDayGroup[] => {
     return termsByDayGroups;
 }
 
-export const StudentsForm = () => {
+export const StudentsForm = ({studentId} : {studentId: number}) => {
     const [terms, setTerms] = useState<Term[]>([]);
     const [checkedTerms, setCheckedTerms] = useState<Term[]>([]);
 
@@ -95,7 +95,7 @@ export const StudentsForm = () => {
                 </List >
             </CardContent>
             <CardActions>
-                <SubmitStudentsFormButton termsToSend={checkedTerms}/>
+                <SubmitStudentsFormButton termsToSend={checkedTerms} studentId={studentId}/>
             </CardActions>
         </Card>
     )
