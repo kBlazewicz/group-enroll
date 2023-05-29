@@ -1,5 +1,5 @@
 import { Term, Student, Vote } from "../../types/types";
-import { Paper, Card, Typography, List, ListItem, ListItemText, Divider } from "@mui/material";
+import { Paper, Card, Typography, List, ListItem, ListItemText, Divider, Alert } from "@mui/material";
 
 interface VotesSummaryProps {
     terms: Term[];
@@ -8,6 +8,16 @@ interface VotesSummaryProps {
 }
 
 export const VotesSummary: React.FC<VotesSummaryProps> = ({ terms, students, votes }) => {
+    if (!Array.isArray(terms) || terms.length === 0) {
+        return <Alert severity="warning">Brak terminów.</Alert>
+    }
+    if (!Array.isArray(students) || students.length === 0) {
+        return <Alert severity="warning">Brak studentów.</Alert>
+    }
+    if (!Array.isArray(votes) || votes.length === 0) {
+        return <Alert severity="warning">Brak głosów w ankietach.</Alert>
+    }
+    
     return (
         <>
             <Card component={Paper} sx={{ minWidth: 500 }}>
