@@ -2,11 +2,11 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { Stack } from "@mui/material";
 import { LayoutGrid } from "./components/layout/LayoutGrid";
 import { StudentDataForm } from "./components/student-data-form/StudentDataForm";
-import { GroupsNumberForm } from "./components/results-view/GroupsNumberForm";
 import { LoginForm } from "./components/authorization/Login";
 import { RegisterForm } from "./components/authorization/Register";
 import { FormCreator } from "./components/layout/FormCreator";
 import ResponsiveAppBar from "./components/layout/Nav";
+import { GroupsView } from "./components/results-view/GroupsView";
 
 export const App = () => {
   return (
@@ -31,7 +31,7 @@ export const App = () => {
           </LayoutGrid>} />
         <Route path="/results" element={
           <LayoutGrid>
-            <GroupsNumberForm></GroupsNumberForm>
+            <GroupsView></GroupsView>
           </LayoutGrid>} />
         <Route path="/login" element={
           <LayoutGrid>

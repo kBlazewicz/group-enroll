@@ -1,4 +1,4 @@
-import { Student, Term, Vote } from "../types/types";
+import { Student, Term, Vote, Group } from "../types/types";
 import { InputTerm } from "../components/teacher-form/InputDateForm";
 import { AuthManagerService } from "../services/AuthManagerService";
 
@@ -35,6 +35,11 @@ export const sendStudentData = async (student: Student): Promise<number> => {
     }
 };
 
+export const fetchStudents = async (): Promise<Student[]> => {
+    const response = await fetch(`${baseUrl}/student`);
+    return response.json();
+}
+
 export const sendLoginRequest = async (username: string, password: string) => {
     const endpoint = baseUrl + '/login';
     const requestBody = JSON.stringify({ username, password });
@@ -62,6 +67,11 @@ export const sendVotes = async (votes: Vote[]) => {
     const response = await fetch(`${baseUrl}/votes`, options);
 
     return response;
+};
+
+export const fetchVotes = async (): Promise<Vote[]> => {
+    const response = await fetch(`${baseUrl}/votes`);
+    return response.json();
 }
 
 export const sendRegisterRequest = async (username: string, password: string, repeatPassword: string) => {
@@ -79,12 +89,12 @@ export const sendRegisterRequest = async (username: string, password: string, re
     return response;
 };
 
-export const generateGroups = async (numberOfGroups: number) => {
+export const generateGroups = async (numberOfGroups: number): Promise<Group[]> => {
     console.log(numberOfGroups);
     // 'Authorization': `Bearer ${AuthManagerService.getToken()}`,, // Dodaj token do nagłówka 'Authorization'
 
-    // API interaction
-
+    const response = await fetch(`${baseUrl}/groups/${numberOfGroups}`);
+    return response.json();
 }
 
 
