@@ -21,8 +21,8 @@ export interface Term {
     id: number;
     startTime: any;
     endTime: any;
-    dayOfWeek: Day
-    voteList: Vote[]
+    dayOfWeek: Day;
+    voteList: Vote[];
 }
 
 export interface Student {
@@ -34,4 +34,9 @@ export interface Student {
     fieldOfStudy: string;
     faculty: string;
     generalComment?: string;
+}
+
+export interface Group {
+    term: Term;
+    students: Student[];
 }
