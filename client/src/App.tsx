@@ -1,12 +1,13 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Stack } from "@mui/material";
 import { LayoutGrid } from "./components/layout/LayoutGrid";
-import { StudentDataForm } from "./components/student-data-form/StudentDataForm";
 import { LoginForm } from "./components/authorization/Login";
 import { RegisterForm } from "./components/authorization/Register";
 import { FormCreator } from "./components/layout/FormCreator";
-import ResponsiveAppBar from "./components/layout/Nav";
+import { NavBar } from "./components/layout/Nav";
 import { GroupsView } from "./components/results-view/GroupsView";
+import { FormAnswers } from "./components/form-answers/FormAnswers";
+import { NotFoundPage } from "./components/layout/NotFoundPage";
 
 export const App = () => {
   return (
@@ -15,20 +16,17 @@ export const App = () => {
       flexDirection: 'column',
       alignItems: 'center',
       height: '100%',
-      gap: '10rem',
+      width: '100%',
+      gap: '1rem'
     }}>
-      <ResponsiveAppBar></ResponsiveAppBar>
+      <NavBar></NavBar>
       <Routes>
         <Route path="/" element={
           <LayoutGrid>
-            <div>Home page</div>
+            <div>Home page</div> 
           </LayoutGrid>} />
-        <Route path="/form-creator" element={
-          <FormCreator />} />
-        <Route path="/form-answers" element={
-          <LayoutGrid>
-            <StudentDataForm></StudentDataForm>
-          </LayoutGrid>} />
+        <Route path="/form-creator" element={<FormCreator />} />
+        <Route path="/survey/:guid" element={<FormAnswers />} />
         <Route path="/results" element={
           <LayoutGrid>
             <GroupsView></GroupsView>
@@ -41,6 +39,7 @@ export const App = () => {
           <LayoutGrid>
             <RegisterForm></RegisterForm>
           </LayoutGrid>} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Stack >
   );

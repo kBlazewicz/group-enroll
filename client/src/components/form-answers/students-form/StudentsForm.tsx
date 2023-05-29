@@ -7,11 +7,10 @@ import Checkbox from '@mui/material/Checkbox';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardContent';
-import { useEffect, useState } from 'react';
-import { fetchTerms } from '../../api/api-utils';
+import { useState } from 'react';
 import React from 'react';
-import { Day, Term, getDays } from '../../types/types';
 import { SubmitStudentsFormButton } from './SubmitStudentsFormButton';
+import { Term, Day, getDays } from '../../../types/types';
 
 const compareTerms = (x: Term, term: Term) => {
     return x.dayOfWeek === term.dayOfWeek &&
@@ -41,17 +40,8 @@ const groupTermsByDay = (terms: Term[]): TermsByDayGroup[] => {
     return termsByDayGroups;
 }
 
-export const StudentsForm = ({studentId} : {studentId: number}) => {
-    const [terms, setTerms] = useState<Term[]>([]);
+export const StudentsForm = ({studentId, terms} : {studentId: number, terms: Term[]}) => {
     const [checkedTerms, setCheckedTerms] = useState<Term[]>([]);
-
-    useEffect(() => {
-        const loadData = async () => {
-            const data = await fetchTerms();
-            setTerms(data);
-        }
-        loadData();
-    }, [])
 
     const handleToggle = (term: Term) => {
         const currentIndex = checkedTerms.findIndex((x) => compareTerms(x, term));

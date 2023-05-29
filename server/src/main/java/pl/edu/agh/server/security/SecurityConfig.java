@@ -32,9 +32,10 @@ public class SecurityConfig {
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     return http.authorizeRequests(
-            authorizeRequests -> authorizeRequests.requestMatchers("/tutor/**")
-                .authenticated()
-                .anyRequest().permitAll())
+            authorizeRequests -> authorizeRequests
+                    .requestMatchers("/tutor/**").authenticated()
+                    .anyRequest().permitAll()
+            )
         .addFilter(new JwtAuthorizationFilter(authenticationManager, userDetailsService, secret))
         .csrf().disable()
         .build();

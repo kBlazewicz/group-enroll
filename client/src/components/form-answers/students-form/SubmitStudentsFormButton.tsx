@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
-import { Term, Vote } from '../../types/types';
-import { sendVotes } from '../../api/api-utils';
+import { Term, Vote } from '../../../types/types';
+import { sendVotes } from '../../../api/api-utils';
 
 
 const convertToVotes = (votedTerms: Term[], studentId: number): Vote[] => {

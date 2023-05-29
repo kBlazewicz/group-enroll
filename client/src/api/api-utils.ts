@@ -3,17 +3,15 @@ import { InputTerm } from "../components/teacher-form/InputDateForm";
 import { AuthManagerService } from "../services/AuthManagerService";
 
 
-export const baseUrl = "http://localhost:8081"
+export const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
+export const fetchSurvey = async (guid: string) => {
+    return await fetch(`${baseUrl}/survey/${guid}`);
+}
 
 export const fetchTerms = async (): Promise<Term[]> => {
     const response = await fetch(`${baseUrl}/terms`);
     return response.json();
-}
-
-export const fetchFormLink = async (): Promise<string> => {
-    // 'Authorization': `Bearer ${AuthManagerService.getToken()}`,  // Dodaj token do nagłówka 'Authorization'
-    return "https://forms.gle/9x6U1k6U1zY2ZK6J8";
 }
 
 export const sendStudentData = async (student: Student): Promise<number> => {
@@ -60,7 +58,7 @@ export const sendVotes = async (votes: Vote[]) => {
         method: "POST",
         body: JSON.stringify(votes),
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         }
     };
 
@@ -98,7 +96,7 @@ export const generateGroups = async (numberOfGroups: number): Promise<Group[]> =
 }
 
 
-export async function createNewTerms(availableDates: InputTerm[]) {
+export const createNewTerms = async (availableDates: InputTerm[]): Promise<string> => {
     try {
         const termsUrl = `${baseUrl}/terms`;
         const response = await fetch(termsUrl, {
@@ -112,8 +110,10 @@ export async function createNewTerms(availableDates: InputTerm[]) {
         if (response.ok) {
             return response.text();
         }
+        throw new Error('Failed to create new terms');
     } catch (error) {
-        console.error(error);
+        console.log(error);
+        throw new Error('Failed to connect with api');
     }
 }
 
