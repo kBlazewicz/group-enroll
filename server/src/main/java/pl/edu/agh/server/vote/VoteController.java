@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.agh.server.student.Student;
+import pl.edu.agh.server.term.Term;
+import pl.edu.agh.server.term.TermService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -21,6 +24,7 @@ public class VoteController {
     private final VoteService voteService;
     private final VoteConverter voteConverter;
     private final ObjectMapper objectMapper;
+    private final TermService termService;
 
     @GetMapping("/votes")
     public List<VoteDTO> getVotes() {
@@ -39,6 +43,22 @@ public class VoteController {
     public List<VoteDTO> saveVotes(@RequestBody List<VoteDTO> voteDTOS) {
         List<Vote> votes = voteDTOS.stream().map(voteConverter::getVoteFromDTO).toList();
         votes = voteService.saveMany(votes);
+
+        List<Term> terms = termService.getTerms();
+        Student student = votes.get(0).getStudent();
+        for (Term term : terms){
+            boolean voted = false;
+            for (Vote studentVote : student.getVotes()) {
+                if (studentVote.getTerm().getId() == term.getId()){
+                    voted = true;
+                    break;
+                }
+            }
+            if (!voted){
+                Vote notPossibleVote = new Vote(student, term, false, "");
+                voteService.save(notPossibleVote);
+            }
+        }
         return voteDTOS;
     }
 
