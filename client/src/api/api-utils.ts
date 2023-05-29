@@ -100,7 +100,7 @@ export const generateGroups = async (numberOfGroups: number): Promise<Group[]> =
 
 export async function createNewTerms(availableDates: InputTerm[]) {
     try {
-        const termsUrl = `${baseUrl}/tutor/terms`;
+        const termsUrl = `${baseUrl}/terms`;
         const response = await fetch(termsUrl, {
             method: 'POST',
             headers: {
