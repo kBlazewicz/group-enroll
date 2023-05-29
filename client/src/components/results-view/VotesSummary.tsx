@@ -16,7 +16,9 @@ export const VotesSummary: React.FC<VotesSummaryProps> = ({ terms, students, vot
                     {terms.map(term => {
                         return (
                             <ListItem key={term.id}>
-                                <Typography variant="h5" sx={{ fontWeight: 'bold' }}> {term.dayOfWeek}
+                                <div style={{textAlign: 'center'}}>
+                                <Typography variant="h5" sx={{ fontWeight: 'bold' }}> {term.dayOfWeek} </Typography>
+                                <div>
                                     <Typography variant="h6" sx={{ color: 'grey' }}>{term.startTime} {term.endTime}</Typography>
                                     <Divider />
 
@@ -52,7 +54,8 @@ export const VotesSummary: React.FC<VotesSummaryProps> = ({ terms, students, vot
                                         })
                                         }
                                     </List>
-                                </Typography>
+                                    </div>
+                                </div>
                             </ListItem>
                         )
                     })}

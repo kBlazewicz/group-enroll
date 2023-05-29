@@ -1,5 +1,6 @@
 import { Group, Vote } from "../../types/types";
 import { CSVLink } from "react-csv";
+import { Button } from '@material-ui/core';
 
 interface GroupExportProps {
     groups: Group[];
@@ -36,7 +37,15 @@ export const GroupsExport: React.FC<GroupExportProps> = ({ groups, votes }) => {
 
     return (
         <form style={{ textAlign: "center", fontFamily: "system-ui" }}>
-            <CSVLink data={csvData}>Pobierz grupy</CSVLink>
+            <br/>
+            <CSVLink data={csvData}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ padding: "6px 12px" }}>
+                    Pobierz grupy
+                </Button>
+            </CSVLink>
         </form>
     )
 }
