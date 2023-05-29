@@ -1,5 +1,5 @@
 import { Group, Vote } from "../../types/types";
-import { Paper, Card, Typography, List, ListItem, ListItemText, Divider } from "@mui/material";
+import { Paper, Card, Typography, List, ListItem, ListItemText, Divider, Alert } from "@mui/material";
 
 interface GroupsListProps {
     groups: Group[];
@@ -7,6 +7,13 @@ interface GroupsListProps {
 }
 
 export const GroupsList: React.FC<GroupsListProps> = ({ groups, votes }) => {
+
+    if (!Array.isArray(groups)) {
+        return <Alert severity="error">Nie udało się wygenerować grup (niekompletne/błędne dane).</Alert>;
+    }
+    if (groups.length === 0) {
+        return null;
+    }
 
     return (
         <>

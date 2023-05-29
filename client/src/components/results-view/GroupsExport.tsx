@@ -8,7 +8,7 @@ interface GroupExportProps {
 
 export const GroupsExport: React.FC<GroupExportProps> = ({ groups, votes }) => {
 
-    if (groups.length === 0) {
+    if (!Array.isArray(groups) || groups.length === 0) {
         return null;
     }
 
