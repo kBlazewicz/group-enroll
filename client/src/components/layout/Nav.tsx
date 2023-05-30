@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 
 const pages = {
     TUTOR: ['Form-Creator', 'Results'],
-    USER: ['Form-Answers'],
+    USER: [''],
 };
 
 const settings = {

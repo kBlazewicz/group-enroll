@@ -4,6 +4,11 @@ services:
   db:
     image: postgres:latest
     restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -21,7 +26,8 @@ services:
       - "8081:8080"
     restart: always
     depends_on:
-      - db
+      db:
+       condition: service_healthy
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/group_enroll_db
       - SPRING_DATASOURCE_USERNAME=postgres
@@ -34,7 +40,7 @@ services:
       ./client
     image: client
     ports:
-      - "3001:3000"
+      - "3000:3000"
     restart: always
     depends_on:
       - server

@@ -3,19 +3,20 @@ import { InputTerm } from "../components/teacher-form/InputDateForm";
 import { AuthManagerService } from "../services/AuthManagerService";
 
 
-export const baseUrl = process.env.REACT_APP_API_BASE_URL;
+export const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+export const clientBaseUrl = process.env.REACT_APP_CLIENT_BASE_URL;
 
 export const fetchSurvey = async (guid: string) => {
-    return await fetch(`${baseUrl}/survey/${guid}`);
+    return await fetch(`${apiBaseUrl}/survey/${guid}`);
 }
 
 export const fetchTerms = async (): Promise<Term[]> => {
-    const response = await fetch(`${baseUrl}/terms`);
+    const response = await fetch(`${apiBaseUrl}/terms`);
     return response.json();
 }
 
 export const sendStudentData = async (student: Student): Promise<number> => {
-    const endpoint = baseUrl + '/student';
+    const endpoint = apiBaseUrl + '/student';
     const requestBody = JSON.stringify(student);
     const response = await fetch(endpoint, {
         method: 'POST',
@@ -34,12 +35,12 @@ export const sendStudentData = async (student: Student): Promise<number> => {
 };
 
 export const fetchStudents = async (): Promise<Student[]> => {
-    const response = await fetch(`${baseUrl}/student`);
+    const response = await fetch(`${apiBaseUrl}/student`);
     return response.json();
 }
 
 export const sendLoginRequest = async (username: string, password: string) => {
-    const endpoint = baseUrl + '/login';
+    const endpoint = apiBaseUrl + '/login';
     const requestBody = JSON.stringify({ username, password });
 
     const response = await fetch(endpoint, {
@@ -62,18 +63,18 @@ export const sendVotes = async (votes: Vote[]) => {
         }
     };
 
-    const response = await fetch(`${baseUrl}/votes`, options);
+    const response = await fetch(`${apiBaseUrl}/votes`, options);
 
     return response;
 };
 
 export const fetchVotes = async (): Promise<Vote[]> => {
-    const response = await fetch(`${baseUrl}/votes`);
+    const response = await fetch(`${apiBaseUrl}/votes`);
     return response.json();
 }
 
 export const sendRegisterRequest = async (username: string, password: string, repeatPassword: string) => {
-    const endpoint = baseUrl + '/register';
+    const endpoint = apiBaseUrl + '/register';
     const requestBody = JSON.stringify({ username, password, repeatPassword });
 
     const response = await fetch(endpoint, {
@@ -91,14 +92,14 @@ export const generateGroups = async (numberOfGroups: number): Promise<Group[]> =
     console.log(numberOfGroups);
     // 'Authorization': `Bearer ${AuthManagerService.getToken()}`,, // Dodaj token do nagłówka 'Authorization'
 
-    const response = await fetch(`${baseUrl}/groups/${numberOfGroups}`);
+    const response = await fetch(`${apiBaseUrl}/groups/${numberOfGroups}`);
     return response.json();
 }
 
 
 export const createNewTerms = async (availableDates: InputTerm[]): Promise<string> => {
     try {
-        const termsUrl = `${baseUrl}/terms`;
+        const termsUrl = `${apiBaseUrl}/terms`;
         const response = await fetch(termsUrl, {
             method: 'POST',
             headers: {
@@ -118,7 +119,7 @@ export const createNewTerms = async (availableDates: InputTerm[]): Promise<strin
 }
 
 export const getUserRole = async (username: string): Promise<string> => {
-    const endpoint = `${baseUrl}/user-role/${username}`;
+    const endpoint = `${apiBaseUrl}/user-role/${username}`;
     const response = await fetch(endpoint);
 
     if (response.ok) {
