@@ -50,7 +50,7 @@ Po przesłaniu terminów generowany jest specjalny link do ankiety dla studentó
 
 ![LinkAnkiety](/readme_images/LinkAnkiety.png)
 
-W ankiecie znajdują się dwa formularze. Pierwszy odpowiada za dane studenta. Po jego przesłaniu w bazie tworzony jest wpis i do aplikacji klienta zwracane jest id studenta, wykorzystywane w kolejnym formularzu. Jest to istotny szczegół, poniważ wypełnienie ankiet w złej kolejności, bądź kilkukrotnie dla jednego studenta skutkuje błędami w bazie danych, które uniemożliwiają generowanie grup.
+W ankiecie znajdują się dwa formularze. Pierwszy odpowiada za dane studenta, natomiast drugi za jego głosy w ankiecie dostępności. Istnieje zabezpieczenie wymuszające wysyłanie obu formularzy w odpowiedniej kolejności oraz blokujące próby wielokrotnego wysłania jednego formularza z rzędu. Mimo to należy pamiętać, aby po wysłaniu pierwszego formularza wysłać także drugi. W przeciwnym przypadku do bazy dodawani są studenci, do których nie zostają dodane głosy, co uniemożliwia późniejsze generowanie grup.
 
 ![AnkietaZDanymi](/readme_images/AnkietaZDanymi.png)
 
@@ -73,7 +73,7 @@ W celu zapisania lokalnie wygenerowanych grup można je pobrać przyciskiem na d
 ### Algorytm
 Algorytm działa bardzo sprawnie. Dla 50 studentów z losowymi preferencjami i dostępnością na poziomie około 60% oraz generowaniem 3 grup zajęciowych spośród 10 możliwych terminów, przeciętnie 48/50 studentów jest zadowolonych. Przy większej dostępności studentów jest to zazwyczaj 50/50.
 
-Jeżeli wygenerowane grupy są niesatysfakcjonujące, ponowne naciśnięcie przycisku generującego zwraca nowy podział prawie natychmiast, więc można je "przerzucać" do osiągnięcia satysfakcji.
+Jeżeli wygenerowane grupy są niesatysfakcjonujące, ponowne naciśnięcie przycisku generującego zwraca nowy podział prawie natychmiast, więc można je "przerzucać" do osiągnięcia satysfakcjonującego wyniku.
 
 ### Postman
 Ponieważ formularze są wrażliwe na wypełnianie ich w złej kolejności, co grozi uniemożliwieniem generowania grup, do testowania dobrze działa Postman, do którego można wgrać przygotowaną kolekcję, znajdującą się w katalogu "postman".
@@ -83,6 +83,8 @@ Aby wygenerować grupy należy kolejno stworzyć możliwe grupy zajęciowe (meto
 ![Postman](/readme_images/Postman.png)
 
 ### Czego brakuje lub co można ulepszyć
-Poza problemami z przesyłaniem formularzy nie udało nam się wprowadzić wszystkich planowanych zabezpieczeń. Brakuje nam route guarda, przez co znając link do zakładek nauczyciela można się do nich dostać bez jego uprawnień.
+Pomimo różnych blokad przed niepoprawnym wysyłaniem formularzy, istnieje kilka słabych punktów w naszej aplikacji, które mogą skutecznie powstrzymać nauczyciela przed możliwością generowania grup. Dobrym pomysłem byłoby zarówno wprowadzenie większej liczby zabezpieczeń, jak i więcej opcji edycji zawartości bazy danych z poziomu aplikacji.
+
+Nie udało nam się wprowadzić wszystkich planowanych zabezpieczeń. Brakuje nam route guarda, przez co znając link do zakładek nauczyciela można się do nich dostać bez jego uprawnień.
 
 Dodatkowo, warto by rozwinąć działanie kont i sterowanie uprawnieniami. Nauczyciel mógłby mieć dostęp do szczegółów studentów, a studenci wgląd we wprowadzone przez nich dane/głosy i potencjalną możliwość ich edycji. Konta nie są też w żaden sposób weryfikowane, przez co istnieje możliwość podszywania się pod kogoś/tworzenia bliźniaczych kont i wysyłania głosów z danymi studenta o innym koncie.
