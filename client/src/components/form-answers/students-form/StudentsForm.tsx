@@ -40,7 +40,8 @@ const groupTermsByDay = (terms: Term[]): TermsByDayGroup[] => {
     return termsByDayGroups;
 }
 
-export const StudentsForm = ({studentId, terms} : {studentId: number, terms: Term[]}) => {
+export const StudentsForm = ({studentId, terms, lastSavedStudentId, saveLastSavedStudentId}
+    : {studentId: number, terms: Term[], lastSavedStudentId: number, saveLastSavedStudentId: (id: number) => void}) => {
     const [checkedTerms, setCheckedTerms] = useState<Term[]>([]);
 
     const handleToggle = (term: Term) => {
@@ -85,7 +86,7 @@ export const StudentsForm = ({studentId, terms} : {studentId: number, terms: Ter
                 </List >
             </CardContent>
             <CardActions>
-                <SubmitStudentsFormButton termsToSend={checkedTerms} studentId={studentId}/>
+                <SubmitStudentsFormButton termsToSend={checkedTerms} studentId={studentId} lastSavedStudentId={lastSavedStudentId} saveLastSavedStudentId={saveLastSavedStudentId}/>
             </CardActions>
         </Card>
     )

@@ -15,16 +15,13 @@ export const StudentDataForm = ({onStudentSave} : {onStudentSave: (studentId: nu
         fieldOfStudy: "",
     });
 
-    const [savedStudentId, setSavedStudentId] = useState<number>(-1);
-
     const handleSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         if (isValidEmail(studentData.mail) && isValidAlbum(studentData.album)) {
             try {
                 const id = await sendStudentData(studentData);
-                setSavedStudentId(id);
 
-                onStudentSave(savedStudentId);
+                onStudentSave(id);
                 
                 setStudentData({
                     name: "",
