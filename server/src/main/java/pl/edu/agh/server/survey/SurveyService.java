@@ -12,8 +12,19 @@ public class SurveyService {
     private final SurveyRepository surveyRepository;
 
     public String createSurvey(List<Term> terms){
-        Survey survey = new Survey(terms);
-        surveyRepository.save(survey);
+        Survey survey;
+        List<Survey> surveyList = surveyRepository.findAll();
+        if (surveyList.size() == 0) {
+            survey = new Survey(terms);
+            surveyRepository.save(survey);
+        }
+        else {
+            survey = surveyList
+                    .stream()
+                    .findFirst()
+                    .orElseThrow();
+        }
+
         return survey.linkCode;
     }
 
@@ -23,5 +34,9 @@ public class SurveyService {
             throw new IllegalStateException("Survey with linkCode " + surveylinkCode + " not found");
         }
         return survey.getTermlist();
+    }
+
+    public boolean surveyExists(String linkCode) {
+        return surveyRepository.existsByLinkCode(linkCode);
     }
 }

@@ -10,7 +10,7 @@ export const LayoutGrid = ({ children }: { children: any }) => {
                 alignItems: 'center',
                 height: '90%',
                 width: '90%',
-                margin: '4rem',
+                margin: '2rem',
                 padding: '2rem',
                 gap: '2rem',
             }}

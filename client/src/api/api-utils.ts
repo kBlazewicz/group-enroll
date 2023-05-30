@@ -3,21 +3,20 @@ import { InputTerm } from "../components/teacher-form/InputDateForm";
 import { AuthManagerService } from "../services/AuthManagerService";
 
 
-export const baseUrl = "http://localhost:8081"
+export const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+export const clientBaseUrl = process.env.REACT_APP_CLIENT_BASE_URL;
 
+export const fetchSurvey = async (guid: string) => {
+    return await fetch(`${apiBaseUrl}/survey/${guid}`);
+}
 
 export const fetchTerms = async (): Promise<Term[]> => {
-    const response = await fetch(`${baseUrl}/terms`);
+    const response = await fetch(`${apiBaseUrl}/terms`);
     return response.json();
 }
 
-export const fetchFormLink = async (): Promise<string> => {
-    // 'Authorization': `Bearer ${AuthManagerService.getToken()}`,  // Dodaj token do nagłówka 'Authorization'
-    return "https://forms.gle/9x6U1k6U1zY2ZK6J8";
-}
-
 export const sendStudentData = async (student: Student): Promise<number> => {
-    const endpoint = baseUrl + '/student';
+    const endpoint = apiBaseUrl + '/student';
     const requestBody = JSON.stringify(student);
     const response = await fetch(endpoint, {
         method: 'POST',
@@ -36,12 +35,12 @@ export const sendStudentData = async (student: Student): Promise<number> => {
 };
 
 export const fetchStudents = async (): Promise<Student[]> => {
-    const response = await fetch(`${baseUrl}/student`);
+    const response = await fetch(`${apiBaseUrl}/student`);
     return response.json();
 }
 
 export const sendLoginRequest = async (username: string, password: string) => {
-    const endpoint = baseUrl + '/login';
+    const endpoint = apiBaseUrl + '/login';
     const requestBody = JSON.stringify({ username, password });
 
     const response = await fetch(endpoint, {
@@ -60,22 +59,22 @@ export const sendVotes = async (votes: Vote[]) => {
         method: "POST",
         body: JSON.stringify(votes),
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         }
     };
 
-    const response = await fetch(`${baseUrl}/votes`, options);
+    const response = await fetch(`${apiBaseUrl}/votes`, options);
 
     return response;
 };
 
 export const fetchVotes = async (): Promise<Vote[]> => {
-    const response = await fetch(`${baseUrl}/votes`);
+    const response = await fetch(`${apiBaseUrl}/votes`);
     return response.json();
 }
 
 export const sendRegisterRequest = async (username: string, password: string, repeatPassword: string) => {
-    const endpoint = baseUrl + '/register';
+    const endpoint = apiBaseUrl + '/register';
     const requestBody = JSON.stringify({ username, password, repeatPassword });
 
     const response = await fetch(endpoint, {
@@ -93,14 +92,14 @@ export const generateGroups = async (numberOfGroups: number): Promise<Group[]> =
     console.log(numberOfGroups);
     // 'Authorization': `Bearer ${AuthManagerService.getToken()}`,, // Dodaj token do nagłówka 'Authorization'
 
-    const response = await fetch(`${baseUrl}/groups/${numberOfGroups}`);
+    const response = await fetch(`${apiBaseUrl}/groups/${numberOfGroups}`);
     return response.json();
 }
 
 
-export async function createNewTerms(availableDates: InputTerm[]) {
+export const createNewTerms = async (availableDates: InputTerm[]): Promise<string> => {
     try {
-        const termsUrl = `${baseUrl}/terms`;
+        const termsUrl = `${apiBaseUrl}/terms`;
         const response = await fetch(termsUrl, {
             method: 'POST',
             headers: {
@@ -112,13 +111,15 @@ export async function createNewTerms(availableDates: InputTerm[]) {
         if (response.ok) {
             return response.text();
         }
+        throw new Error('Failed to create new terms');
     } catch (error) {
-        console.error(error);
+        console.log(error);
+        throw new Error('Failed to connect with api');
     }
 }
 
 export const getUserRole = async (username: string): Promise<string> => {
-    const endpoint = `${baseUrl}/user-role/${username}`;
+    const endpoint = `${apiBaseUrl}/user-role/${username}`;
     const response = await fetch(endpoint);
 
     if (response.ok) {

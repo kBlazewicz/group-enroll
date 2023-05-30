@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { TextField, Button, Card, CardContent } from "@material-ui/core";
-import { Student } from "../../types/types";
-import { sendStudentData } from "../../api/api-utils";
+import { Student } from "../../../types/types";
+import { sendStudentData } from "../../../api/api-utils";
 import { Typography } from "@mui/material";
-import { StudentsForm } from "../students-form/StudentsForm";
 
 
-export const StudentDataForm = () => {
+export const StudentDataForm = ({onStudentSave} : {onStudentSave: (studentId: number) => void}) => {
     const [studentData, setStudentData] = useState<Student>({
         name: "",
         surname: "",
@@ -23,9 +22,10 @@ export const StudentDataForm = () => {
         if (isValidEmail(studentData.mail) && isValidAlbum(studentData.album)) {
             try {
                 const id = await sendStudentData(studentData);
-                console.log("Received ID:", id);
                 setSavedStudentId(id);
 
+                onStudentSave(savedStudentId);
+                
                 setStudentData({
                     name: "",
                     surname: "",
@@ -76,7 +76,7 @@ export const StudentDataForm = () => {
                         />
                         <br/><br/>
                         <TextField
-                            label="Naziwsko"
+                            label="Nazwisko"
                             name="surname"
                             value={studentData.surname}
                             onChange={handleInputChange}
@@ -150,10 +150,6 @@ export const StudentDataForm = () => {
                     </form>
                 </CardContent>
             </Card>
-            
-            <br/><br/>
-
-            <StudentsForm studentId={savedStudentId}/>
         </div>
     );
 };
