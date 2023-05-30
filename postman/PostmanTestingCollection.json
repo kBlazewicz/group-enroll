@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "d48f2ee8-91c1-4622-b71b-7e43b9060fff",
+		"name": "groupsTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23043402"
+	},
+	"item": [
+		{
+			"name": "10students",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"name\": \"Jan\",\r\n    \"surname\": \"Kowalski\",\r\n    \"album\": \"123456\",\r\n    \"email\": \"jan.kowalski@example.com\",\r\n    \"faculty\": \"Informatyki\",\r\n    \"fieldOfStudy\": \"Informatyka\"\r\n  },\r\n  {\r\n    \"name\": \"Anna\",\r\n    \"surname\": \"Nowak\",\r\n    \"album\": \"654321\",\r\n    \"email\": \"anna.nowak@example.com\",\r\n    \"faculty\": \"Matematyki\",\r\n    \"fieldOfStudy\": \"Matematyka\"\r\n  },\r\n  {\r\n    \"name\": \"Piotr\",\r\n    \"surname\": \"Wójcik\",\r\n    \"album\": \"987654\",\r\n    \"email\": \"piotr.wojcik@example.com\",\r\n    \"faculty\": \"Fizyki\",\r\n    \"fieldOfStudy\": \"Fizyka\"\r\n  },\r\n  {\r\n    \"name\": \"Katarzyna\",\r\n    \"surname\": \"Lewandowska\",\r\n    \"album\": \"456789\",\r\n    \"email\": \"katarzyna.lewandowska@example.com\",\r\n    \"faculty\": \"Chemiczny\",\r\n    \"fieldOfStudy\": \"Chemia\"\r\n  },\r\n  {\r\n    \"name\": \"Tomasz\",\r\n    \"surname\": \"Kaczmarek\",\r\n    \"album\": \"987123\",\r\n    \"email\": \"tomasz.kaczmarek@example.com\",\r\n    \"faculty\": \"Inżynierii mechanicznej\",\r\n    \"fieldOfStudy\": \"Mechanika\"\r\n  },\r\n  {\r\n    \"name\": \"Magdalena\",\r\n    \"surname\": \"Zielińska\",\r\n    \"album\": \"321789\",\r\n    \"email\": \"magdalena.zielinska@example.com\",\r\n    \"faculty\": \"Biologii\",\r\n    \"fieldOfStudy\": \"Biologia\"\r\n  },\r\n  {\r\n    \"name\": \"Adam\",\r\n    \"surname\": \"Szymański\",\r\n    \"album\": \"654987\",\r\n    \"email\": \"adam.szymanski@example.com\",\r\n    \"faculty\": \"Historii\",\r\n    \"fieldOfStudy\": \"Historia\"\r\n  },\r\n  {\r\n    \"name\": \"Ewa\",\r\n    \"surname\": \"Dąbrowska\",\r\n    \"album\": \"789321\",\r\n    \"email\": \"ewa.dabrowska@example.com\",\r\n    \"faculty\": \"Psychologii\",\r\n    \"fieldOfStudy\": \"Psychologia\"\r\n  },\r\n  {\r\n    \"name\": \"Marcin\",\r\n    \"surname\": \"Jankowski\",\r\n    \"album\": \"456123\",\r\n    \"email\": \"marcin.jankowski@example.com\",\r\n    \"faculty\": \"Socjologii\",\r\n    \"fieldOfStudy\": \"Socjologia\"\r\n  },\r\n  {\r\n    \"name\": \"Karolina\",\r\n    \"surname\": \"Górka\",\r\n    \"album\": \"321654\",\r\n    \"email\": \"karolina.gorka@example.com\",\r\n    \"faculty\": \"Prawa\",\r\n    \"fieldOfStudy\": \"Prawo\"\r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/student/many",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"student",
+						"many"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5terms",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"startTime\": \"09:00\",\r\n    \"endTime\": \"10:00\",\r\n    \"dayOfWeek\": \"MONDAY\"\r\n  },\r\n  {\r\n    \"startTime\": \"14:30\",\r\n    \"endTime\": \"15:30\",\r\n    \"dayOfWeek\": \"TUESDAY\"\r\n  },\r\n  {\r\n    \"startTime\": \"11:15\",\r\n    \"endTime\": \"12:15\",\r\n    \"dayOfWeek\": \"WEDNESDAY\"\r\n  },\r\n  {\r\n    \"startTime\": \"16:00\",\r\n    \"endTime\": \"17:00\",\r\n    \"dayOfWeek\": \"THURSDAY\"\r\n  },\r\n  {\r\n    \"startTime\": \"13:45\",\r\n    \"endTime\": \"14:45\",\r\n    \"dayOfWeek\": \"FRIDAY\"\r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/terms",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"terms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "50votes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"studentId\": 1,\r\n    \"termId\": 1,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 2,\r\n    \"termId\": 1,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 3,\r\n    \"termId\": 1,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 4,\r\n    \"termId\": 1,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 5,\r\n    \"termId\": 1,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 6,\r\n    \"termId\": 1,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 7,\r\n    \"termId\": 1,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 8,\r\n    \"termId\": 1,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 9,\r\n    \"termId\": 1,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 10,\r\n    \"termId\": 1,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 1,\r\n    \"termId\": 2,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 2,\r\n    \"termId\": 2,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 3,\r\n    \"termId\": 2,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 4,\r\n    \"termId\": 2,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 5,\r\n    \"termId\": 2,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 6,\r\n    \"termId\": 2,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 7,\r\n    \"termId\": 2,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 8,\r\n    \"termId\": 2,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 9,\r\n    \"termId\": 2,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 10,\r\n    \"termId\": 2,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 1,\r\n    \"termId\": 3,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 2,\r\n    \"termId\": 3,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 3,\r\n    \"termId\": 3,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 4,\r\n    \"termId\": 3,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 5,\r\n    \"termId\": 3,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 6,\r\n    \"termId\": 3,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 7,\r\n    \"termId\": 3,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 8,\r\n    \"termId\": 3,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 9,\r\n    \"termId\": 3,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 10,\r\n    \"termId\": 3,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 1,\r\n    \"termId\": 4,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 2,\r\n    \"termId\": 4,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 3,\r\n    \"termId\": 4,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 4,\r\n    \"termId\": 4,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 5,\r\n    \"termId\": 4,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 6,\r\n    \"termId\": 4,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 7,\r\n    \"termId\": 4,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 8,\r\n    \"termId\": 4,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 9,\r\n    \"termId\": 4,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 10,\r\n    \"termId\": 4,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 1,\r\n    \"termId\": 5,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 2,\r\n    \"termId\": 5,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 3,\r\n    \"termId\": 5,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 4,\r\n    \"termId\": 5,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 5,\r\n    \"termId\": 5,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 6,\r\n    \"termId\": 5,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 7,\r\n    \"termId\": 5,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 8,\r\n    \"termId\": 5,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 9,\r\n    \"termId\": 5,\r\n    \"possibility\": false,\r\n    \"comment\": \"\"\r\n  },\r\n  {\r\n    \"studentId\": 10,\r\n    \"termId\": 5,\r\n    \"possibility\": true,\r\n    \"comment\": \"\"\r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/votes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"votes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3groups",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	]
+}
