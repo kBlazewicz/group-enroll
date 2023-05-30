@@ -27,7 +27,7 @@ export const FormAnswers = () => {
             setSurvey(data);
         }
         loadData();
-    }, [guid])
+    }, [guid, savedStudentId])
 
     const handleStudentSave = (studentId: number) => {
         setSavedStudentId(studentId)
