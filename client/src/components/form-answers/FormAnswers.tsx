@@ -37,7 +37,7 @@ export const FormAnswers = () => {
     return (<>
         {isSurveyFound ? 
             <>
-                <StudentDataForm onStudentSave={handleStudentSave}></StudentDataForm>
+                <StudentDataForm onStudentSave={handleStudentSave} studentId={savedStudentId} lastSavedStudentId={lastSavedStudentId}></StudentDataForm>
                 <StudentsForm terms={survey} studentId={savedStudentId} lastSavedStudentId={lastSavedStudentId} saveLastSavedStudentId={setLastSavedStudentId}/>
             </> : 
             `Survey with code ${guid} was not found!`
