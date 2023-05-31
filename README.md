@@ -23,7 +23,7 @@ Tested integration
 
 ## Używanie aplikacji
 ### Home page
-Po wejściu na localhost:3000 wita nas główna strona naszej aplikacji. W lewym górym rogu znajduje się logo, które po naciśnięciu przenosi do tego widoku. Obok niego zawsze znajdują się wszystkie dostępne aktualnie zakładki (zależnie od posiadanych uprawnień). W prawym górnym rogu znajduje się koło zębate, które umożliwia logowanie oraz rejestrację.
+Po wejściu na localhost:3001 wita nas główna strona naszej aplikacji. W lewym górym rogu znajduje się logo, które po naciśnięciu przenosi do tego widoku. Obok niego zawsze znajdują się wszystkie dostępne aktualnie zakładki (zależnie od posiadanych uprawnień). W prawym górnym rogu znajduje się koło zębate, które umożliwia logowanie oraz rejestrację.
 ![HomePage](/readme_images/HomePage.png)
 
 ### Logowanie/Rejestracja
