@@ -12,14 +12,17 @@ const convertToVotes = (votedTerms: Term[], studentId: number): Vote[] => {
     return votes;
 }
 
-export const SubmitStudentsFormButton = ({termsToSend, studentId} : {termsToSend: Term[], studentId: number}) => {
+export const SubmitStudentsFormButton = ({termsToSend, studentId, lastSavedStudentId, saveLastSavedStudentId}
+    : {termsToSend: Term[], studentId: number, lastSavedStudentId: number, saveLastSavedStudentId: (id: number) => void}) => {
+
     const handleOnClick = async () => {
-        if(studentId < 0 ){
-            alert("Przesłanie zaznaczonych terminów będzie możliwe dopiero wtedy, gdy zatwierdzisz formularz ze swoimi danymi!");
+        if(studentId === lastSavedStudentId ) {
+            alert("Aby przesłać głosy należy najpierw wypełnić formularz danych studenta.");
         }
         else{
             const votes = convertToVotes(termsToSend, studentId)
             await sendVotes(votes); 
+            saveLastSavedStudentId(studentId);
             alert("Zaznaczone terminy zostały przesłane. \nDziękujemy za wypełnienie ankiety.");
         }
     }

@@ -5,7 +5,8 @@ import { sendStudentData } from "../../../api/api-utils";
 import { Typography } from "@mui/material";
 
 
-export const StudentDataForm = ({onStudentSave} : {onStudentSave: (studentId: number) => void}) => {
+export const StudentDataForm = ({onStudentSave, studentId, lastSavedStudentId} 
+    : {onStudentSave: (studentId: number) => void, studentId: number, lastSavedStudentId: number}) => {
     const [studentData, setStudentData] = useState<Student>({
         name: "",
         surname: "",
@@ -15,16 +16,16 @@ export const StudentDataForm = ({onStudentSave} : {onStudentSave: (studentId: nu
         fieldOfStudy: "",
     });
 
-    const [savedStudentId, setSavedStudentId] = useState<number>(-1);
-
     const handleSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
-        if (isValidEmail(studentData.mail) && isValidAlbum(studentData.album)) {
+        if (studentId !== lastSavedStudentId) {
+            alert("Aby przesłać nowe dane studenta należy najpierw wypełnić formularz z terminami.");
+        }
+        else if (isValidEmail(studentData.mail) && isValidAlbum(studentData.album)) {
             try {
                 const id = await sendStudentData(studentData);
-                setSavedStudentId(id);
 
-                onStudentSave(savedStudentId);
+                onStudentSave(id);
                 
                 setStudentData({
                     name: "",
